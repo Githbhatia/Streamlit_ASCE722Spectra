@@ -300,7 +300,7 @@ def onclick():
     return()
 
 def contourf(lat, longt, riskct,sitecl):
-    mesg = st.empty()
+    
     nlong = 7
     nlat= 7
     gridspacing = 0.5/60.0
@@ -313,6 +313,7 @@ def contourf(lat, longt, riskct,sitecl):
     st.write("Grid Used:")
     df = pd.DataFrame({"lat":xLat.flatten(), "lon":xLong.flatten()})
     st.map(df)  
+    mesg = st.empty()
 
     for i in range(nlong):
         for j in range(nlat):
