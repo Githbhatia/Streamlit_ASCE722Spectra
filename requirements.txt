@@ -1,6 +1,5 @@
 ﻿certifi
 geopy
-urllib
 json
 pandas
 matplotlib
