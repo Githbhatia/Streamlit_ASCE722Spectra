@@ -494,13 +494,15 @@ with t2:
     placeholdersc = st.empty()
     siteClassList=["A","B","BC","C","CD","D","DE","E", "Default"]
     siteclass = placeholdersc.selectbox("Site Class",siteClassList,index = 4,key="original")
-
+st.divider()
 
 RiskCategoryList=["I","II","III","IV"]
 riskc = st.selectbox("Risk Category",RiskCategoryList, index = 3)
+
+st.divider()
 st.write("Either provide Address or Lat/Long Pair (leave Address blank)")
 
-tab1, tab2 = st.tabs(["Address", "Lat/Log"])
+tab1, tab2 = st.tabs(["Address", "Lat/Long"])
 
 with tab1:
     addressg = st.text_input("Address", "", placeholder="123, streat name, city, CA")
