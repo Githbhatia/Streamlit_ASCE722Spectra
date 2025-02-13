@@ -485,19 +485,22 @@ mysite = st.text_input("Title for report","My Site")
 st.write("Either enter Shear Wave Velocity or pick Site Class" )
 st.write("(Shear Wave Velocity will be used when entered)")
 
-t1, t2 = st.tabs(["Shear Wave Velocity", "Site Class"])
-with t1:
-    swv= st.number_input("Shear Wave Velocity (ft/s)",0.0)
-    estimatedswv= st.checkbox("Estimated Shear Wave Velocity?")
+c1, c2 =st.columns(2)
+with c1:
+    t1, t2 = st.tabs(["Shear Wave Velocity", "Site Class"])
+    with t1:
+        swv= st.number_input("Shear Wave Velocity (ft/s)",0.0)
+        estimatedswv= st.checkbox("Estimated Shear Wave Velocity?")
 
-with t2:
-    placeholdersc = st.empty()
-    siteClassList=["A","B","BC","C","CD","D","DE","E", "Default"]
-    siteclass = placeholdersc.selectbox("Site Class",siteClassList,index = 4,key="original")
-st.divider()
+    with t2:
+        placeholdersc = st.empty()
+        siteClassList=["A","B","BC","C","CD","D","DE","E", "Default"]
+        siteclass = placeholdersc.selectbox("Site Class",siteClassList,index = 4,key="original")
 
-RiskCategoryList=["I","II","III","IV"]
-riskc = st.selectbox("Risk Category",RiskCategoryList, index = 3)
+with c2:
+
+    RiskCategoryList=["I","II","III","IV"]
+    riskc = st.selectbox("Risk Category",RiskCategoryList, index = 3)
 
 st.divider()
 st.write("Either provide Address or Lat/Long Pair (leave Address blank)")
