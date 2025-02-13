@@ -113,12 +113,12 @@ def onclick():
             responseu = ur.urlopen(urlu)
     except ur.URLError as e:
         if hasattr(e, 'reason'):
-            print('We failed to reach a server.')
-            print('Reason: ', e.reason)
+            st.write('We failed to reach a server.')
+            st.write('Reason: ', e.reason)
             return()
         elif hasattr(e, 'code'):
-            print('The server couldn\'t fulfill the request.')
-            print('Error code: ', e.code)
+            st.write('The server couldn\'t fulfill the request.')
+            st.write('Error code: ', e.code)
             return()
 
     
@@ -324,12 +324,12 @@ def contourf(lat, longt, riskct):
 
             except ur.URLError as e:
                 if hasattr(e, 'reason'):
-                    print('We failed to reach a server.')
-                    print('Reason: ', e.reason)
+                    st.write('We failed to reach a server.')
+                    st.write('Reason: ', e.reason)
                     return()
                 elif hasattr(e, 'code'):
-                    print('The server couldn\'t fulfill the request.')
-                    print('Error code: ', e.code)
+                    st.write('The server couldn\'t fulfill the request.')
+                    st.write('Error code: ', e.code)
                     return() 
             rdata = js.loads(response.read())
             ZSDS[i,j] = rdata["response"]["data"]["sds"]
