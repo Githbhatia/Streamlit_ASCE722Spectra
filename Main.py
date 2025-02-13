@@ -299,8 +299,8 @@ def onclick():
 
     return()
 
-def contourf(lat, longt, riskct,sitecl):
-    
+def contourf(lat, longt, riskct):
+    sitecl = siteclass
     nlong = 7
     nlat= 7
     gridspacing = 0.5/60.0
@@ -518,11 +518,13 @@ if st.session_state.clicked:
     if sfile:
         st.download_button("Save output file", textout, file_name="respspectra.txt",)
 
-st.subheader("ASCE7-22 Local Variation")
-st.write("Computed for selected site class only,\n Will take some time depending on latency of USGS website,\n Select to start")
-locvart= st.checkbox("Check Local Variation of SDS and SD1")
-if locvart==1:
-        contourf(lat, longt, riskct, sitecl)
+
+if st.session_state.clicked:
+    st.subheader("ASCE7-22 Local Variation")
+    st.write("Computed for selected site class only,\n Will take some time depending on latency of USGS website,\n Select to start")
+    locvart= st.checkbox("Check Local Variation of SDS and SD1")
+    if locvart==1:
+        contourf(lat, longt, riskct)
 
 
 
