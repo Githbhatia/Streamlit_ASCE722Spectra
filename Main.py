@@ -484,24 +484,30 @@ st.subheader("ASCE7-22 Seismic Parameter Input")
 mysite = st.text_input("Title for report","My Site")
 st.write("Either enter Shear Wave Velocity or pick Site Class" )
 st.write("(Shear Wave Velocity will be used when entered)")
-swv= st.number_input("Shear Wave Velocity (ft/s)",0.0)
-estimatedswv= st.checkbox("Estimated Shear Wave Velocity?")
 
-placeholdersc = st.empty()
-siteClassList=["A","B","BC","C","CD","D","DE","E", "Default"]
-siteclass = placeholdersc.selectbox("Site Class",siteClassList,index = 4,key="original")
+t1, t2 = st.tabs(["Shear Wave Velocity", "Site Class"])
+with t1:
+    swv= st.number_input("Shear Wave Velocity (ft/s)",0.0)
+    estimatedswv= st.checkbox("Estimated Shear Wave Velocity?")
+
+with t2:
+    placeholdersc = st.empty()
+    siteClassList=["A","B","BC","C","CD","D","DE","E", "Default"]
+    siteclass = placeholdersc.selectbox("Site Class",siteClassList,index = 4,key="original")
 
 
 RiskCategoryList=["I","II","III","IV"]
 riskc = st.selectbox("Risk Category",RiskCategoryList, index = 3)
 st.write("Either provide Address or Lat/Long Pair (leave Address blank)")
 
+tab1, tab2 = st.tabs(["Address", "Lat/Log"])
 
-addressg = st.text_input("Address", "")
+with tab1:
+    addressg = st.text_input("Address", "", placeholder="123, streat name, city, CA")
 
-
-latitude= st.number_input("Latitude",38)
-longitude= st.number_input("Longitude",-121)
+with tab2:
+    latitude= st.number_input("Latitude",38)
+    longitude= st.number_input("Longitude",-121)
 
 if 'clicked' not in st.session_state:
     st.session_state.clicked = False
