@@ -489,7 +489,7 @@ c1, c2 =st.columns(2)
 with c1:
     t1, t2 = st.tabs(["Shear Wave Velocity", "Site Class"])
     with t1:
-        swv= st.number_input("Shear Wave Velocity (ft/s)",0.0)
+        swv= st.number_input("Shear Wave Velocity (ft/s)",0.0, step = 100)
         estimatedswv= st.checkbox("Estimated Shear Wave Velocity?")
 
     with t2:
