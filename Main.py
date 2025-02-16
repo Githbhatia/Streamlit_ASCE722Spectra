@@ -97,13 +97,14 @@ def onclick():
                 longt = str(location.longitude)
                 address = str(location.address)
                 st.write("Using "+ str(lat) + ", " + str(longt))
+            else:
+                st.write("Invalid Address:" + "Invalid address, revise address and try again")
+                return()
         except GeocoderTimedOut as e:
             st.write("Error: geocode failed on input %s with message %s"%(address, e.message))
             return()
             
-        else:
-            st.write("Invalid Address:" + "Invalid address, revise address and try again")
-            return()
+
     
     df = pd.DataFrame({"lat":[float(lat)], "lon":[float(longt)]})
     st.map(df)      
