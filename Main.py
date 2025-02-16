@@ -55,7 +55,7 @@ def onclick():
                 if shearwavevel*1.3 <= b:
                     siteclu = a
                     break
-        placeholdersc.selectbox("Site Class",siteClassList,index = siteClassList.index(sitecl), key="replaced")    
+        placeholdersc.selectbox("Site Class",siteClassList,index = siteClassList.index(sitecl), key="siteclass")    
         
     elif siteclass=="Default":
         sitecl = "CD"
@@ -69,7 +69,7 @@ def onclick():
     
     #print(sitecll+" "+siteclu)
     #print(st.session_state.siteclass)
-    st.write("Using site class " + sitecl)
+    st.write("Using site class " + siteclass)
 
     
     ctx = ssl.create_default_context(cafile=certifi.where())
@@ -238,7 +238,7 @@ def onclick():
         st.dataframe(dfs)
         textout = mywritefileEstSV(t, sg, tmce, smceg, sds, sd1, sitecl)
        
-    elif sitecl=="Default":   
+    elif siteclass=="Default":   
 
         sg = [max(sl,s,su) for sl,s,su in zip(sl,s,su)]
         ax[0].plot(t, sl, label="Multiperiod Des Spec lower bound SC= "+ sitecll, color='Red', linewidth=1.0)
