@@ -479,7 +479,7 @@ def mywritefileest(ldata, sitecl, sexp):
 st.subheader("ASCE7-22 Seismic Parameter Input")
 
 
-# st.query_params.from_dict({"address": "elk grove, CA", "title": "Cool location", "long": -120, "lat": 39})
+# st.query_params.from_dict({"address": "elk grove, CA", "title": "Cool location", "long": -120, "lat": 39, "shearwavevelo": 1200})
 
 if "title" in st.query_params:
     inTitle = st.query_params["title"]
@@ -501,7 +501,19 @@ if "lat" in st.query_params:
 else:
     inLat = 38.0
 
+RiskCategoryList=["I","II","III","IV"]
+if "riskcat" in st.query_params:
+    if st.query_params["riskcat"] in RiskCategoryList:
+        inRisk = st.query_params["riskcat"]
+    else:
+        inRisk = "IV"
+else:
+    inRisk = "IV"
 
+if "shearwavevelo" in st.query_params:
+    inSwv = float(st.query_params["shearwavevelo"])
+else:
+    inSwv = 0.0
 
 st.write("Data source is USGS (ASCE 722 Database) and OpenStreetMaps.\nAuthors do not assume any responsibility or liability for its accuracy.")
 st.write("Use of the output of this program does not imply approval by the governing building code bodies responsible for building code approval and interpretation for the building site described by latitude/longitude location.")
@@ -515,7 +527,7 @@ c1, c2 =st.columns(2)
 with c1:
     t1, t2 = st.tabs(["Shear Wave Velocity", "Site Class"])
     with t1:
-        swv= st.number_input("Shear Wave Velocity (ft/s)",value = 0.0, step = 100.0, min_value = 0.0)
+        swv= st.number_input("Shear Wave Velocity (ft/s)",value = inSwv, step = 100.0, min_value = 0.0)
         estimatedswv= st.checkbox("Estimated Shear Wave Velocity?")
 
     with t2:
@@ -525,8 +537,7 @@ with c1:
 
 with c2:
 
-    RiskCategoryList=["I","II","III","IV"]
-    riskc = st.selectbox("Risk Category",RiskCategoryList, index = 3)
+    riskc = st.selectbox("Risk Category",RiskCategoryList, index = RiskCategoryList.index(inRisk))
 
 st.divider()
 st.write("Either provide Address or Lat/Long Pair (leave Address blank)")
