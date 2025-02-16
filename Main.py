@@ -360,7 +360,7 @@ def mywritefileEstSV(t, sg, tmce, smceg, sds, sd1, sitecl):
 
     textout += "Data source is USGS (ASCE 722 Database) and OpenStreetMaps.\nAuthors do not assume any responsibility or liability for its accuracy.\n"
     textout += "Use of the output of this program does not imply approval by the governing building code bodies responsible for building code approval and interpretation for the building site described by latitude/longitude location.\n"
-    textout += "Written by HXB\n \n \n"
+    textout += "\n \n"
     textout += sitetitle + "\n" + address + "\n"
     textout += "The location is " + str(lat) + ", " + str(longt) +  " and Risk Category "+ riskct + "\n"
     if (estimatedswv and swv == 0.0):
@@ -403,7 +403,7 @@ def mywritefile( ldata, sitecl):
     smce = ldata["response"]["data"]["multiPeriodMCErSpectrum"]["ordinates"]
     textout += "Data source is USGS (ASCE 722 Database) and OpenStreetMaps.\nAuthors do not assume any responsibility or liability for its accuracy.\n"
     textout += "Use of the output of this program does not imply approval by the governing building code bodies responsible for building code approval and interpretation for the building site described by latitude/longitude location.\n"
-    textout += "Written by HXB\n \n \n"
+    textout += "\n \n"
     textout += sitetitle + "\n" + address + "\n"
     textout += "The location is " + str(lat) + ", " + str(longt) + " with Site Class " + sitecl + " and Risk Category "+ riskct + "\n"
     if swv != 0.0:
@@ -442,7 +442,7 @@ def mywritefileest(ldata, sitecl, sexp):
     smce = ldata["response"]["data"]["multiPeriodMCErSpectrum"]["ordinates"]
     textout += "Data source is USGS (ASCE 722 Database) and OpenStreetMaps.\nAuthors do not assume any responsibility or liability for its accuracy.\n"
     textout += "Use of the output of this program does not imply approval by the governing building code bodies responsible for building code approval and interpretation for the building site described by latitude/longitude location.\n"
-    textout += "Written by HXB\n \n \n"
+    textout += "\n \n"
     textout += sitetitle + "\n" + address + "\n"
     textout += "The location is " + str(lat) + ", " + str(longt) + " with Site Class " + sitecl + " and Risk Category "+ riskct + "\n"
     if swv != 0.0 :
@@ -479,7 +479,7 @@ def mywritefileest(ldata, sitecl, sexp):
 st.subheader("ASCE7-22 Seismic Parameter Input")
 
 
-#st.query_params.from_dict({"address": "elk grove, CA", "title": "Cool location", "long": -120, "lat": 39})
+# st.query_params.from_dict({"address": "elk grove, CA", "title": "Cool location", "long": -120, "lat": 39})
 
 if "title" in st.query_params:
     inTitle = st.query_params["title"]
@@ -502,9 +502,14 @@ else:
     inLat = 38.0
 
 
+
+st.write("Data source is USGS (ASCE 722 Database) and OpenStreetMaps.\nAuthors do not assume any responsibility or liability for its accuracy.")
+st.write("Use of the output of this program does not imply approval by the governing building code bodies responsible for building code approval and interpretation for the building site described by latitude/longitude location.")
+st.divider()
 mysite = st.text_input("Title for report",inTitle)
 st.write("Either enter Shear Wave Velocity or pick Site Class" )
 st.write("(Shear Wave Velocity will be used when entered)")
+
 
 c1, c2 =st.columns(2)
 with c1:
