@@ -194,6 +194,7 @@ def onclick():
         ax[1].legend() 
         ax[1].grid()
         
+
         
         sds = 0.9 * max(sg[t.index(0.2):t.index(5.0)])
         sd1min = sg[t.index(1.0)]
@@ -214,6 +215,9 @@ def onclick():
         )
         df.set_index('Parameter', inplace=True)
         st.dataframe(df)
+
+        dfs=pd.DataFrame({"time period":t,"Governing Multiperiod Spec": sg, "Governing MCE Multiperiod":smceg })
+        st.dataframe(dfs)
         textout = mywritefileEstSV(t, sg, tmce, smceg, sds, sd1, sitecl)
        
     elif siteclass=="Default":   
@@ -247,6 +251,8 @@ def onclick():
         )
         df.set_index('Parameter', inplace=True)
         st.dataframe(df)
+        dfs=pd.DataFrame({"time period":t,"Governing Multiperiod Spec": sg, "Governing MCE Multiperiod":smceg })
+        st.dataframe(dfs)
         textout = mywritefileEstSV(t, sg, tmce, smceg, sds, sd1, sitecl)
 
     elif  swv != 0.0:
@@ -273,6 +279,8 @@ def onclick():
         df['Values'] = df['Values'].astype(str)
         df.set_index('Parameter', inplace=True)
         st.dataframe(df)
+        dfs=pd.DataFrame({"time period":t,"Multiperiod Spec": s, "Interpolated Spec": sexp  ,"MCE Multiperiod":smce, "Interpolated MCE spec": sexpmce })
+        st.dataframe(dfs)
         textout = mywritefileest(rdata, sitecl, sexp)
     else:
         ax[0].plot(t, s, label="Multiperiod Design Spectrum for" + sitecl, color='Red', linewidth=1.0)
@@ -293,6 +301,8 @@ def onclick():
         df['Values'] = df['Values'].astype(str)
         df.set_index('Parameter', inplace=True)
         st.dataframe(df)
+        dfs=pd.DataFrame({"time period":t,"Multiperiod Spec": s, "MCE Multiperiod":smce })
+        st.dataframe(dfs)
         textout = mywritefile(rdata, sitecl)
 
     st.pyplot(fig)
@@ -533,7 +543,7 @@ with c1:
     with t2:
         placeholdersc = st.empty()
         siteClassList=["A","B","BC","C","CD","D","DE","E", "Default"]
-        siteclass = placeholdersc.selectbox("Site Class",siteClassList,index = 4,key="original")
+        siteclass = placeholdersc.selectbox("Site Class",siteClassList,index = 8,key="original")
 
 with c2:
 
