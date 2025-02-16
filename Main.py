@@ -83,12 +83,17 @@ def onclick():
         longt = longitude
         try:
             location = geolocator.reverse(str(lat) + " ," + str(longt))
-            address = str(location.address)
-            st.write("Using "+ address)
+            if location != None:
+                address = str(location.address)
+                st.write("Using "+ address)
+            else:
+                st.write("Address not found: Continuing using"+ str(lat) + ", " + str(longt))   
         except GeocoderTimedOut as e:
             st.write("Error: geocode failed on input %s with message %s"%(address, e.message))
-            st.write("Continuing using"+ str(lat) + ", " + str(longt))
+            st.write("Continuing using "+ str(lat) + ", " + str(longt))
         
+
+
     else:
         try:
             location = geolocator.geocode(address)
