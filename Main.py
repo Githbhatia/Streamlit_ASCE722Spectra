@@ -55,7 +55,7 @@ def onclick():
                 if shearwavevel*1.3 <= b:
                     siteclu = a
                     break
-        siteclass = placeholdersc.selectbox("Site Class",siteClassList,index = siteClassList.index(sitecl), key="replaced")    
+        placeholdersc.selectbox("Site Class",siteClassList,index = siteClassList.index(sitecl), key="replaced")    
         
     elif siteclass=="Default":
         sitecl = "CD"
@@ -69,7 +69,7 @@ def onclick():
     
     #print(sitecll+" "+siteclu)
     #print(st.session_state.siteclass)
-    
+    st.write("Using site class " + sitecl)
 
     
     ctx = ssl.create_default_context(cafile=certifi.where())
@@ -238,7 +238,7 @@ def onclick():
         st.dataframe(dfs)
         textout = mywritefileEstSV(t, sg, tmce, smceg, sds, sd1, sitecl)
        
-    elif siteclass=="Default":   
+    elif sitecl=="Default":   
 
         sg = [max(sl,s,su) for sl,s,su in zip(sl,s,su)]
         ax[0].plot(t, sl, label="Multiperiod Des Spec lower bound SC= "+ sitecll, color='Red', linewidth=1.0)
@@ -301,8 +301,8 @@ def onclick():
         st.dataframe(dfs)
         textout = mywritefileest(rdata, sitecl, sexp)
     else:
-        ax[0].plot(t, s, label="Multiperiod Design Spectrum for" + sitecl, color='Red', linewidth=1.0)
-        ax[0].plot(t2, s2, label="2-Period Design Spectrum for" + sitecl, color='Green', linewidth=1.0)
+        ax[0].plot(t, s, label="Multiperiod Design Spectrum for " + sitecl, color='Red', linewidth=1.0)
+        ax[0].plot(t2, s2, label="2-Period Design Spectrum for " + sitecl, color='Green', linewidth=1.0)
         ax[0].set_xlim([0, 5])
         ax[0].legend()
         ax[0].grid()
