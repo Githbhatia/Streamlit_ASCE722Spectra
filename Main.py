@@ -479,7 +479,7 @@ def mywritefileest(ldata, sitecl, sexp):
 st.subheader("ASCE7-22 Seismic Parameter Input")
 
 
-st.query_params.from_dict({"address": "elk grove, CA", "title": "Cool location", "long": -120, "lat": 39})
+#st.query_params.from_dict({"address": "elk grove, CA", "title": "Cool location", "long": -120, "lat": 39})
 
 if "title" in st.query_params:
     inTitle = st.query_params["title"]
