@@ -4,6 +4,7 @@ import certifi
 import ssl
 import geopy.geocoders
 from geopy.geocoders import Nominatim
+from geopy.exc import GeocoderTimedOut
 import urllib.request as ur
 import json as js
 import matplotlib.pyplot as plt
@@ -80,17 +81,26 @@ def onclick():
     if address =="":
         lat = latitude
         longt = longitude
-        location = geolocator.reverse(str(lat) + " ," + str(longt))
-        address = str(location.address)
-        st.write("Using "+ address)
-
-    else:
-        location = geolocator.geocode(address)
-        if (location != None):
-            lat = str(location.latitude)
-            longt = str(location.longitude)
+        try:
+            location = geolocator.reverse(str(lat) + " ," + str(longt))
             address = str(location.address)
-            st.write("Using "+ str(lat) + ", " + str(longt))
+            st.write("Using "+ address)
+        except GeocoderTimedOut as e:
+            st.write("Error: geocode failed on input %s with message %s"%(address, e.message))
+            st.write("Continuing using"+ str(lat) + ", " + str(longt))
+        
+    else:
+        try:
+            location = geolocator.geocode(address)
+            if (location != None):
+                lat = str(location.latitude)
+                longt = str(location.longitude)
+                address = str(location.address)
+                st.write("Using "+ str(lat) + ", " + str(longt))
+        except GeocoderTimedOut as e:
+            st.write("Error: geocode failed on input %s with message %s"%(address, e.message))
+            return()
+            
         else:
             st.write("Invalid Address:" + "Invalid address, revise address and try again")
             return()
@@ -558,8 +568,8 @@ with tab1:
     addressg = st.text_input("Address", inAdd, placeholder="123, streat name, city, CA")
 
 with tab2:
-    latitude= st.number_input("Latitude",inLat)
-    longitude= st.number_input("Longitude",inLong)
+    latitude= st.number_input("Latitude",value=inLat, step = 0.1, min_value = -90.0, max_value= 90.0)
+    longitude= st.number_input("Longitude",value =inLong, step = 0.1, min_value =-180.0, max_value=180.0)
 
 if 'clicked' not in st.session_state:
     st.session_state.clicked = False
