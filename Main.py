@@ -55,7 +55,8 @@ def onclick():
                 if shearwavevel*1.3 <= b:
                     siteclu = a
                     break
-        placeholdersc.selectbox("Site Class",siteClassList,index = siteClassList.index(sitecl), key="replaced")    
+        siteclass = placeholdersc.selectbox("Site Class",siteClassList,index = siteClassList.index(sitecl), key="replaced")    
+        
     elif siteclass=="Default":
         sitecl = "CD"
         siteclu = "C"
@@ -67,7 +68,8 @@ def onclick():
         return(0)
     
     #print(sitecll+" "+siteclu)
-    #print(siteclBMultp)
+    #print(st.session_state.siteclass)
+    
 
     
     ctx = ssl.create_default_context(cafile=certifi.where())
@@ -87,7 +89,7 @@ def onclick():
                 address = str(location.address)
                 st.write("Using "+ address)
             else:
-                st.write("Address not found: Continuing using"+ str(lat) + ", " + str(longt))   
+                st.write("Address not found: Continuing using "+ str(lat) + ", " + str(longt))   
         except GeocoderTimedOut as e:
             st.write("Error: geocode failed on input %s with message %s"%(address, e.message))
             st.write("Continuing using "+ str(lat) + ", " + str(longt))
@@ -557,6 +559,8 @@ with c1:
         estimatedswv= st.checkbox("Estimated Shear Wave Velocity?")
 
     with t2:
+        if 'siteclass' not in st.session_state:
+            st.session_state.siteclass = "Default"
         placeholdersc = st.empty()
         siteClassList=["A","B","BC","C","CD","D","DE","E", "Default"]
         siteclass = placeholdersc.selectbox("Site Class",siteClassList,index = 8,key="original")
