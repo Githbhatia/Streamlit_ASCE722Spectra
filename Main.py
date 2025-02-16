@@ -475,13 +475,34 @@ def mywritefileest(ldata, sitecl, sexp):
     return(textout)
 
 
-global rr
 
-
-rr=0
 st.subheader("ASCE7-22 Seismic Parameter Input")
 
-mysite = st.text_input("Title for report","My Site")
+
+st.query_params.from_dict({"address": "elk grove, CA", "title": "Cool location", "long": -120, "lat": 39})
+
+if "title" in st.query_params:
+    inTitle = st.query_params["title"]
+else:
+    inTitle = "My Title"
+
+if "address" in st.query_params:
+    inAdd = st.query_params["address"]
+else:
+    inAdd = ""
+
+if "long" in st.query_params:
+    inLong = float(st.query_params["long"])
+else:
+    inLong = -121.0
+
+if "lat" in st.query_params:
+    inLat = float(st.query_params["lat"])
+else:
+    inLat = 38.0
+
+
+mysite = st.text_input("Title for report",inTitle)
 st.write("Either enter Shear Wave Velocity or pick Site Class" )
 st.write("(Shear Wave Velocity will be used when entered)")
 
@@ -508,11 +529,11 @@ st.write("Either provide Address or Lat/Long Pair (leave Address blank)")
 tab1, tab2 = st.tabs(["Address", "Lat/Long"])
 
 with tab1:
-    addressg = st.text_input("Address", "", placeholder="123, streat name, city, CA")
+    addressg = st.text_input("Address", inAdd, placeholder="123, streat name, city, CA")
 
 with tab2:
-    latitude= st.number_input("Latitude",38)
-    longitude= st.number_input("Longitude",-121)
+    latitude= st.number_input("Latitude",inLat)
+    longitude= st.number_input("Longitude",inLong)
 
 if 'clicked' not in st.session_state:
     st.session_state.clicked = False
