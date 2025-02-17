@@ -15,7 +15,7 @@ import pandas as pd
 def onclick():
 
     global address, lat,longt, textout, riskct, sitecl
-    
+   
     if swv != 0.0:
         try:
             shearwavevel = float(swv)
@@ -55,7 +55,9 @@ def onclick():
                 if shearwavevel*1.3 <= b:
                     siteclu = a
                     break
-        # placeholdersc.selectbox("Site Class",siteClassList,index = siteClassList.index(sitecl), key="siteclass")    
+
+        placeholder.selectbox("Site Class",siteClassList,index = siteClassList.index(sitecl)) 
+            
         
     elif siteclass=="Default":
         sitecl = "CD"
@@ -563,10 +565,11 @@ with c1:
         estimatedswv= st.checkbox("Estimated Shear Wave Velocity?")
 
     with t2:
-
+        placeholder = st.empty()
         siteClassList=["A","B","BC","C","CD","D","DE","E", "Default"]
-        siteclass = st.selectbox("Site Class",siteClassList,index = 8)
-
+        siteclass = placeholder.selectbox("Site Class",siteClassList,index = 8, key="siteclass")
+        if swv != 0:
+            st.write("Note: Clear Shear Wave Velocity to 0.0 to use generate spectra via site class")
 with c2:
 
     riskc = st.selectbox("Risk Category",RiskCategoryList, index = RiskCategoryList.index(inRisk))
@@ -582,6 +585,8 @@ with tab1:
 with tab2:
     latitude= st.number_input("Latitude",value=inLat, step = 0.1, min_value = -90.0, max_value= 90.0)
     longitude= st.number_input("Longitude",value =inLong, step = 0.1, min_value =-180.0, max_value=180.0)
+    if addressg != "":
+        st.write("Note: Clear address to use generate spectra using lat/long pair")
 
 if 'clicked' not in st.session_state:
     st.session_state.clicked = False
@@ -591,6 +596,7 @@ def click_button():
 
 st.button('Run', on_click=click_button)
 
+# st.write(st.session_state)
 if st.session_state.clicked:
     onclick()
     st.subheader("Download output file")
