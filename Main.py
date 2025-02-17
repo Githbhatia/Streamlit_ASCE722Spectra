@@ -15,7 +15,7 @@ import pandas as pd
 def onclick():
 
     global address, lat,longt, textout, riskct, sitecl
-    print(swv)
+    
     if swv != 0.0:
         try:
             shearwavevel = float(swv)
