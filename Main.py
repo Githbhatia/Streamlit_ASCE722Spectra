@@ -15,7 +15,7 @@ import pandas as pd
 def onclick():
 
     global address, lat,longt, textout, riskct, sitecl
-
+    print(swv)
     if swv != 0.0:
         try:
             shearwavevel = float(swv)
@@ -55,7 +55,7 @@ def onclick():
                 if shearwavevel*1.3 <= b:
                     siteclu = a
                     break
-        placeholdersc.selectbox("Site Class",siteClassList,index = siteClassList.index(sitecl), key="siteclass")    
+        # placeholdersc.selectbox("Site Class",siteClassList,index = siteClassList.index(sitecl), key="siteclass")    
         
     elif siteclass=="Default":
         sitecl = "CD"
@@ -69,13 +69,17 @@ def onclick():
     
     #print(sitecll+" "+siteclu)
     #print(st.session_state.siteclass)
-    st.write("Using site class " + siteclass)
+
+    if siteclass=="Default" and swv == 0.0:
+        st.write("Using site class " + siteclass)
+    else:
+        st.write("Using site class " + sitecl)
 
     
     ctx = ssl.create_default_context(cafile=certifi.where())
     #ctx = ssl._create_unverified_context()
     geopy.geocoders.options.default_ssl_context = ctx
-    geolocator = Nominatim(user_agent="ASCE722Spectra", scheme='https')
+    geolocator = Nominatim(user_agent="STASCE722Spectra", scheme='https')
     sitetitle = mysite
     riskct = riskc
     address = addressg
@@ -237,7 +241,35 @@ def onclick():
         dfs=pd.DataFrame({"time period":t,"Governing Multiperiod Spec": sg, "Governing MCE Multiperiod":smceg })
         st.dataframe(dfs)
         textout = mywritefileEstSV(t, sg, tmce, smceg, sds, sd1, sitecl)
-       
+
+    elif  swv != 0.0:
+        sexp = np.array(su)*siteclBMultp + np.array(sl)*(1-siteclBMultp)
+        sexpmce = np.array(smceu)*siteclBMultp + np.array(smcel)*(1-siteclBMultp)
+        ax[0].plot(t, s, label="Multiperiod Design Spectrum for " + sitecl, color='Red', linewidth=1.0)
+        ax[0].plot(t2, s2, label="2-Period Design Spectrum for " + sitecl, color='Green', linewidth=1.0)
+        #ax[0].plot(tl, sl, label="Lower Bound Design Spectrum for" + sitecll, color='black', linewidth=0.1)
+        ax[0].plot(tl, sexp, label="Interpolated Spectrum for " + str(round(shearwavevel,0)) + " ft/s", color='black', linestyle='--', linewidth=1.0)
+        ax[0].set_xlim([0, 5])
+        ax[0].legend()
+        ax[0].grid()
+        ax[1].plot(tmce, smce, label="MCE Multiperiod Spectrum", color='Blue', linewidth=1.0)
+        ax[1].plot(tmce2, smce2, label="MCE 2-Period  Spectrum", color='Green', linewidth=1.0)
+        ax[1].plot(tmcel, sexpmce, label="Interpolated mCE Spectrum for " + str(round(shearwavevel,0)) + " ft/s", color='black', linestyle='--', linewidth=1.0)
+        ax[1].set_xlim([0, 5])
+        ax[1].legend()
+        ax[1].grid()
+        p = rdata["response"]["data"].items()
+        st.subheader("ASCE7-22 Seismic Parameter Output")
+        df = pd.DataFrame(p)
+        df = df[0:11]
+        df.columns = ['Parameter','Values']
+        df['Values'] = df['Values'].astype(str)
+        df.set_index('Parameter', inplace=True)
+        st.dataframe(df)
+        dfs=pd.DataFrame({"time period":t,"Multiperiod Spec": s, "Interpolated Spec": sexp  ,"MCE Multiperiod":smce, "Interpolated MCE spec": sexpmce })
+        st.dataframe(dfs)
+        textout = mywritefileest(rdata, sitecl, sexp)
+
     elif siteclass=="Default":   
 
         sg = [max(sl,s,su) for sl,s,su in zip(sl,s,su)]
@@ -272,34 +304,6 @@ def onclick():
         dfs=pd.DataFrame({"time period":t,"Governing Multiperiod Spec": sg, "Governing MCE Multiperiod":smceg })
         st.dataframe(dfs)
         textout = mywritefileEstSV(t, sg, tmce, smceg, sds, sd1, sitecl)
-
-    elif  swv != 0.0:
-        sexp = np.array(su)*siteclBMultp + np.array(sl)*(1-siteclBMultp)
-        sexpmce = np.array(smceu)*siteclBMultp + np.array(smcel)*(1-siteclBMultp)
-        ax[0].plot(t, s, label="Multiperiod Design Spectrum for " + sitecl, color='Red', linewidth=1.0)
-        ax[0].plot(t2, s2, label="2-Period Design Spectrum for " + sitecl, color='Green', linewidth=1.0)
-        #ax[0].plot(tl, sl, label="Lower Bound Design Spectrum for" + sitecll, color='black', linewidth=0.1)
-        ax[0].plot(tl, sexp, label="Interpolated Spectrum for " + str(round(shearwavevel,0)) + " ft/s", color='black', linestyle='--', linewidth=1.0)
-        ax[0].set_xlim([0, 5])
-        ax[0].legend()
-        ax[0].grid()
-        ax[1].plot(tmce, smce, label="MCE Multiperiod Spectrum", color='Blue', linewidth=1.0)
-        ax[1].plot(tmce2, smce2, label="MCE 2-Period  Spectrum", color='Green', linewidth=1.0)
-        ax[1].plot(tmcel, sexpmce, label="Interpolated mCE Spectrum for " + str(round(shearwavevel,0)) + " ft/s", color='black', linestyle='--', linewidth=1.0)
-        ax[1].set_xlim([0, 5])
-        ax[1].legend()
-        ax[1].grid()
-        p = rdata["response"]["data"].items()
-        st.subheader("ASCE7-22 Seismic Parameter Output")
-        df = pd.DataFrame(p)
-        df = df[0:11]
-        df.columns = ['Parameter','Values']
-        df['Values'] = df['Values'].astype(str)
-        df.set_index('Parameter', inplace=True)
-        st.dataframe(df)
-        dfs=pd.DataFrame({"time period":t,"Multiperiod Spec": s, "Interpolated Spec": sexp  ,"MCE Multiperiod":smce, "Interpolated MCE spec": sexpmce })
-        st.dataframe(dfs)
-        textout = mywritefileest(rdata, sitecl, sexp)
     else:
         ax[0].plot(t, s, label="Multiperiod Design Spectrum for " + sitecl, color='Red', linewidth=1.0)
         ax[0].plot(t2, s2, label="2-Period Design Spectrum for " + sitecl, color='Green', linewidth=1.0)
@@ -555,15 +559,13 @@ c1, c2 =st.columns(2)
 with c1:
     t1, t2 = st.tabs(["Shear Wave Velocity", "Site Class"])
     with t1:
-        swv= st.number_input("Shear Wave Velocity (ft/s)",value = inSwv, step = 100.0, min_value = 0.0)
+        swv = st.number_input("Shear Wave Velocity (ft/s)",value = inSwv, step = 100.0, min_value = 0.0, key="swv")
         estimatedswv= st.checkbox("Estimated Shear Wave Velocity?")
 
     with t2:
-        if 'siteclass' not in st.session_state:
-            st.session_state.siteclass = "Default"
-        placeholdersc = st.empty()
+
         siteClassList=["A","B","BC","C","CD","D","DE","E", "Default"]
-        siteclass = placeholdersc.selectbox("Site Class",siteClassList,index = 8,key="original")
+        siteclass = st.selectbox("Site Class",siteClassList,index = 8)
 
 with c2:
 
