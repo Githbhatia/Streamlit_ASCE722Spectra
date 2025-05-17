@@ -88,7 +88,7 @@ G. Cantilevered Column Systems  1. Steel special cantilever column systems,2.5,2
 G. Cantilevered Column Systems  2. Steel ordinary cantilever column systems,1.25,1.25,1.25
 G. Cantilevered Column Systems  3. Special reinforced concrete moment framesm,2.5,2.5,2.5
 G. Cantilevered Column Systems  4. Intermediate reinforced concrete moment frames,1.5,1.5,1.5
-G. Cantilevered Column Systems  5. Ordinary reinforced concrete moment frames,1,1¼,1
+G. Cantilevered Column Systems  5. Ordinary reinforced concrete moment frames,1,1.25,1
 G. Cantilevered Column Systems  6. Timber frames,1.5,1.5,1.5
 "H. STEEL SYSTEMS NOT SPECIFICALLY DETAILED FOR SEISMIC RESISTANCE, EXCLUDING CANTILEVER COLUMN
 SYSTEMS",3,3,3
