@@ -14,7 +14,7 @@ import pandas as pd
         
 def onclick():
 
-    global address, lat,longt, textout, riskct, sitecl
+    global address, lat,longt, textout, riskct, sitecl,sds
    
     if swv != 0.0:
         try:
@@ -325,6 +325,7 @@ def onclick():
         df['Values'] = df['Values'].astype(str)
         df.set_index('Parameter', inplace=True)
         st.dataframe(df)
+        sds =df.loc["sds"].values[0]
         dfs=pd.DataFrame({"time period":t,"Multiperiod Spec": s, "MCE Multiperiod":smce })
         st.dataframe(dfs)
         textout = mywritefile(rdata, sitecl)
@@ -511,7 +512,7 @@ def mywritefileest(ldata, sitecl, sexp):
 
 
 st.subheader("ASCE7-22 Seismic Parameter Input")
-
+sds = 0.0
 
 # st.query_params.from_dict({"address": "elk grove, CA", "title": "Cool location", "long": -120, "lat": 39, "shearwavevelo": 1200})
 
@@ -604,14 +605,148 @@ if st.session_state.clicked:
     if sfile:
         st.download_button("Save output file", textout, file_name="respspectra.txt",)
 
-
+sds_latex = "S_{DS}"
+sd1_latex = "S_{D1}"
 if st.session_state.clicked:
     st.subheader("ASCE7-22 Local Variation")
     st.write("Computed for selected site class only,\n Will take some time depending on latency of USGS website,\n Select to start")
-    locvart= st.checkbox("Check Local Variation of SDS and SD1")
+    locvart= st.checkbox(f"Check Local Variation of ${sds_latex}$ and ${sd1_latex}$")
     if locvart==1:
         contourf(lat, longt, riskct)
 
+
+if st.session_state.clicked:
+    st.subheader("ASCE7-22 Fp Calculation")
+    locvart= st.checkbox("Compute Fp")
+    FP="F_{p}"
+    if locvart==1:
+        sds = st.number_input(f"${sds_latex}$, Computed for Sds obtainted above", value= sds, format="%0.3f")
+        df = pd.read_excel('ASCE722Ch13.xlsx', sheet_name='Table', usecols= 'A:E')
+        df.set_index('Menuitems', inplace=True)
+        selecteditem = st.selectbox("Select Nonstructural item:",df.index, index = 32, key="nonstructural")
+        car0 = df.loc[selecteditem].values[0]
+        car1 = df.loc[selecteditem].values[1]
+        rPO = df.loc[selecteditem].values[2]
+        omegaOP = df.loc[selecteditem].values[3]
+
+        sc1,sc2 =st.columns(2)
+        with sc1:
+            I_p = "I_{p}"
+            iP = float(st.selectbox(f"${I_p}$, Component Importance Factor",(1.0,1.5), index = 1))
+
+        sc3,sc4 =st.columns(2)
+        with sc3:
+            Z = "Z"
+            z = st.number_input(f"${Z}$, height above base",value= 90.0)
+        with sc4:
+            H = "H"
+            h = st.number_input(f"${H}$, Average roof height of structure in ft",value= 100.0)
+
+        knownstsys = st.toggle("Structural System Selection (Unknown system assumed if not enabled)", key="structuralselect")
+        if knownstsys:
+            dfs = pd.read_excel('ASCE722StructuralSystems.xlsx', sheet_name='Table1', usecols= 'A:D')
+            dfs.set_index('StructuralSystem', inplace=True)
+            selecteditem = st.selectbox("Select Structural System of the Building:",dfs.index, index = 49, key="structural")
+            r = dfs.loc[selecteditem].values[0]
+            oM = dfs.loc[selecteditem].values[1]
+        I_e = "I_{e}"
+        ie = float(st.selectbox(f"${I_e}$, Importance Factor for Building",(1.0,1.25,1.5), index = 2))
+        knownperiod = st.toggle("Period Known (if not enabled, period is calculated based on Height H)", key="periodselect")
+        if knownperiod:
+            Ta = "T_{a}"
+            tA = st.number_input(f"${Ta}$, Lowest fundamental perio of structure",value= 0.5)
+        else:
+            tA = 0.02*h**0.75
+            Ta = "T_{a}"
+            st.write(f"${Ta}$ = " +str(round(tA,3)))
+        
+        if knownstsys:
+            c1,c2 = st.columns(2)
+            with c1:
+                R= "R"
+                st.write(f"${R}$, Response modification Value = "+ str(round(r,2)))
+            with c2:
+                Om = "\\Omega_{o}"
+                st.write(f"${Om}$ = "+str(round(oM,2)))
+            rU = max((1.1*(r/(ie*oM)))**0.5, 1.3)
+        else:
+            rU = 1.3
+        
+
+        Ru = "R_{\\mu}"
+        st.write(f"${Ru}$ = " +str(round(rU,3)) + " (1.0 used for z = 0.0)")
+        c1,c2 = st.columns(2)
+        with c1:
+            CAR0 = "C_{AR}"
+            st.write(f"${CAR0}$ supported at or below grade plane = " + str(car0))
+        with c2:
+            CAR1 = "C_{AR}"
+            st.write(f"${CAR1}$ above grade plane,supported by a structure = " + str(car1))   
+        Rpo = "R_{PO}"
+        st.write(f"${Rpo}$ = " + str(rPO))
+
+        def getHf(zhratio):
+            a1 = min(1/tA,2.5)
+            a2 = max((1-(0.4/tA)**2),0.0)
+            hF = 1+ a1*zhratio + a2*zhratio**10 
+            # print ("Hf = " + str(hF))   
+            return(hF)
+
+        zhlist = np.concatenate((np.array([0.0,0.001]),np.arange(0.002, 1.01, 0.01)),axis=0)
+        zh =z/h
+        hF = getHf(zh)
+        Hf = "H_{f}"
+        st.write(f"${Hf}$ = " +str(round(hF,3)))
+
+
+        if z == 0.0:
+            fP = 0.4*sds*iP*(hF/1.0)*(car0/rPO)
+        else:
+            fP = 0.4*sds*iP*(hF/rU)*(car1/rPO)
+        fPMax = 1.6*sds*iP
+        fPMin = 0.3*sds*iP
+        fP = min(max(fP,fPMin),fPMax)
+        Wp = "W_{p}"
+        c1,c2,c3 = st.columns(3)
+        with c1:
+            st.write(f"Minimum ${FP}$ = " + str(round(fPMin,3)) + "${Wp}$")
+        with c2:
+            st.write(f"Maximum ${FP}$ = " + str(round(fPMax,3)) + "${Wp}$")
+        with c3:
+            st.write(f"Governing ${FP}$ = " + str(round(fP,3)) + "${Wp}$")
+        Omop = "\\Omega_{op}"
+        st.write(f" ${Omop}$ used for concrete or masonry post installed anchors = " + str(round(omegaOP,3)) )
+
+        fPlist = []
+        for i in range(len(zhlist)):
+            hFL = getHf(zhlist[i])
+            if zhlist[i] == 0.0:
+                fPlist.append(min(max(0.4*sds*iP*(hFL/1.0)*(car0/rPO),fPMin),fPMax))
+            else:
+                fPlist.append(min(max(0.4*sds*iP*(hFL/rU)*(car1/rPO),fPMin),fPMax))
+
+        fig = plt.figure(figsize=(10, 10))
+        ax = fig.add_subplot(111)
+        ax.plot(fPlist, zhlist, label="Calculated Fp", color='Red', linewidth=1.0)
+        ax.plot(fP, zh, marker='o', label="Governing Fp", color='Black', linestyle='--', linewidth=2.0)
+        axmin,axmax = ax.get_xlim()
+        arrowlength = (axmax - axmin)/20
+        if z >0.9* h:
+            ax.annotate(f"{round(fP,3)} at " + str(z) + " (z/h = "+ str(round(zh,3)) + ")", ha = 'right', xy=(fP, zh), xytext=(fP-arrowlength, zh+0.005), arrowprops=dict(facecolor='black', shrink=0.05))
+        else:       
+            ax.annotate(f"{round(fP,3)} at " + str(z) + " (z/h = "+ str(round(zh,3)) + ")", xy=(fP, zh), xytext=(fP+arrowlength, zh+0.005), arrowprops=dict(facecolor='black', shrink=0.05))
+        ax.grid()
+        ax.set_xlabel("Fp/Wp")
+        ax.set_ylabel("Z/H")
+        ax.set_title("Variation of Fp with Z/H")
+        st.pyplot(fig)
+
+        
+
+
+     
+
+        
 
 
 
