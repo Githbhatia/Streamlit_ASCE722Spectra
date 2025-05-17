@@ -641,8 +641,22 @@ if st.session_state.clicked:
         with sc3:
             Z = "Z"
             # z = st.number_input(f"${Z}$, height above base",value= 90.0)
-            zStr = st.text_input(f"${Z}$, height above base (multiple ok,separate with commas)",str("25, 50, 90"))
-            z =[float(i) for i in zStr.split(",")]
+            zStr = st.text_input(f"${Z}$, height above base (multiple ok,separate with commas)",str("15, 30, 100"))
+            zLbl = st.text_input("Labels corresponding to Z values (Separate with commas,Optional)",str("Level 1, Level 2, Roof"))
+            zLblist = [i.strip() for i in zLbl.split(",")]
+            try:
+                z =[float(i) for i in zStr.split(",")]
+            except ValueError:
+                st.write("Invalid input, Please enter numbers separated by commas")
+                st.stop()
+
+            if len(z) > len(zLblist):
+                for i in range(len(z)-len(zLblist)):
+                    zLblist.append("")
+            if len(z) < len(zLblist):
+                for i in range(len(zLblist)-len(z)):
+                    zLblist.pop()
+
         with sc4:
             H = "H"
             h = st.number_input(f"${H}$, Average roof height of structure in ft",value= 100.0)
@@ -689,7 +703,7 @@ if st.session_state.clicked:
             st.write(f"${CAR0}$ supported at or below grade plane = " + str(car0))
         with c2:
             CAR1 = "C_{AR}"
-            st.write(f"${CAR1}$ above grade plane,supported by a structure = " + str(car1))   
+            st.write(f"${CAR1}$ above grade plane,supported by structure = " + str(car1))   
         Rpo = "R_{PO}"
         st.write(f"${Rpo}$ = " + str(rPO))
 
@@ -730,7 +744,7 @@ if st.session_state.clicked:
         #     tfp=str(round(fP,3))
         #     st.write(f":red[Governing ${FP}$ =  {tfp} ${Wp}$]")
         Omop = "\\Omega_{op}"
-        st.write(f" ${Omop}$ used for concrete or masonry post installed anchors = " + str(round(omegaOP,3)) )
+        st.write(f" ${Omop}$ to be used for concrete or masonry post-installed anchors = " + str(round(omegaOP,3)) )
 
         fPlist = []
         for i in range(len(zhlist)):
@@ -740,7 +754,7 @@ if st.session_state.clicked:
             else:
                 fPlist.append(min(max(0.4*sds*iP*(hFL/rU)*(car1/rPO),fPMin),fPMax))
         st.write(f":blue[Governing ${FP}$:]")
-        dfsfP=pd.DataFrame({"Z":z,"Z/H": zh,"Hf": hF, "Fp": fP})
+        dfsfP=pd.DataFrame({"Location":zLblist,"Z":z,"Z/H": zh,"Hf": hF, "Fp": fP})
         st.dataframe(dfsfP, hide_index=True)
 
         fig = plt.figure(figsize=(10, 10))
@@ -751,9 +765,9 @@ if st.session_state.clicked:
             axmin,axmax = ax.get_xlim()
             arrowlength = (axmax - axmin)/20
             if z[i] >0.9* h:
-                ax.annotate(f"{round(fP[i],3)} at " + str(z[i]) + " (z/h = "+ str(round(zh[i],3)) + ")", ha = 'right', xy=(fP[i], zh[i]), xytext=(fP[i]-arrowlength, zh[i]+0.005), arrowprops=dict(facecolor='black', shrink=0.05))
+                ax.annotate(f"{round(fP[i],3)} at " + str(z[i]) + " ("+ zLblist[i] + ")", ha = 'right', xy=(fP[i], zh[i]), xytext=(fP[i]-arrowlength, zh[i]+0.005), arrowprops=dict(facecolor='black', shrink=0.05))
             else:       
-                ax.annotate(f"{round(fP[i],3)} at " + str(z[i]) + " (z/h = "+ str(round(zh[i],3)) + ")", xy=(fP[i], zh[i]), xytext=(fP[i]+arrowlength, zh[i]+0.005), arrowprops=dict(facecolor='black', shrink=0.05))
+                ax.annotate(f"{round(fP[i],3)} at " + str(z[i]) + " ("+ zLblist[i] + ")", xy=(fP[i], zh[i]), xytext=(fP[i]+arrowlength, zh[i]+0.005), arrowprops=dict(facecolor='black', shrink=0.05))
         ax.grid()
         ax.set_xlabel("Fp/Wp")
         ax.set_ylabel("Z/H")
