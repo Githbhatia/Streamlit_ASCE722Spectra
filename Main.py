@@ -270,6 +270,7 @@ def onclick():
         st.dataframe(df)
         dfs=pd.DataFrame({"time period":t,"Multiperiod Spec": s, "Interpolated Spec": sexp  ,"MCE Multiperiod":smce, "Interpolated MCE spec": sexpmce })
         st.dataframe(dfs)
+        sds =float(df.loc["sds"].values[0])
         textout = mywritefileest(rdata, sitecl, sexp)
 
     elif siteclass=="Default":   
@@ -303,6 +304,7 @@ def onclick():
         )
         df.set_index('Parameter', inplace=True)
         st.dataframe(df)
+        sds =float(df.loc["sds"].values[0])
         dfs=pd.DataFrame({"time period":t,"Governing Multiperiod Spec": sg, "Governing MCE Multiperiod":smceg })
         st.dataframe(dfs)
         textout = mywritefileEstSV(t, sg, tmce, smceg, sds, sd1, sitecl)
@@ -325,7 +327,7 @@ def onclick():
         df['Values'] = df['Values'].astype(str)
         df.set_index('Parameter', inplace=True)
         st.dataframe(df)
-        sds =df.loc["sds"].values[0]
+        sds =float(df.loc["sds"].values[0])
         dfs=pd.DataFrame({"time period":t,"Multiperiod Spec": s, "MCE Multiperiod":smce })
         st.dataframe(dfs)
         textout = mywritefile(rdata, sitecl)
