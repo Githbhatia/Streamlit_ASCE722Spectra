@@ -621,7 +621,7 @@ if st.session_state.clicked:
     FP="F_{p}"
     if locvart==1:
         sds = st.number_input(f"${sds_latex}$, Computed for Sds obtainted above", value= sds, format="%0.3f")
-        df = pd.read_excel('ASCE722Ch13.xlsx', sheet_name='Table', usecols= 'A:E')
+        df = pd.read_csv('ASCE722Ch13.csv')
         df.set_index('Menuitems', inplace=True)
         selecteditem = st.selectbox("Select Nonstructural item:",df.index, index = 32, key="nonstructural")
         car0 = df.loc[selecteditem].values[0]
@@ -644,7 +644,7 @@ if st.session_state.clicked:
 
         knownstsys = st.toggle("Structural System Selection (Unknown system assumed if not enabled)", key="structuralselect")
         if knownstsys:
-            dfs = pd.read_excel('ASCE722StructuralSystems.xlsx', sheet_name='Table1', usecols= 'A:D')
+            dfs = pd.read_csv('ASCE722StructuralSystems.csv')
             dfs.set_index('StructuralSystem', inplace=True)
             selecteditem = st.selectbox("Select Structural System of the Building:",dfs.index, index = 49, key="structural")
             r = dfs.loc[selecteditem].values[0]

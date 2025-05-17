@@ -1,0 +1,73 @@
+﻿Menuitems,CAR0,CAR,Rpo,Omegaop
+Interior nonstructural walls and partitions;  Light frame ? 9 ft (2.74 m) in height,1,1,1.5,2
+Interior nonstructural walls and partitions;  Light frame > 9 ft (2.74 m) in height ,1,1,1.5,2
+Interior nonstructural walls and partitions;  Reinforced masonry,1,1,1.5,2
+Interior nonstructural walls and partitions;   All other walls and partitions,2.2,2.8,1.5,1.5
+Cantilever elements (unbraced or braced to structural frame below its center of mass);  Parapets and cantilever interior nonstructural walls ,1.8,2.2,1.5,1.75
+Cantilever elements (unbraced or braced to structural frame below its center of mass);  Chimneys where laterally braced or supported by the structural frame ,1.8,2.2,1.5,1.75
+Cantilever elements (braced to structural frame above its center of mass);  Parapets,1,1,1.5,2
+Cantilever elements (braced to structural frame above its center of mass); Chimneys,1,1,1.5,2
+Cantilever elements (braced to structural frame above its center of mass); Exterior nonstructural wallsb,1,1,1.5,2
+Exterior nonstructural wall elements and connectionsb;  Wall element,1,1,1.5,2
+Exterior nonstructural wall elements and connectionsb;  Body of wall panel connections,1,1,1.5,2
+Exterior nonstructural wall elements and connectionsb;  Fasteners of the connecting system,2.2,2.8,1.5,1
+Veneer;  Limited-deformability elements and attachments   ,1,1,1.5,2
+Veneer;   Low-deformability elements and attachments,1,1,1.5,2
+Penthouses (except where framed by an extension of the building frame);  Seismic force-resisting systems with R ? 6,N/A,1.4,2,2
+Penthouses (except where framed by an extension of the building frame);   Seismic force-resisting systems with  4 ? R < 6 ,N/A,2.2,2,1.75
+Penthouses (except where framed by an extension of the building frame);   Seismic force-resisting systems with R < 4,N/A,2.8,2,2.5
+Penthouses (except where framed by an extension of the building frame);   Other system,N/A,2.8,1.5,1.5
+Ceilings; All,1,1,1.5,2
+"Cabinets;  Permanent floor-supported storage cabinets more than 6 ft(1.8 m) tall, including contents ",1,1,1.5,2
+"Cabinets;   Permanent floor-supported library shelving, book stacks, and bookshelves more than 6 ft (1.8 m) tall, including  contents",1,1,1.5,2
+Laboratory equipment ,1,1,1.5,2
+Access floors;  Special access floors (designed in accordance with Section 13.5.7.2) ,1,1,2,2
+Access floors;   All other,2.2,2.8,1.5,1.5
+Appendages and ornamentations,1.8,2.2,1.5,1.75
+Signs and billboards,1.8,2.2,1.5,1.75
+Other rigid components,1,1,1.5,2
+Other flexible components; High-deformability elements and attachments,1.4,1.4,1.5,2
+Other flexible components; Limited-deformability elements and attachments ,1.8,2.2,1.5,1.75
+Other flexible components;  Low-deformability materials and attachments,2.2,2.8,1.5,1.5
+Egress stairways not part of the building seismic force-resisting system ,1,1,1.5,2
+Egress stairs and ramp fasteners and attachments,1.8,2.2,1.5,1.75
+"MECHANICAL AND ELECTRICAL COMPONENTS  Air-side HVACR, fans, air handlers, air conditioning units, cabinet heaters, air distribution boxes, and other mechanical components constructed of sheet metal framing ",1.4,1.4,2,2
+"MECHANICAL AND ELECTRICAL COMPONENTS Wet-side HVACR, boilers, furnaces, atmospheric tanks and bins, chillers, water heaters, heat exchangers, evaporators, air separators, manufacturing or process equipment, and other mechanical components …",1,1,1.5,2
+"MECHANICAL AND ELECTRICAL COMPONENTS Air coolers (fin fans), air-cooled heat exchangers, condensing units, dry coolers, remote radiators, and other mechanical components elevated on integral structural steel or sheet metal supports",1.8,2.2,1.5,1.75
+"MECHANICAL AND ELECTRICAL COMPONENTS  Engines, turbines, pumps, compressors, and pressure vessels not supported on skirts and not within the scope of Chapter 15",1,1,1.5,2
+MECHANICAL AND ELECTRICAL COMPONENTS  Skirt-supported pressure vessels not within the scope of Chapter 15 Elevator and escalator components,1.8,2.2,1.5,1.75
+MECHANICAL AND ELECTRICAL COMPONENTS  Elevator and escalator components,1,1,1.5,2
+"MECHANICAL AND ELECTRICAL COMPONENTS  Generators, batteries, inverters, motors, transformers, and other electrical components constructed of high-deformability materials",1,1,1.5,2
+"MECHANICAL AND ELECTRICAL COMPONENTS  Motor control centers, panel boards, switch gear, instrumentation cabinets, and other components constructed of sheet metal framing",1.4,1.4,1.5,2
+"MECHANICAL AND ELECTRICAL COMPONENTS  Communication equipment, computers, instrumentation, and controls",1,1,1.5,2
+"MECHANICAL AND ELECTRICAL COMPONENTS  Roof-mounted stacks, cooling and electrical towers laterally braced below their center of mass",1.8,2.2,1.5,1.75
+"MECHANICAL AND ELECTRICAL COMPONENTS Roof-mounted stacks, cooling and electrical towers laterally braced above their center of mass",1,1,1.5,2
+MECHANICAL AND ELECTRICAL COMPONENTS Lighting fixtures,1,1,1.5,2
+MECHANICAL AND ELECTRICAL COMPONENTS Other mechanical or electrical components,1,1,1.5,2
+MECHANICAL AND ELECTRICAL COMPONENTS Manufacturing or process conveyors (nonpersonnel),1.8,2.2,1.5,1.75
+VIBRATION-ISOLATED COMPONENTS AND SYSTEMSa Components and systems isolated using neoprene elements and neoprene isolated floors with built-in or separate elastomeric snubbing devices or resilient perimeter stops,1.8,2.2,1.3,1.75
+VIBRATION-ISOLATED COMPONENTS AND SYSTEMSa Spring-isolated components and systems and vibration-isolated floors closely restrained using built-in or separate elastomeric snubbing devices or resilient  perimeter stops,1.8,2.2,1.3,1.75
+VIBRATION-ISOLATED COMPONENTS AND SYSTEMSa Internally isolated components and systems,1.8,2.2,1.3,1.75
+"VIBRATION-ISOLATED COMPONENTS AND SYSTEMSa Suspended vibration-isolated equipment, including in-line duct devices and suspended internally isolated components",1.8,2.2,1.3,1.75
+"EQUIPMENT SUPPORT STRUCTURES AND PLATFORMS Support structures and platforms where Tp/Ta < 0.2, or Tp ? 0.06 s, per Section 13.6.4.6",NA,1,1.5,2
+EQUIPMENT SUPPORT STRUCTURES AND PLATFORMS Seismic force-resisting systems with R > 3,1.4,1.4,1.5,2
+EQUIPMENT SUPPORT STRUCTURES AND PLATFORMS Seismic force-resisting systems with R ? 3 ,1.8,2.2,1.5,1.75
+EQUIPMENT SUPPORT STRUCTURES AND PLATFORMS Other systems,2.2,2.8,1.5,1.5
+DISTRIBUTION SYSTEM SUPPORTS Tension-only and cable bracing,1,1,1.5,2
+DISTRIBUTION SYSTEM SUPPORTS Cold-formed steel rigid bracing,1,1,1.5,2
+DISTRIBUTION SYSTEM SUPPORTS Hot-rolled steel bracing,1,1,1.5,2
+DISTRIBUTION SYSTEM SUPPORTS Other rigid bracing,1,1,1.5,2
+DISTRIBUTION SYSTEM SUPPORTS Lateral resistance provided by rods in flexure,1.8,2.2,1.5,1.75
+DISTRIBUTION SYSTEM SUPPORTS Vertical cantilever supports such as pipe tees and moment frames above and supported by a floor or roof,1.8,2.2,1.5,1.75
+"DISTRIBUTION SYSTEMS Piping in accordance with ASME B31 (2001, 2002, 2008, 2010), including in-line components with joints made by welding or brazing",1,1,3,2
+"DISTRIBUTION SYSTEMS Piping in accordance with ASME B31, including in-line components, constructed of high- or limited-deformability materials, with joints made by threading, bonding, compression couplings, or grooved couplings",1,1,2,2
+"DISTRIBUTION SYSTEMS Piping and tubing not in accordance with ASME B31, including in-line components, constructed of high-deformability materials, with joints made by welding or brazing",1,1,2,2
+"DISTRIBUTION SYSTEMS Piping and tubing not in accordance with ASME B31, including in-line components, constructed of high- or limited-deformability materials, with joints made by threading, bonding, compression couplings, or grooved couplings",1.8,2.2,2,1.75
+"DISTRIBUTION SYSTEMS Piping and tubing constructed of low-deformability materials, such as cast iron, glass, and nonductile plastics",1.8,2.2,1.5,1.75
+"DISTRIBUTION SYSTEMS Duct systems, including in-line components, constructed of high-deformability materials, with joints made by welding or brazing",1,1,2,2
+"DISTRIBUTION SYSTEMS Duct systems, including in-line components, constructed of high- or limited-deformability materials, with joints made by means other than welding or brazing",1,1,1.5,2
+"DISTRIBUTION SYSTEMS Duct systems, including in-line components, constructed of low-deformability materials, such as cast iron, glass, and nonductile plastics",1.8,2.2,1.5,1.75
+"DISTRIBUTION SYSTEMS Electrical conduit, cable trays, and raceways",1,1,1.5,2
+DISTRIBUTION SYSTEMS Bus ducts,1,1,1.5,2
+DISTRIBUTION SYSTEMS Plumbing,1,1,1.5,2
+DISTRIBUTION SYSTEMS Pneumatic tube transport systems,1,1,1.5,2

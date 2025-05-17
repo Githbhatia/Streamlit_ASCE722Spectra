@@ -1,0 +1,94 @@
+﻿StructuralSystem,R,Omega0,Cd
+"A. Bearing Wall Systems 1. Special reinforced concrete shear wallsg,h",5,2.5,5
+A. Bearing Wall Systems 2. Reinforced concrete ductile coupled wallsq,8,2.5,8
+A. Bearing Wall Systems 3. Ordinary reinforced concrete shear wallsg,4,2.5,4
+A. Bearing Wall Systems 4. Detailed plain concrete shear wallsg,2,2.5,2
+A. Bearing Wall Systems 5. Ordinary plain concrete shear wallsg,1.5,2.5,1.5
+A. Bearing Wall Systems 6. Intermediate precast shear wallsg,4,2.5,4
+A. Bearing Wall Systems 7. Ordinary precast shear wallsg,3,2.5,3
+A. Bearing Wall Systems 8. Special reinforced masonry shear walls,5,2.5,3.5
+A. Bearing Wall Systems 9. Intermediate reinforced masonry shear walls,3.5,2.5,2.25
+A. Bearing Wall Systems 10. Ordinary reinforced masonry shear walls,2,2.5,1.75
+A. Bearing Wall Systems 11. Detailed plain masonry shear walls,2,2.5,1.75
+A. Bearing Wall Systems 12. Ordinary plain masonry shear walls,1.5,2.5,1.25
+A. Bearing Wall Systems 13. Prestressed masonry shear walls,1.5,2.5,1.75
+A. Bearing Wall Systems 14. Ordinary reinforced AAC masonry shear walls,2,2.5,2
+A. Bearing Wall Systems 15. Ordinary plain AAC masonry shear walls,1.5,2.5,1.5
+A. Bearing Wall Systems 16. Light-frame (wood) walls sheathed with wood structural panels rated for shear resistance,6.5,3,4
+A. Bearing Wall Systems 17. Light-frame (cold-formed steel) walls sheathed with wood structural,6.5,3,4
+A. Bearing Wall Systems 18. Light-frame walls with shear panels of all other materials,2,2.5,2
+A. Bearing Wall Systems 19. Light-frame (cold-formed steel) wall systems using ?at strap bracing,4,2,3.5
+A. Bearing Wall Systems 20. Cross-laminated timber shear walls,3,3,3
+A. Bearing Wall Systems 21. Cross-laminated timber shear walls with shear resistance provided by high-aspect-ratio panels only,4,3,4
+A. Building Frame Systems 1. Steel eccentrically braced frames,8,2,4
+A. Building Frame Systems 2. Steel special concentrically braced frames,6,2,5
+A. Building Frame Systems 3. Steel ordinary concentrically braced frames,3.25,2,3.25
+"A. Building Frame Systems 4. Special reinforced concrete shear wallsg,h",6,2.5,5
+A. Building Frame Systems 5. Reinforced concrete ductile coupled wallsq,8,2.5,8
+A. Building Frame Systems 6. Ordinary reinforced concrete shear wallsg,5,2.5,4.5
+A. Building Frame Systems 7. Detailed plain concrete shear wallsg,2,2.5,2
+A. Building Frame Systems 8. Ordinary plain concrete shear wallsg,1.5,2.5,1.5
+A. Building Frame Systems 9. Intermediate precast shear wallsg,5,2.5,4.5
+A. Building Frame Systems 10. Ordinary precast shear wallsg,4,2.5,4
+A. Building Frame Systems 11. Steel and concrete composite eccentrically braced frames,8,2.5,4
+A. Building Frame Systems 12. Steel and concrete composite special concentrically braced frames,5,2,4.5
+A. Building Frame Systems 13. Steel and concrete composite ordinary braced frames,3,2,3
+A. Building Frame Systems 14. Steel and concrete composite plate shear walls,6.5,2.5,5.5
+A. Building Frame Systems 15. Steel and concrete composite special shear walls,6,2.5,5
+A. Building Frame Systems 16. Steel and concrete composite ordinary shear walls,5,2.5,4.5
+A. Building Frame Systems 17. Special reinforced masonry shear walls,5.5,2.5,4
+A. Building Frame Systems 18. Intermediate reinforced masonry shear walls,4,2.5,4
+A. Building Frame Systems 19. Ordinary reinforced masonry shear walls,2,2.5,2
+A. Building Frame Systems 20. Detailed plain masonry shear walls,2,2.5,2
+A. Building Frame Systems 21. Ordinary plain masonry shear walls,1.5,2.5,1.25
+A. Building Frame Systems 22. Prestressed masonry shear walls,1.5,2.5,1.75
+A. Building Frame Systems 23. Light-frame (wood) walls sheathed with wood structural panels rated for shear resistance,7,2.5,4.5
+A. Building Frame Systems 24. Light-frame (cold-formed steel) walls sheathed with wood structural panels rated for shear resistance or steel sheets,7,2.5,4.5
+A. Building Frame Systems 25. Light-frame walls with shear panels of all other materials,2.5,2.5,2.5
+A. Building Frame Systems 26. Steel buckling-restrained braced frames,8,2.5,5
+A. Building Frame Systems 27. Steel special plate shear walls,7,2,6
+A. Building Frame Systems 28. Steel and concrete coupled composite plate shear walls,8,2.5,5.5
+C. Moment-resisting Frame Systems 1. Steel special moment frames,8,3,5.5
+C. Moment-resisting Frame Systems 2. Steel special truss moment frames,7,3,5.5
+C. Moment-resisting Frame Systems 3. Steel intermediate moment frames,4.5,3,4
+C. Moment-resisting Frame Systems 4. Steel ordinary moment frames,3.5,3,3
+C. Moment-resisting Frame Systems 5. Special reinforced concrete moment framesm,8,3,5.5
+C. Moment-resisting Frame Systems 6. Intermediate reinforced concrete moment frames,5,3,4.5
+C. Moment-resisting Frame Systems 7. Ordinary reinforced concrete moment frames,3,3,2.5
+C. Moment-resisting Frame Systems 8. Steel and concrete composite special moment frames,8,3,5.5
+C. Moment-resisting Frame Systems 9. Steel and concrete composite intermediate moment frames,5,3,4.5
+C. Moment-resisting Frame Systems 10. Steel and concrete composite partially restrained moment frames,6,3,5.5
+C. Moment-resisting Frame Systems 11. Steel and concrete composite ordinary moment frames,3,3,2.5
+C. Moment-resisting Frame Systems 12. Cold-formed steel—special bolted moment framen ,3.5,3,3.5
+D. Dual Systems with Special Moment Frames 1. Steel eccentrically braced frames,8,2.5,4
+D. Dual Systems with Special Moment Frames 2. Steel special concentrically braced frames,7,2.5,5.5
+"D. Dual Systems with Special Moment Frames 3. Special reinforced concrete shear wallsg,h",7,2.5,5.5
+D. Dual Systems with Special Moment Frames 4. Reinforced concrete ductile coupled wallsq,8,2.5,8
+D. Dual Systems with Special Moment Frames 5. Ordinary reinforced concrete shear wallsg,6,2.5,5
+D. Dual Systems with Special Moment Frames 6. Steel and concrete composite eccentrically braced frames,8,2.5,4
+D. Dual Systems with Special Moment Frames 7. Steel and concrete composite special concentrically braced frames,6,2.5,5
+D. Dual Systems with Special Moment Frames 8. Steel and concrete composite plate shear walls,7.5,2.5,6
+D. Dual Systems with Special Moment Frames 9. Steel and concrete composite special shear walls,7,2.5,6
+D. Dual Systems with Special Moment Frames 10. Steel and concrete composite ordinary shear walls,6,2.5,5
+D. Dual Systems with Special Moment Frames 11. Special reinforced masonry shear walls,5.5,3,5
+D. Dual Systems with Special Moment Frames 12. Intermediate reinforced masonry shear walls,4,3,3.5
+D. Dual Systems with Special Moment Frames 13. Steel buckling-restrained braced frames,8,2.5,5
+D. Dual Systems with Special Moment Frames 14. Steel special plate shear walls,8,2.5,6.5
+D. Dual Systems with Special Moment Frames 15. Steel and concrete coupled composite plate shear walls,8,2.5,5.5
+D. Dual Systems with Intermediate Moment Frames 1. Steel special concentrically braced framesp,6,2.5,5
+"D. Dual Systems with Intermediate Moment Frames 2. Special reinforced concrete shear wallsg,h",6.5,2.5,5
+D. Dual Systems with Intermediate Moment Frames 3. Ordinary reinforced masonry shear walls,3,3,2.5
+D. Dual Systems with Intermediate Moment Frames 4. Intermediate reinforced masonry shear walls,3.5,3,3
+D. Dual Systems with Intermediate Moment Frames 5. Steel and concrete composite special concentrically braced frames,5.5,2.5,4.5
+D. Dual Systems with Intermediate Moment Frames 6. Steel and concrete composite ordinary braced frames,3.5,2.5,3
+D. Dual Systems with Intermediate Moment Frames 7. Steel and concrete composite ordinary shear walls,5,3,4.5
+D. Dual Systems with Intermediate Moment Frames 8. Ordinary reinforced concrete shear wallsg,5.5,2.5,4.5
+F. SHEAR WALL-FRAME INTERACTIVE SYSTEM WITH ORDINARY REINFORCED CONCRETE MOMENT FRAMES AND ORDINARY REINFORCED CONCRETE SHEAR WALLSg,4.5,2.5,4
+G. Cantilevered Column Systems  1. Steel special cantilever column systems,2.5,2.5,2.5
+G. Cantilevered Column Systems  2. Steel ordinary cantilever column systems,1.25,1.25,1.25
+G. Cantilevered Column Systems  3. Special reinforced concrete moment framesm,2.5,2.5,2.5
+G. Cantilevered Column Systems  4. Intermediate reinforced concrete moment frames,1.5,1.5,1.5
+G. Cantilevered Column Systems  5. Ordinary reinforced concrete moment frames,1,1¼,1
+G. Cantilevered Column Systems  6. Timber frames,1.5,1.5,1.5
+"H. STEEL SYSTEMS NOT SPECIFICALLY DETAILED FOR SEISMIC RESISTANCE, EXCLUDING CANTILEVER COLUMN
+SYSTEMS",3,3,3
