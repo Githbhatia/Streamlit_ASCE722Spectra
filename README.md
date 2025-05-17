@@ -13,4 +13,5 @@ Accepts both late long pair or an address.
 2/15/2025 Enabled parameters in url - add to url as 
 /?title=your title&address=your address&lat=xx.x&long=xx.x&riskcat=II&shearwavevelo=1200
 2/16/2025 Better trapping of geocoding errors - will continue even if lat/long pair provided and geocoder is unavailable.
+5/16/2025 A new section to automate FP calculation via ASCE 7-22 is now provided.
 Try out at: https://jmtwtc7pdpdfhpzgnwfdt6.streamlit.app/
