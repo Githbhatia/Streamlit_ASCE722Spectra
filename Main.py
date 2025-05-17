@@ -618,6 +618,7 @@ if st.session_state.clicked:
 if st.session_state.clicked:
     st.subheader("ASCE7-22 Fp Calculation")
     locvart= st.checkbox("Compute Fp")
+    st.write("USING THE DEFAULT OPTIONS WILL LEAD TO CONSERVATIVE RESULTS")
     FP="F_{p}"
     if locvart==1:
         sds = st.number_input(f"${sds_latex}$, Computed for Sds obtainted above", value= sds, format="%0.3f")
@@ -642,6 +643,7 @@ if st.session_state.clicked:
             H = "H"
             h = st.number_input(f"${H}$, Average roof height of structure in ft",value= 100.0)
 
+        st.divider()
         knownstsys = st.toggle("Structural System Selection (Unknown system assumed if not enabled)", key="structuralselect")
         if knownstsys:
             dfs = pd.read_csv('ASCE722StructuralSystems.csv')
@@ -651,15 +653,6 @@ if st.session_state.clicked:
             oM = dfs.loc[selecteditem].values[1]
         I_e = "I_{e}"
         ie = float(st.selectbox(f"${I_e}$, Importance Factor for Building",(1.0,1.25,1.5), index = 2))
-        knownperiod = st.toggle("Period Known (if not enabled, period is calculated based on Height H)", key="periodselect")
-        if knownperiod:
-            Ta = "T_{a}"
-            tA = st.number_input(f"${Ta}$, Lowest fundamental perio of structure",value= 0.5)
-        else:
-            tA = 0.02*h**0.75
-            Ta = "T_{a}"
-            st.write(f"${Ta}$ = " +str(round(tA,3)))
-        
         if knownstsys:
             c1,c2 = st.columns(2)
             with c1:
@@ -667,14 +660,25 @@ if st.session_state.clicked:
                 st.write(f"${R}$, Response modification Value = "+ str(round(r,2)))
             with c2:
                 Om = "\\Omega_{o}"
-                st.write(f"${Om}$ = "+str(round(oM,2)))
+                st.write(f"${Om}$ = " + str(round(oM,2)))
             rU = max((1.1*(r/(ie*oM)))**0.5, 1.3)
         else:
             rU = 1.3
         
-
         Ru = "R_{\\mu}"
         st.write(f"${Ru}$ = " +str(round(rU,3)) + " (1.0 used for z = 0.0)")
+
+        st.divider()
+        knownperiod = st.toggle("Period Known (if not enabled, period is calculated based on Height H)", key="periodselect")
+        if knownperiod:
+            Ta = "T_{a}"
+            tA = st.number_input(f"${Ta}$, Lowest fundamental period of structure",value= 0.5)
+        else:
+            tA = 0.02*h**0.75
+            Ta = "T_{a}"
+            st.write(f"${Ta}$ = " +str(round(tA,3)))
+        st.divider()
+
         c1,c2 = st.columns(2)
         with c1:
             CAR0 = "C_{AR}"
@@ -709,11 +713,12 @@ if st.session_state.clicked:
         Wp = "W_{p}"
         c1,c2,c3 = st.columns(3)
         with c1:
-            st.write(f"Minimum ${FP}$ = " + str(round(fPMin,3)) + "${Wp}$")
+            st.write(f"Minimum ${FP}$ = " + str(round(fPMin,3)) + " ${Wp}$")
         with c2:
-            st.write(f"Maximum ${FP}$ = " + str(round(fPMax,3)) + "${Wp}$")
+            st.write(f"Maximum ${FP}$ = " + str(round(fPMax,3)) + " ${Wp}$")
         with c3:
-            st.write(f"Governing ${FP}$ = " + str(round(fP,3)) + "${Wp}$")
+            tfp=str(round(fP,3))
+            st.write(f":red[Governing ${FP}$ =  {tfp} ${Wp}$]")
         Omop = "\\Omega_{op}"
         st.write(f" ${Omop}$ used for concrete or masonry post installed anchors = " + str(round(omegaOP,3)) )
 
