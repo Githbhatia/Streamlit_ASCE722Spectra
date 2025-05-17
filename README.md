@@ -17,4 +17,6 @@ Accepts both late long pair or an address.
 
 5/16/2025 A new section to automate FP calculation via ASCE 7-22 is now provided.
 
+5/17/2025 Allow user to specify multiple z values - error checking not complete yet.
+
 Try out at: https://jmtwtc7pdpdfhpzgnwfdt6.streamlit.app/
