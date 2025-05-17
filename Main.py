@@ -623,7 +623,7 @@ if st.session_state.clicked:
     st.write("USING THE DEFAULT OPTIONS WILL LEAD TO CONSERVATIVE RESULTS")
     FP="F_{p}"
     if locvart==1:
-        sds = st.number_input(f"${sds_latex}$, Computed for Sds obtainted above", value= sds, format="%0.3f")
+        sds = st.number_input(f"${sds_latex}$, as obtained above, can modify here", value= sds, format="%0.3f")
         df = pd.read_csv('ASCE722Ch13.csv')
         df.set_index('Menuitems', inplace=True)
         selecteditem = st.selectbox("Select Nonstructural item:",df.index, index = 32, key="nonstructural")
@@ -640,7 +640,9 @@ if st.session_state.clicked:
         sc3,sc4 =st.columns(2)
         with sc3:
             Z = "Z"
-            z = st.number_input(f"${Z}$, height above base",value= 90.0)
+            # z = st.number_input(f"${Z}$, height above base",value= 90.0)
+            zStr = st.text_input(f"${Z}$, height above base (multiple ok,separate with commas)",str("25, 50, 90"))
+            z =[float(i) for i in zStr.split(",")]
         with sc4:
             H = "H"
             h = st.number_input(f"${H}$, Average roof height of structure in ft",value= 100.0)
@@ -699,28 +701,34 @@ if st.session_state.clicked:
             return(hF)
 
         zhlist = np.concatenate((np.array([0.0,0.001]),np.arange(0.002, 1.01, 0.01)),axis=0)
-        zh =z/h
-        hF = getHf(zh)
-        Hf = "H_{f}"
-        st.write(f"${Hf}$ = " +str(round(hF,3)))
 
-
-        if z == 0.0:
-            fP = 0.4*sds*iP*(hF/1.0)*(car0/rPO)
-        else:
-            fP = 0.4*sds*iP*(hF/rU)*(car1/rPO)
+        zh = [None]*len(z);hF = [None]*len(z);fP = [None]*len(z)
         fPMax = 1.6*sds*iP
         fPMin = 0.3*sds*iP
-        fP = min(max(fP,fPMin),fPMax)
+        for i in range(len(z)):
+            zh[i] =z[i]/h
+            hF[i] = getHf(zh[i])
+        # Hf = "H_{f}"
+        # st.write(f"${Hf}$ = " +str(round(hF,3)))
+            if z[i] == 0.0:
+                fP[i] = 0.4*sds*iP*(hF[i]/1.0)*(car0/rPO)
+            else:
+                fP[i] = 0.4*sds*iP*(hF[i]/rU)*(car1/rPO)
+
+            fP[i] = min(max(fP[i],fPMin),fPMax)
+
+
         Wp = "W_{p}"
-        c1,c2,c3 = st.columns(3)
+        c1,c2 = st.columns(2)
         with c1:
-            st.write(f"Minimum ${FP}$ = " + str(round(fPMin,3)) + " ${Wp}$")
+            tfPmin=str(round(fPMin,3))
+            st.write(f":red[Governing ${FP}$ =  {tfPmin} ${Wp}$]")
         with c2:
-            st.write(f"Maximum ${FP}$ = " + str(round(fPMax,3)) + " ${Wp}$")
-        with c3:
-            tfp=str(round(fP,3))
-            st.write(f":red[Governing ${FP}$ =  {tfp} ${Wp}$]")
+            tfmax=str(round(fPMax,3))
+            st.write(f":red[Governing ${FP}$ =  {tfmax} ${Wp}$]")
+        # with c3:
+        #     tfp=str(round(fP,3))
+        #     st.write(f":red[Governing ${FP}$ =  {tfp} ${Wp}$]")
         Omop = "\\Omega_{op}"
         st.write(f" ${Omop}$ used for concrete or masonry post installed anchors = " + str(round(omegaOP,3)) )
 
@@ -731,17 +739,21 @@ if st.session_state.clicked:
                 fPlist.append(min(max(0.4*sds*iP*(hFL/1.0)*(car0/rPO),fPMin),fPMax))
             else:
                 fPlist.append(min(max(0.4*sds*iP*(hFL/rU)*(car1/rPO),fPMin),fPMax))
+        st.write(f":blue[Governing ${FP}$:]")
+        dfsfP=pd.DataFrame({"Z":z,"Z/H": zh,"Hf": hF, "Fp": fP})
+        st.dataframe(dfsfP, hide_index=True)
 
         fig = plt.figure(figsize=(10, 10))
         ax = fig.add_subplot(111)
         ax.plot(fPlist, zhlist, label="Calculated Fp", color='Red', linewidth=1.0)
-        ax.plot(fP, zh, marker='o', label="Governing Fp", color='Black', linestyle='--', linewidth=2.0)
-        axmin,axmax = ax.get_xlim()
-        arrowlength = (axmax - axmin)/20
-        if z >0.9* h:
-            ax.annotate(f"{round(fP,3)} at " + str(z) + " (z/h = "+ str(round(zh,3)) + ")", ha = 'right', xy=(fP, zh), xytext=(fP-arrowlength, zh+0.005), arrowprops=dict(facecolor='black', shrink=0.05))
-        else:       
-            ax.annotate(f"{round(fP,3)} at " + str(z) + " (z/h = "+ str(round(zh,3)) + ")", xy=(fP, zh), xytext=(fP+arrowlength, zh+0.005), arrowprops=dict(facecolor='black', shrink=0.05))
+        for i in range(len(z)):
+            ax.plot(fP[i], zh[i], marker='o', label="Governing Fp", color='Black', linestyle='--', linewidth=2.0)
+            axmin,axmax = ax.get_xlim()
+            arrowlength = (axmax - axmin)/20
+            if z[i] >0.9* h:
+                ax.annotate(f"{round(fP[i],3)} at " + str(z[i]) + " (z/h = "+ str(round(zh[i],3)) + ")", ha = 'right', xy=(fP[i], zh[i]), xytext=(fP[i]-arrowlength, zh[i]+0.005), arrowprops=dict(facecolor='black', shrink=0.05))
+            else:       
+                ax.annotate(f"{round(fP[i],3)} at " + str(z[i]) + " (z/h = "+ str(round(zh[i],3)) + ")", xy=(fP[i], zh[i]), xytext=(fP[i]+arrowlength, zh[i]+0.005), arrowprops=dict(facecolor='black', shrink=0.05))
         ax.grid()
         ax.set_xlabel("Fp/Wp")
         ax.set_ylabel("Z/H")
