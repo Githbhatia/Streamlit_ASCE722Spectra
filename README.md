@@ -19,6 +19,6 @@ Accepts both late long pair or an address.
 
 5/17/2025 Allow user to specify multiple z values with labels - error checking included.
 
-5/18/2025 Cached URL calls, so the URL calls are not repeated when Fp calcs are run  (To do: Need to cache the normatin calls as well)
+5/18/2025 Cached URL calls, so the URL calls are not repeated when Fp calcs are run  also cached the normatin calls as well.
 
 Try out at: https://jmtwtc7pdpdfhpzgnwfdt6.streamlit.app/
