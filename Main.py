@@ -645,7 +645,7 @@ if st.session_state.clicked:
         sds = st.number_input(f"${sds_latex}$, as obtained above, can modify here", value= sds, format="%0.3f")
         df = pd.read_csv('ASCE722Ch13.csv')
         df.set_index('Menuitems', inplace=True)
-        selecteditem = st.selectbox("Select Nonstructural item:",df.index, index = 32, key="nonstructural")
+        selecteditem = st.selectbox("Select Nonstructural item (ASCE 7-22 Tables 13.5-1 and 13.6-1)",df.index, index = 1, key="nonstructural")
         car0 = df.loc[selecteditem].values[0]
         car1 = df.loc[selecteditem].values[1]
         rPO = df.loc[selecteditem].values[2]
@@ -660,21 +660,22 @@ if st.session_state.clicked:
         with sc3:
             Z = "Z"
             # z = st.number_input(f"${Z}$, height above base",value= 90.0)
-            zStr = st.text_input(f"${Z}$, height above base (multiple ok,separate with commas)",str("15, 30, 100"))
-            zLbl = st.text_input("Labels corresponding to Z values (Separate with commas,Optional)",str("Level 1, Level 2, Roof"))
-            zLblist = [i.strip() for i in zLbl.split(",")]
-            try:
-                z =[float(i) for i in zStr.split(",")]
-            except ValueError:
-                st.write("Invalid input, Please enter numbers separated by commas")
-                st.stop()
+            zStr = st.text_input(f"${Z}$, height above base (multiple ok,separate with commas)",str("0, 15, 30, 45, 60, 75, 90, 100"))
 
-            if len(z) > len(zLblist):
-                for i in range(len(z)-len(zLblist)):
-                    zLblist.append("")
-            if len(z) < len(zLblist):
-                for i in range(len(zLblist)-len(z)):
-                    zLblist.pop()
+        zLbl = st.text_input("Labels corresponding to Z values (Separate with commas,Optional)",str("Grnd Level, Level 2, Level 3, Level 4, Level 5, Level 6, Mech Level, Roof"))
+        zLblist = [i.strip() for i in zLbl.split(",")]
+        try:
+            z =[float(i) for i in zStr.split(",")]
+        except ValueError:
+            st.write("Invalid input, Please enter numbers separated by commas")
+            st.stop()
+
+        if len(z) > len(zLblist):
+            for i in range(len(z)-len(zLblist)):
+                zLblist.append("")
+        if len(z) < len(zLblist):
+            for i in range(len(zLblist)-len(z)):
+                zLblist.pop()
 
         with sc4:
             H = "H"
@@ -685,7 +686,7 @@ if st.session_state.clicked:
         if knownstsys:
             dfs = pd.read_csv('ASCE722StructuralSystems.csv')
             dfs.set_index('StructuralSystem', inplace=True)
-            selecteditem = st.selectbox("Select Structural System of the Building:",dfs.index, index = 49, key="structural")
+            selecteditem = st.selectbox("Select Structural System of the Building (ASCE 7-22 Table 12.2-1):",dfs.index, index = 49, key="structural")
             r = dfs.loc[selecteditem].values[0]
             oM = dfs.loc[selecteditem].values[1]
         I_e = "I_{e}"
@@ -709,22 +710,16 @@ if st.session_state.clicked:
         knownperiod = st.toggle("Period Known (if not enabled, period is calculated based on Height H)", key="periodselect")
         if knownperiod:
             Ta = "T_{a}"
-            tA = st.number_input(f"${Ta}$, Lowest fundamental period of structure",value= 0.5)
+            tA = st.number_input(f"${Ta}$, Lowest fundamental period of structure:",value= 0.5)
         else:
             tA = 0.02*h**0.75
-            Ta = "T_{a}"
-            st.write(f"${Ta}$ = " +str(round(tA,3)))
+            Ta = "T_{a} = C_t H^x = "
+            st.write(f"Per ASCE 7-22 Eq 12.8-8 (for \"all other structural systems\"):" )
+            st.write(f"${Ta}$" +str(round(tA,3))+ " secs")
         st.divider()
 
-        c1,c2 = st.columns(2)
-        with c1:
-            CAR0 = "C_{AR}"
-            st.write(f"${CAR0}$ supported at or below grade plane = " + str(car0))
-        with c2:
-            CAR1 = "C_{AR}"
-            st.write(f"${CAR1}$ above grade plane,supported by structure = " + str(car1))   
-        Rpo = "R_{PO}"
-        st.write(f"${Rpo}$ = " + str(rPO))
+
+
 
         def getHf(zhratio):
             a1 = min(1/tA,2.5)
@@ -733,11 +728,13 @@ if st.session_state.clicked:
             # print ("Hf = " + str(hF))   
             return(hF)
 
-        zhlist = np.concatenate((np.array([0.0,0.001]),np.arange(0.002, 1.01, 0.01)),axis=0)
+        zhlist = np.concatenate((np.array([0.0,0.001]),np.arange(0.002, 1.001, 0.001)),axis=0)
 
         zh = [None]*len(z);hF = [None]*len(z);fP = [None]*len(z)
         fPMax = 1.6*sds*iP
         fPMin = 0.3*sds*iP
+        fPMaxstr = "1.6 S_{DS} I_p W_p"
+        fPMinstr = "0.3 S_{DS} I_p W_p"
         for i in range(len(z)):
             zh[i] =z[i]/h
             hF[i] = getHf(zh[i])
@@ -752,16 +749,24 @@ if st.session_state.clicked:
 
 
         Wp = "W_{p}"
+        st.write(":red[ASCE 7-22 Equation 13.3.1:]")
+        st.latex(r'''\color{red} F_{p} = 0.4 S_{DS} I_{p} \left( \frac{H_{f}}{R_{\mu}} \right) \left( \frac{C_{AR}}{R_{po}} \right) W_{p}''')
         c1,c2 = st.columns(2)
         with c1:
             tfPmin=str(round(fPMin,3))
-            st.write(f":red[Governing ${FP}$ =  {tfPmin} ${Wp}$]")
+            st.write(f":red[Minimum ${FP}$ = ${fPMinstr}$ = {tfPmin} ${Wp}$]")
         with c2:
             tfmax=str(round(fPMax,3))
-            st.write(f":red[Governing ${FP}$ =  {tfmax} ${Wp}$]")
-        # with c3:
-        #     tfp=str(round(fP,3))
-        #     st.write(f":red[Governing ${FP}$ =  {tfp} ${Wp}$]")
+            st.write(f":red[Maximum ${FP}$ = ${fPMaxstr}$ = {tfmax} ${Wp}$]")
+        c1,c2 = st.columns(2)
+        with c1:
+            CAR0 = "C_{AR}"
+            st.write(f"${CAR0}$ supported at or below grade plane = " + str(car0))
+        with c2:
+            CAR1 = "C_{AR}"
+            st.write(f"${CAR1}$ above grade plane,supported by structure = " + str(car1))   
+        Rpo = "R_{PO}"
+        st.write(f"${Rpo}$ = " + str(rPO))
         Omop = "\\Omega_{op}"
         st.write(f" ${Omop}$ to be used for concrete or masonry post-installed anchors = " + str(round(omegaOP,3)) )
 
@@ -773,7 +778,7 @@ if st.session_state.clicked:
             else:
                 fPlist.append(min(max(0.4*sds*iP*(hFL/rU)*(car1/rPO),fPMin),fPMax))
         st.write(f":blue[Governing ${FP}$:]")
-        dfsfP=pd.DataFrame({"Location":zLblist,"Z":z,"Z/H": zh,"Hf": hF, "Fp": fP})
+        dfsfP=pd.DataFrame({"Location":zLblist,"Z":z,"Z/H": zh,"Hf": hF, "Fp/Wp": fP})
         st.dataframe(dfsfP, hide_index=True)
 
         fig = plt.figure(figsize=(10, 10))
@@ -783,7 +788,7 @@ if st.session_state.clicked:
             ax.plot(fP[i], zh[i], marker='o', label="Governing Fp", color='Black', linestyle='--', linewidth=2.0)
             axmin,axmax = ax.get_xlim()
             arrowlength = (axmax - axmin)/20
-            if z[i] >0.9* h:
+            if z[i] >0.85* h:
                 ax.annotate(f"{round(fP[i],3)} at " + str(z[i]) + " ("+ zLblist[i] + ")", ha = 'right', xy=(fP[i], zh[i]), xytext=(fP[i]-arrowlength, zh[i]+0.005), arrowprops=dict(facecolor='black', shrink=0.05))
             else:       
                 ax.annotate(f"{round(fP[i],3)} at " + str(z[i]) + " ("+ zLblist[i] + ")", xy=(fP[i], zh[i]), xytext=(fP[i]+arrowlength, zh[i]+0.005), arrowprops=dict(facecolor='black', shrink=0.05))

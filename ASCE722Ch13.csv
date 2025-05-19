@@ -1,5 +1,5 @@
 ﻿Menuitems,CAR0,CAR,Rpo,Omegaop
-Interior nonstructural walls and partitions;  Light frame ? 9 ft (2.74 m) in height,1,1,1.5,2
+Interior nonstructural walls and partitions;  Light frame <= 9 ft (2.74 m) in height,1,1,1.5,2
 Interior nonstructural walls and partitions;  Light frame > 9 ft (2.74 m) in height ,1,1,1.5,2
 Interior nonstructural walls and partitions;  Reinforced masonry,1,1,1.5,2
 Interior nonstructural walls and partitions;   All other walls and partitions,2.2,2.8,1.5,1.5
@@ -13,8 +13,8 @@ Exterior nonstructural wall elements and connectionsb;  Body of wall panel conne
 Exterior nonstructural wall elements and connectionsb;  Fasteners of the connecting system,2.2,2.8,1.5,1
 Veneer;  Limited-deformability elements and attachments   ,1,1,1.5,2
 Veneer;   Low-deformability elements and attachments,1,1,1.5,2
-Penthouses (except where framed by an extension of the building frame);  Seismic force-resisting systems with R ? 6,N/A,1.4,2,2
-Penthouses (except where framed by an extension of the building frame);   Seismic force-resisting systems with  4 ? R < 6 ,N/A,2.2,2,1.75
+Penthouses (except where framed by an extension of the building frame);  Seismic force-resisting systems with R >= 6,N/A,1.4,2,2
+Penthouses (except where framed by an extension of the building frame);   Seismic force-resisting systems with  4 <= R < 6 ,N/A,2.2,2,1.75
 Penthouses (except where framed by an extension of the building frame);   Seismic force-resisting systems with R < 4,N/A,2.8,2,2.5
 Penthouses (except where framed by an extension of the building frame);   Other system,N/A,2.8,1.5,1.5
 Ceilings; All,1,1,1.5,2
@@ -49,9 +49,9 @@ VIBRATION-ISOLATED COMPONENTS AND SYSTEMSa Components and systems isolated using
 VIBRATION-ISOLATED COMPONENTS AND SYSTEMSa Spring-isolated components and systems and vibration-isolated floors closely restrained using built-in or separate elastomeric snubbing devices or resilient  perimeter stops,1.8,2.2,1.3,1.75
 VIBRATION-ISOLATED COMPONENTS AND SYSTEMSa Internally isolated components and systems,1.8,2.2,1.3,1.75
 "VIBRATION-ISOLATED COMPONENTS AND SYSTEMSa Suspended vibration-isolated equipment, including in-line duct devices and suspended internally isolated components",1.8,2.2,1.3,1.75
-"EQUIPMENT SUPPORT STRUCTURES AND PLATFORMS Support structures and platforms where Tp/Ta < 0.2, or Tp ? 0.06 s, per Section 13.6.4.6",NA,1,1.5,2
+"EQUIPMENT SUPPORT STRUCTURES AND PLATFORMS Support structures and platforms where Tp/Ta < 0.2, or Tp <= 0.06 s, per Section 13.6.4.6",NA,1,1.5,2
 EQUIPMENT SUPPORT STRUCTURES AND PLATFORMS Seismic force-resisting systems with R > 3,1.4,1.4,1.5,2
-EQUIPMENT SUPPORT STRUCTURES AND PLATFORMS Seismic force-resisting systems with R ? 3 ,1.8,2.2,1.5,1.75
+EQUIPMENT SUPPORT STRUCTURES AND PLATFORMS Seismic force-resisting systems with R <= 3 ,1.8,2.2,1.5,1.75
 EQUIPMENT SUPPORT STRUCTURES AND PLATFORMS Other systems,2.2,2.8,1.5,1.5
 DISTRIBUTION SYSTEM SUPPORTS Tension-only and cable bracing,1,1,1.5,2
 DISTRIBUTION SYSTEM SUPPORTS Cold-formed steel rigid bracing,1,1,1.5,2
