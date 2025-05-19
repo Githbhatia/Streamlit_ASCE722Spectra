@@ -11,6 +11,22 @@ import matplotlib.pyplot as plt
 import streamlit as st
 import pandas as pd
 
+@st.cache_resource
+def myurlopen(url): 
+    ctx = ssl.create_default_context(cafile=certifi.where())
+    try:
+        response = ur.urlopen(url)
+    except ur.URLError as e:
+        if hasattr(e, 'reason'):
+            st.write('We failed to reach a server.')
+            st.write('Reason: ', e.reason)
+            return()
+        elif hasattr(e, 'code'):
+            st.write('The server couldn\'t fulfill the request.')
+            st.write('Error code: ', e.code)
+            return() 
+    
+    return(response.read())
         
 def onclick():
 
@@ -130,27 +146,17 @@ def onclick():
         urlu = 'https://earthquake.usgs.gov/ws/designmaps/asce7-22.json?latitude='+ str(lat) + '&longitude=' + str(longt) +'&riskCategory='+ riskct +'&siteClass=' + siteclu + '&title=Example'
         
 
-    try:
-        response = ur.urlopen(url)
-        if swv != 0.0 or siteclass=="Default":
-            responsel = ur.urlopen(urll)
-            responseu = ur.urlopen(urlu)
-    except ur.URLError as e:
-        if hasattr(e, 'reason'):
-            st.write('We failed to reach a server.')
-            st.write('Reason: ', e.reason)
-            return()
-        elif hasattr(e, 'code'):
-            st.write('The server couldn\'t fulfill the request.')
-            st.write('Error code: ', e.code)
-            return()
+
+    response = myurlopen(url)
+    if swv != 0.0 or siteclass=="Default":
+        responsel = myurlopen(urll)
+        responseu = myurlopen(urlu)
 
     
-
-    rdata = js.loads(response.read())
+    rdata = js.loads(response)
     if swv != 0.0 or siteclass=="Default":           
-        rdatal = js.loads(responsel.read())
-        rdatau = js.loads(responseu.read())
+        rdatal = js.loads(responsel)
+        rdatau = js.loads(responseu)
 
     # if self.SaveJson.get() == 1:
     #     with open("ASCE722.json", "w") as write_file:
@@ -356,19 +362,8 @@ def contourf(lat, longt, riskct):
         for j in range(nlat):
             mesg.write("Getting gird " + str(i) + ", " + str(j))
             url = 'https://earthquake.usgs.gov/ws/designmaps/asce7-22.json?latitude='+ str(xLat[i,j]) + '&longitude=' + str(xLong[i,j]) +'&riskCategory='+ riskct +'&siteClass=' + sitecl + '&title=Example'
-            try:
-                response = ur.urlopen(url)
-
-            except ur.URLError as e:
-                if hasattr(e, 'reason'):
-                    st.write('We failed to reach a server.')
-                    st.write('Reason: ', e.reason)
-                    return()
-                elif hasattr(e, 'code'):
-                    st.write('The server couldn\'t fulfill the request.')
-                    st.write('Error code: ', e.code)
-                    return() 
-            rdata = js.loads(response.read())
+            response = myurlopen(url)
+            rdata = js.loads(response)
             ZSDS[i,j] = rdata["response"]["data"]["sds"]
             ZSD1[i,j] = rdata["response"]["data"]["sd1"]
     mesg.write("Completed")
@@ -620,9 +615,9 @@ if st.session_state.clicked:
 if st.session_state.clicked:
     st.subheader("ASCE7-22 Fp Calculation")
     locvart= st.checkbox("Compute Fp")
-    st.write("USING THE DEFAULT OPTIONS WILL LEAD TO CONSERVATIVE RESULTS")
     FP="F_{p}"
     if locvart==1:
+        st.write("USING THE DEFAULT OPTIONS WILL LEAD TO CONSERVATIVE RESULTS")
         sds = st.number_input(f"${sds_latex}$, as obtained above, can modify here", value= sds, format="%0.3f")
         df = pd.read_csv('ASCE722Ch13.csv')
         df.set_index('Menuitems', inplace=True)
