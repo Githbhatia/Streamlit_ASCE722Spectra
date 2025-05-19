@@ -532,7 +532,7 @@ def mywritefileest(ldata, sitecl, sexp):
 
 
 
-st.subheader("ASCE7-22 Seismic Parameter Input")
+st.subheader(":blue[ASCE7-22 Seismic Parameter Input]")
 sds = 0.0
 
 # st.query_params.from_dict({"address": "elk grove, CA", "title": "Cool location", "long": -120, "lat": 39, "shearwavevelo": 1200})
@@ -621,7 +621,7 @@ st.button('Run', on_click=click_button)
 # st.write(st.session_state)
 if st.session_state.clicked:
     onclick()
-    st.subheader("Download output file")
+    st.subheader("Download output file for Spectra")
     sfile= st.checkbox("Save output file")
     if sfile:
         st.download_button("Save output file", textout, file_name="respspectra.txt",)
@@ -629,15 +629,17 @@ if st.session_state.clicked:
 sds_latex = "S_{DS}"
 sd1_latex = "S_{D1}"
 if st.session_state.clicked:
-    st.subheader("ASCE7-22 Local Variation")
+    st.subheader("ASCE7-22 Local Variation of Seismic Parameters")
     st.write("Computed for selected site class only,\n Will take some time depending on latency of USGS website,\n Select to start")
     locvart= st.checkbox(f"Check Local Variation of ${sds_latex}$ and ${sd1_latex}$")
     if locvart==1:
         contourf(lat, longt, riskct)
 
+st.divider()
+
 
 if st.session_state.clicked:
-    st.subheader("ASCE7-22 Fp Calculation")
+    st.subheader(":blue[ASCE7-22 Fp Calculation]")
     locvart= st.checkbox("Compute Fp")
     FP="F_{p}"
     if locvart==1:
