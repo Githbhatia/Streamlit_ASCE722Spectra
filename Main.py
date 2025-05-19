@@ -27,7 +27,51 @@ def myurlopen(url):
             return() 
     
     return(response.read())
-        
+
+@st.cache_resource
+def mygeolocatorreverse(lat, longt):
+    ctx = ssl.create_default_context(cafile=certifi.where())
+    #ctx = ssl._create_unverified_context()
+    geopy.geocoders.options.default_ssl_context = ctx
+    geolocator = Nominatim(user_agent="STASCE722Spectra", scheme='https')
+    try:
+        location = geolocator.reverse(str(lat) + " ," + str(longt))
+        if location != None:
+            address = str(location.address)
+            st.write("Using "+ address)
+            return(location.address)
+        else:
+            st.write("Address not found: Continuing using "+ str(lat) + ", " + str(longt)) 
+            return("")  
+    except GeocoderTimedOut as e:
+        st.write("Error: geocode failed on input %s with message %s"%(address, e.message))
+        st.write("Continuing using "+ str(lat) + ", " + str(longt))
+        return("")
+
+@st.cache_resource
+def mygeolocator(address):
+    ctx = ssl.create_default_context(cafile=certifi.where())
+    #ctx = ssl._create_unverified_context()
+    geopy.geocoders.options.default_ssl_context = ctx
+    geolocator = Nominatim(user_agent="STASCE722Spectra", scheme='https')
+    try:
+        location = geolocator.geocode(address)
+        if (location != None):
+            lat = str(location.latitude)
+            longt = str(location.longitude)
+            address = str(location.address)
+            st.write("Using "+ str(lat) + ", " + str(longt))
+            return(location.latitude, location.longitude, location.address)
+        else:
+            st.write("Invalid Address:" + "Revise address and try again")
+            return(0.0, 0.0, "")
+    except GeocoderTimedOut as e:
+        st.write("Error: geocode failed on input %s with message %s"%(address, e.message))
+        return(0.0, 0.0, "")
+
+
+    
+
 def onclick():
 
     global address, lat,longt, textout, riskct, sitecl,sds
@@ -102,36 +146,16 @@ def onclick():
     riskct = riskc
     address = addressg
 
+
+
     if address =="":
         lat = latitude
         longt = longitude
-        try:
-            location = geolocator.reverse(str(lat) + " ," + str(longt))
-            if location != None:
-                address = str(location.address)
-                st.write("Using "+ address)
-            else:
-                st.write("Address not found: Continuing using "+ str(lat) + ", " + str(longt))   
-        except GeocoderTimedOut as e:
-            st.write("Error: geocode failed on input %s with message %s"%(address, e.message))
-            st.write("Continuing using "+ str(lat) + ", " + str(longt))
-        
-
-
+        address = mygeolocatorreverse(lat, longt)
     else:
-        try:
-            location = geolocator.geocode(address)
-            if (location != None):
-                lat = str(location.latitude)
-                longt = str(location.longitude)
-                address = str(location.address)
-                st.write("Using "+ str(lat) + ", " + str(longt))
-            else:
-                st.write("Invalid Address:" + "Invalid address, revise address and try again")
-                return()
-        except GeocoderTimedOut as e:
-            st.write("Error: geocode failed on input %s with message %s"%(address, e.message))
-            return()
+        lat, longt, address = mygeolocator(address)
+        if lat == 0.0 and longt == 0.0:
+            st.stop()
             
 
     
