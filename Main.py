@@ -10,6 +10,7 @@ import json as js
 import matplotlib.pyplot as plt
 import streamlit as st
 import pandas as pd
+import math
 
 @st.cache_resource
 def myurlopen(url): 
@@ -717,7 +718,7 @@ if st.session_state.clicked:
             tA = 0.02*h**0.75
             Ta = "T_{a} = C_t H^x = "
             st.write(f"Per ASCE 7-22 Eq 12.8-8 (for \"all other structural systems\"):" )
-            st.write(f"${Ta}$" +str(round(tA,3))+ " secs")
+            st.write(f"${Ta}$ " +str(round(tA,3))+ " secs")
         st.divider()
 
 
@@ -763,7 +764,10 @@ if st.session_state.clicked:
         c1,c2 = st.columns(2)
         with c1:
             CAR0 = "C_{AR}"
-            st.write(f"${CAR0}$ supported at or below grade plane = " + str(car0))
+            if math.isnan(car0):
+                st.write(f"${CAR0}$ supported at or below grade plane = N/A" )
+            else:
+                st.write(f"${CAR0}$ supported at or below grade plane = " + str(car0))
         with c2:
             CAR1 = "C_{AR}"
             st.write(f"${CAR1}$ above grade plane,supported by structure = " + str(car1))   
