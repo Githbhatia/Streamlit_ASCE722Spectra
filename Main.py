@@ -670,7 +670,7 @@ if st.session_state.clicked:
         try:
             z =[float(i) for i in zStr.split(",")]
         except ValueError:
-            st.write("Invalid input, Please enter numbers separated by commas")
+            st.write(":red[Invalid input, Please enter numbers separated by commas]")
             st.stop()
 
         if len(z) > len(zLblist):
@@ -683,6 +683,9 @@ if st.session_state.clicked:
         with sc4:
             H = "H"
             h = st.number_input(f"${H}$, Average roof height of structure in ft",value= 100.0)
+            if h < max(z):
+                st.write(":red[H is < highest value of z, Please correct]")
+                st.stop()
 
         st.divider()
         knownstsys = st.toggle("Structural System Selection (Unknown system assumed if not enabled)", key="structuralselect")
