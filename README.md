@@ -21,4 +21,6 @@ Accepts both late long pair or an address.
 
 5/18/2025 Cached URL calls, so the URL calls are not repeated when Fp calcs are run  also cached the normatin calls as well.
 
+5/20/2025 Various aesthetic improvements (equations/code references) and error checking ( zmax <= H) etc.
+
 Try out at: https://jmtwtc7pdpdfhpzgnwfdt6.streamlit.app/
