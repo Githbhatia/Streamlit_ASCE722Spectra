@@ -705,12 +705,14 @@ if st.session_state.clicked:
             with c2:
                 Om = "\\Omega_{o}"
                 st.write(f"${Om}$ = " + str(round(oM,2)))
+
             rU = max((1.1*(r/(ie*oM)))**0.5, 1.3)
         else:
             rU = 1.3
-        
+        st.write(":red[ASCE 7-22 Equation 13.3-6:]")
+        st.latex(r'''\color{red} R_{\mu} = \left[ \frac{1.1 R}{I_{e}\Omega_{o}} \right]^{1/2} \ge 1.3''')
         Ru = "R_{\\mu}"
-        st.write(f"${Ru}$ = " +str(round(rU,3)) + " (1.0 used for z = 0.0)")
+        st.write(f"${Ru}$ = " +str(round(rU,3)) + " (1.0 used for z = 0.0 per ASCE 7-22 13.3.1.2)")
 
         st.divider()
         knownperiod = st.toggle("Period Known (if not enabled, period is calculated based on Height H)", key="periodselect")
@@ -755,7 +757,7 @@ if st.session_state.clicked:
 
 
         Wp = "W_{p}"
-        st.write(":red[ASCE 7-22 Equation 13.3.1:]")
+        st.write(":red[ASCE 7-22 Equation 13.3-1:]")
         st.latex(r'''\color{red} F_{p} = 0.4 S_{DS} I_{p} \left( \frac{H_{f}}{R_{\mu}} \right) \left( \frac{C_{AR}}{R_{po}} \right) W_{p}''')
         c1,c2 = st.columns(2)
         with c1:
