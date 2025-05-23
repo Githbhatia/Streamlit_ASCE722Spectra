@@ -607,6 +607,7 @@ with c1:
     t1, t2 = st.tabs(["Shear Wave Velocity", "Site Class"])
     with t1:
         swv = st.number_input("Shear Wave Velocity (ft/s)",value = inSwv, step = 100.0, min_value = 0.0, key="swv")
+        st.session_state['myswv'] = swv
         estimatedswv= st.checkbox("Estimated Shear Wave Velocity?")
 
     with t2:
@@ -618,6 +619,7 @@ with c1:
 with c2:
 
     riskc = st.selectbox("Risk Category",RiskCategoryList, index = RiskCategoryList.index(inRisk))
+    st.session_state['myrisk'] = riskc
 
 st.divider()
 st.write("Either provide Address or Lat/Long Pair (leave Address blank)")
@@ -626,10 +628,13 @@ tab1, tab2 = st.tabs(["Address", "Lat/Long"])
 
 with tab1:
     addressg = st.text_input("Address", inAdd, placeholder="123, streat name, city, CA")
+    st.session_state['myaddress'] = addressg
 
 with tab2:
     latitude= st.number_input("Latitude",value=inLat, step = 0.1, min_value = -90.0, max_value= 90.0)
+    st.session_state['mylat'] = latitude
     longitude= st.number_input("Longitude",value =inLong, step = 0.1, min_value =-180.0, max_value=180.0)
+    st.session_state['mylong'] = longitude
     if addressg != "":
         st.write("Note: Clear address to generate spectra using lat/long pair")
 
