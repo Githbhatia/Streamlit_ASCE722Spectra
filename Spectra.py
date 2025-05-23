@@ -543,21 +543,33 @@ st.subheader(":blue[ASCE7-22 Seismic Parameter Input]")
 
 if "title" in st.query_params:
     inTitle = st.query_params["title"]
+    st.session_state['mytitle'] = inTitle
+elif 'mytitle' in st.session_state:
+    inTitle = st.session_state['mytitle']
 else:
     inTitle = "My Title"
 
 if "address" in st.query_params:
     inAdd = st.query_params["address"]
+    st.session_state['myaddress'] = inAdd
+elif 'myaddress' in st.session_state:
+    inAdd = st.session_state['myaddress']
 else:
     inAdd = ""
 
 if "long" in st.query_params:
     inLong = float(st.query_params["long"])
+    st.session_state['mylong'] = inLong
+elif 'mylong' in st.session_state:
+    inLong = st.session_state['mylong']
 else:
     inLong = -121.0
 
 if "lat" in st.query_params:
     inLat = float(st.query_params["lat"])
+    st.session_state['mylat'] = inLat
+elif 'mylat' in st.session_state:
+    inLat = st.session_state['mylat']
 else:
     inLat = 38.0
 
@@ -565,6 +577,9 @@ RiskCategoryList=["I","II","III","IV"]
 if "riskcat" in st.query_params:
     if st.query_params["riskcat"] in RiskCategoryList:
         inRisk = st.query_params["riskcat"]
+        st.session_state['myrisk'] = inRisk
+    elif 'myrisk' in st.session_state:
+        inRisk = st.session_state['myrisk']
     else:
         inRisk = "IV"
 else:
@@ -572,6 +587,9 @@ else:
 
 if "shearwavevelo" in st.query_params:
     inSwv = float(st.query_params["shearwavevelo"])
+    st.session_state['myswv'] = inSwv
+elif 'myswv' in st.session_state:
+    inSwv = st.session_state['myswv']
 else:
     inSwv = 0.0
 
