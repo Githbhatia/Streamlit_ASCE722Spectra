@@ -583,7 +583,10 @@ if "riskcat" in st.query_params:
     else:
         inRisk = "IV"
 else:
-    inRisk = "IV"
+    if 'myrisk' in st.session_state:
+        inRisk = st.session_state['myrisk']
+    else:
+        inRisk = "IV"
 
 if "shearwavevelo" in st.query_params:
     inSwv = float(st.query_params["shearwavevelo"])
