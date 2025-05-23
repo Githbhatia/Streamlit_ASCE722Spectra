@@ -24,7 +24,7 @@ if not st.session_state.clicked:
 
 FP="F_{p}"
 mysite = st.text_input("Title for report",st.session_state['mytitle'])
-st.session_state['mytitle'] = mysite
+# st.session_state['mytitle'] = mysite
 if sds <= 0.0:
     sds = st.number_input(f"Enter ${sds_latex}$", value= sds, format="%0.3f", min_value=0.0)
 else:
@@ -193,8 +193,9 @@ ax.grid()
 ax.set_xlabel("Fp/Wp")
 ax.set_ylabel("Z/H")
 ax.set_title("Variation of Fp with Z/H")
-info = (st.session_state['mytitle'][:100] + '..') if len(st.session_state['mytitle']) > 100 else st.session_state['mytitle']
-ax.text(0.99, 0.07, info, horizontalalignment='right', verticalalignment='top', fontsize=10, color ='Black',transform=ax.transAxes)
+info = (mysite[:100] + '..') if len(mysite) > 100 else mysite
+ax.text(0.99, 0.08, info, horizontalalignment='right', verticalalignment='top', fontsize=10, color ='Black',transform=ax.transAxes)
+ax.text(0.99, 0.05, "Sds = "+str(round(sds,3)), horizontalalignment='right', verticalalignment='top', fontsize=10, color ='Black',transform=ax.transAxes)
 info = (st.session_state['nonstructural'][:150] + '..') if len(st.session_state['nonstructural']) > 150 else st.session_state['nonstructural']
-ax.text(0.99, 0.03, info, horizontalalignment='right', verticalalignment='top', fontsize=6, color ='Black',transform=ax.transAxes)
+ax.text(0.99, 0.02, info, horizontalalignment='right', verticalalignment='top', fontsize=6, color ='Black',transform=ax.transAxes)
 st.pyplot(fig)
