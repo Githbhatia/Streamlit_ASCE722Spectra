@@ -12,3 +12,5 @@ if 'sds' not in st.session_state:
     st.session_state['sds'] = 0.0
 if 'mytitle' not in st.session_state:
     st.session_state['mytitle'] = ""
+if "estswv" in st.session_state:
+    st.session_state.estswv = st.session_state.estswv

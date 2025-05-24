@@ -12,6 +12,14 @@ import streamlit as st
 import pandas as pd
 import math
 
+def persistent_checkbox(label, key):
+    if 'checklist_items' not in st.session_state:
+        st.session_state.checklist_items = {}
+    state = st.checkbox(label, value=st.session_state.checklist_items.get(key, False), key=key)
+    st.session_state.checklist_items[key] = state
+    return state
+
+
 @st.cache_resource
 def myurlopen(url): 
     ctx = ssl.create_default_context(cafile=certifi.where())
@@ -611,8 +619,7 @@ with c1:
     with t1:
         swv = st.number_input("Shear Wave Velocity (ft/s)",value = inSwv, step = 100.0, min_value = 0.0, key="swv")
         st.session_state['myswv'] = swv
-        estimatedswv= st.checkbox("Estimated Shear Wave Velocity?")
-
+        estimatedswv= persistent_checkbox("Estimated Shear Wave Velocity?" ,key="estswv")
     with t2:
         placeholder = st.empty()
         siteClassList=["A","B","BC","C","CD","D","DE","E", "Default"]
