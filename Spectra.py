@@ -609,7 +609,7 @@ if inTitle == "":
     mysite = st.text_input("Title for report", placeholder="Enter title for report")
 else:
     mysite = st.text_input("Title for report", inTitle)
-st.session_state['mytitle'] = mysite
+st.session_state['myTitle'] = mysite
 st.write("Either enter Shear Wave Velocity or pick Site Class" )
 st.write("(Shear Wave Velocity will be used when entered)")
 
