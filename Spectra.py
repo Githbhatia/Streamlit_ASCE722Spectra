@@ -541,7 +541,8 @@ def mywritefileest(ldata, sitecl, sexp):
     return(textout)
 
 
-
+for k, v in st.session_state.items():
+    st.session_state[k] = v
 st.subheader(":blue[ASCE7-22 Seismic Parameter Input]")
 
 
