@@ -1,15 +1,13 @@
 import numpy as np
-import certifi
-import ssl
-import geopy.geocoders
-from geopy.geocoders import Nominatim
-from geopy.exc import GeocoderTimedOut
-import urllib.request as ur
-import json as js
 import matplotlib.pyplot as plt
 import streamlit as st
 import pandas as pd
 import math
+
+def persistent_toggle(label, key):
+    state = st.toggle(label, value=st.session_state.checklist_items.get(key, False), key=key)
+    st.session_state.checklist_items[key] = state
+    return state
 
 
 sds  = st.session_state['sds']
@@ -32,9 +30,18 @@ else:
 if sds <= 0.0:
     st.write(f":red[Enter a valid value for ${sds_latex}$]")
     st.stop()
+
+
 df = pd.read_csv('ASCE722Ch13.csv')
 df.set_index('Menuitems', inplace=True)
-selecteditem = st.selectbox("Select Nonstructural item (ASCE 7-22 Tables 13.5-1 and 13.6-1)",df.index, index = 1, key="nonstructural")
+if st.session_state.selecteditem != "":
+    _selecteditem = st.session_state.selecteditem
+    selecteditem = st.selectbox("Select Nonstructural item (ASCE 7-22 Tables 13.5-1 and 13.6-1)",df.index, index = list(df.index).index(_selecteditem), key="nonstructural")
+else:
+    selecteditem = st.selectbox("Select Nonstructural item (ASCE 7-22 Tables 13.5-1 and 13.6-1)",df.index, index = 1, key="nonstructural")
+
+st.session_state.selecteditem = selecteditem
+
 car0 = df.loc[selecteditem].values[0]
 car1 = df.loc[selecteditem].values[1]
 rPO = df.loc[selecteditem].values[2]
@@ -43,16 +50,33 @@ omegaOP = df.loc[selecteditem].values[3]
 sc1,sc2 =st.columns(2)
 with sc1:
     I_p = "I_{p}"
-    iP = float(st.selectbox(f"${I_p}$, Component Importance Factor",(1.0,1.5), index = 1))
+    if st.session_state.selectedIp != 0.0:
+        iP = float(st.selectbox(f"${I_p}$, Component Importance Factor",(1.0,1.5), index = list((1.0,1.5)).index(st.session_state.selectedIp), key="Ip"))   
+    else:
+        iP = float(st.selectbox(f"${I_p}$, Component Importance Factor",(1.0,1.5), index = 1, key="Ip"))
+    st.session_state.selectedIp = iP
+   
 
 sc3,sc4 =st.columns(2)
 with sc3:
     Z = "Z"
     # z = st.number_input(f"${Z}$, height above base",value= 90.0)
-    zStr = st.text_input(f"${Z}$, height above base (multiple ok,separate with commas)",str("0, 15, 30, 45, 60, 75, 90, 100"))
+    if st.session_state.UserZvalues != "":
+        zStr = st.text_input(f"${Z}$, height above base (multiple ok,separate with commas)",value= st.session_state.UserZvalues)
 
-zLbl = st.text_input("Labels corresponding to Z values (Separate with commas,Optional)",str("Grnd Level, Level 2, Level 3, Level 4, Level 5, Level 6, Mech Level, Roof"))
+    else:
+        zStr = st.text_input(f"${Z}$, height above base (multiple ok,separate with commas)",str("0, 15, 30, 45, 60, 75, 90, 100"))
+
+st.session_state.UserZvalues = zStr
+
+
+if st.session_state.UserZlabels != "":
+    zLbl = st.text_input("Labels corresponding to Z values (Separate with commas,Optional)",st.session_state.UserZlabels)
+else:
+    zLbl = st.text_input("Labels corresponding to Z values (Separate with commas,Optional)",str("Grnd Level, Level 2, Level 3, Level 4, Level 5, Level 6, Mech Level, Roof"))
 zLblist = [i.strip() for i in zLbl.split(",")]
+st.session_state.UserZlabels = zLbl
+
 try:
     z =[float(i) for i in zStr.split(",")]
 except ValueError:
@@ -68,21 +92,34 @@ if len(z) < len(zLblist):
 
 with sc4:
     H = "H"
-    h = st.number_input(f"${H}$, Average roof height of structure in ft",value= 100.0)
+    if st.session_state["UserHvalues"] != 0.0:
+        h = st.number_input(f"${H}$, Average roof height of structure in ft",value= st.session_state["UserHvalues"])
+    else:
+        h = st.number_input(f"${H}$, Average roof height of structure in ft",value= 100.0)
+    st.session_state.UserHvalues = h
     if h < max(z):
         st.write(":red[H is < highest value of z, Please correct]")
         st.stop()
 
 st.divider()
-knownstsys = st.toggle("Structural System Selection (Unknown system assumed if not enabled)", key="structuralselect")
+knownstsys = persistent_toggle("Structural System Selection (Unknown system assumed if not enabled)", key="structuralselect")
 if knownstsys:
     dfs = pd.read_csv('ASCE722StructuralSystems.csv')
     dfs.set_index('StructuralSystem', inplace=True)
-    selecteditem = st.selectbox("Select Structural System of the Building (ASCE 7-22 Table 12.2-1):",dfs.index, index = 49, key="structural")
+    if st.session_state.selecteditemStructSys != "":
+        _selecteditem = st.session_state.selecteditemStructSys
+        selecteditem = st.selectbox("Select Structural System of the Building (ASCE 7-22 Table 12.2-1):",dfs.index, index = list(dfs.index).index(_selecteditem), key="structural") 
+    else:   
+        selecteditem = st.selectbox("Select Structural System of the Building (ASCE 7-22 Table 12.2-1):",dfs.index, index = 49, key="structural")
+    st.session_state.selecteditemStructSys = selecteditem
     r = dfs.loc[selecteditem].values[0]
     oM = dfs.loc[selecteditem].values[1]
 I_e = "I_{e}"
-ie = float(st.selectbox(f"${I_e}$, Importance Factor for Building",(1.0,1.25,1.5), index = 2))
+if st.session_state["selectedIe"] != 0.0:
+    ie = float(st.selectbox(f"${I_e}$, Importance Factor for Building",(1.0,1.25,1.5), index = list((1.0,1.25,1.5)).index(st.session_state["selectedIe"]), key="Ie"))
+else:
+    ie = float(st.selectbox(f"${I_e}$, Importance Factor for Building",(1.0,1.25,1.5), index = 2, key="Ie"))
+st.session_state["selectedIe"] = ie
 if knownstsys:
     c1,c2 = st.columns(2)
     with c1:
@@ -101,19 +138,21 @@ Ru = "R_{\\mu}"
 st.write(f"${Ru}$ = " +str(round(rU,3)) + " (1.0 used for z = 0.0 per ASCE 7-22 13.3.1.2)")
 
 st.divider()
-knownperiod = st.toggle("Period Known (if not enabled, period is calculated based on Height H)", key="periodselect")
+knownperiod = persistent_toggle("Period Known (if not enabled, period is calculated based on Height H)", key="periodselect")
+# st.write(st.session_state)
 if knownperiod:
     Ta = "T_{a}"
-    tA = st.number_input(f"${Ta}$, Lowest fundamental period of structure:",value= 0.5)
+    if st.session_state.selecteditemTa != 0.0:
+        tA = st.number_input(f"${Ta}$, Lowest fundamental period of structure:",value= st.session_state.selecteditemTa, key="Ta")
+    else:
+        tA = st.number_input(f"${Ta}$, Lowest fundamental period of structure:",value= 0.5, key="Ta")
+    st.session_state.selecteditemTa = tA
 else:
     tA = 0.02*h**0.75
     Ta = "T_{a} = C_t H^x = "
     st.write(f"Per ASCE 7-22 Eq 12.8-8 (for \"all other structural systems\"):" )
     st.write(f"${Ta}$ " +str(round(tA,3))+ " secs")
 st.divider()
-
-
-
 
 def getHf(zhratio):
     a1 = min(1/tA,2.5)

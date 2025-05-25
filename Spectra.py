@@ -13,8 +13,6 @@ import pandas as pd
 import math
 
 def persistent_checkbox(label, key):
-    if 'checklist_items' not in st.session_state:
-        st.session_state.checklist_items = {}
     state = st.checkbox(label, value=st.session_state.checklist_items.get(key, False), key=key)
     st.session_state.checklist_items[key] = state
     return state
