@@ -21,7 +21,10 @@ if not st.session_state.clicked:
 
 
 FP="F_{p}"
-mysite = st.text_input("Title for report",st.session_state['myTitle'])
+if st.session_state['myTitle'] == "":
+    mysite = st.text_input("Title for report", placeholder="Enter title for report")
+else:
+    mysite = st.text_input("Title for report",st.session_state['myTitle'])
 # st.session_state['mytitle'] = mysite
 if sds <= 0.0:
     sds = st.number_input(f"Enter ${sds_latex}$", value= sds, format="%0.3f", min_value=0.0)

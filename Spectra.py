@@ -605,7 +605,10 @@ else:
 st.write("Data source is USGS (ASCE 722 Database) and OpenStreetMaps.\nAuthors do not assume any responsibility or liability for its accuracy.")
 st.write("Use of the output of this program does not imply approval by the governing building code bodies responsible for building code approval and interpretation for the building site described by latitude/longitude location.")
 st.divider()
-mysite = st.text_input("Title for report",inTitle)
+if inTitle == "":
+    mysite = st.text_input("Title for report", placeholder="Enter title for report")
+else:
+    mysite = st.text_input("Title for report", inTitle)
 st.session_state['mytitle'] = mysite
 st.write("Either enter Shear Wave Velocity or pick Site Class" )
 st.write("(Shear Wave Velocity will be used when entered)")
