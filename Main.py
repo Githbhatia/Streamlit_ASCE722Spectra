@@ -3,7 +3,7 @@ import streamlit as st
 if 'sds' not in st.session_state:
     st.session_state['sds'] = 0.0
 if 'mytitle' not in st.session_state:
-    st.session_state['mytitle'] = ""
+    st.session_state['myTitle'] = ""
 if "selecteditem" not in st.session_state:
     st.session_state.selecteditem = ""
 if "selectedIp" not in st.session_state:

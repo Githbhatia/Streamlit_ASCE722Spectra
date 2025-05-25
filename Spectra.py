@@ -549,9 +549,9 @@ st.subheader(":blue[ASCE7-22 Seismic Parameter Input]")
 
 if "title" in st.query_params:
     inTitle = st.query_params["title"]
-    st.session_state['mytitle'] = inTitle
-elif 'mytitle' in st.session_state:
-    inTitle = st.session_state['mytitle']
+    st.session_state['myTitle'] = inTitle
+elif 'myTitle' in st.session_state:
+    inTitle = st.session_state['myTitle']
 else:
     inTitle = "My Title"
 
