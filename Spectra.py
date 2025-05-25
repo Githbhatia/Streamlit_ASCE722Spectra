@@ -550,10 +550,6 @@ st.subheader(":blue[ASCE7-22 Seismic Parameter Input]")
 if "title" in st.query_params:
     inTitle = st.query_params["title"]
     st.session_state['myTitle'] = inTitle
-elif 'myTitle' in st.session_state:
-    inTitle = st.session_state['myTitle']
-else:
-    inTitle = "My Title"
 
 if "address" in st.query_params:
     inAdd = st.query_params["address"]
@@ -605,11 +601,12 @@ else:
 st.write("Data source is USGS (ASCE 722 Database) and OpenStreetMaps.\nAuthors do not assume any responsibility or liability for its accuracy.")
 st.write("Use of the output of this program does not imply approval by the governing building code bodies responsible for building code approval and interpretation for the building site described by latitude/longitude location.")
 st.divider()
-if inTitle == "":
-    mysite = st.text_input("Title for report", placeholder="Enter title for report")
+if st.session_state["myTitle"] == "":
+    mysite = st.text_input("Title for report", placeholder="Enter title for report", key="title")
 else:
-    mysite = st.text_input("Title for report", inTitle)
+    mysite = st.text_input("Title for report", st.session_state["myTitle"] , key="title")
 st.session_state['myTitle'] = mysite
+
 st.write("Either enter Shear Wave Velocity or pick Site Class" )
 st.write("(Shear Wave Velocity will be used when entered)")
 

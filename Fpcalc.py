@@ -19,13 +19,12 @@ if not st.session_state.clicked:
     st.write (f"Please click on :red[RUN] button in the previous page to get Sds for this site")
     st.write (f"To proceed anyways, manually enter:red[${sds_latex}$]")
 
-
 FP="F_{p}"
 if st.session_state['myTitle'] == "":
-    mysite = st.text_input("Title for report", placeholder="Enter title for report")
+    mysite = st.text_input("Title for report", placeholder="Enter title for report", key="title")
 else:
-    mysite = st.text_input("Title for report",st.session_state['myTitle'])
-# st.session_state['mytitle'] = mysite
+    mysite = st.text_input("Title for report",st.session_state['myTitle'], key="title")
+st.session_state['myTitle'] = mysite
 if sds <= 0.0:
     sds = st.number_input(f"Enter ${sds_latex}$", value= sds, format="%0.3f", min_value=0.0)
 else:
