@@ -23,6 +23,8 @@ Accepts both late long pair or an address.
 
 5/20/2025 Various aesthetic improvements (equations/code references) and error checking ( zmax <= H) etc.
 
-5/23/2025 Converted to a multi- page app to separate Fp calculations from spectra calculations. URL parameters are stored in session variables.
+5/23/2025 Converted to a multi- page app to separate Fp calculations from spectra calculations. URL parameters are stored in session variables for persistance over pages
+
+5/24/2025 Further added code for persistance in user options on the Fp page, not perfect but close.
 
 Try out at: https://jmtwtc7pdpdfhpzgnwfdt6.streamlit.app/
