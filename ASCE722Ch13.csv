@@ -1,6 +1,6 @@
 ﻿Menuitems,CAR0,CAR,Rpo,Omegaop
 Interior nonstructural walls and partitions;  Light frame <= 9 ft (2.74 m) in height,1,1,1.5,2
-Interior nonstructural walls and partitions;  Light frame > 9 ft (2.74 m) in height ,1,1,1.5,2
+Interior nonstructural walls and partitions;  Light frame > 9 ft (2.74 m) in height ,1.4,1.4,1.5,2
 Interior nonstructural walls and partitions;  Reinforced masonry,1,1,1.5,2
 Interior nonstructural walls and partitions;   All other walls and partitions,2.2,2.8,1.5,1.5
 Cantilever elements (unbraced or braced to structural frame below its center of mass);  Parapets and cantilever interior nonstructural walls ,1.8,2.2,1.5,1.75
