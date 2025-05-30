@@ -59,4 +59,4 @@ toolbarMode = "auto"
 # multi-page app. This only applies when app's pages are defined by the
 # `pages/` directory.
 # Default: true
-showSidebarNavigation = false
+showSidebarNavigation = true
