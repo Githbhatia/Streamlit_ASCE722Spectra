@@ -5,7 +5,7 @@
 # the widget's key in `st.session_state`.
 # If you'd like to turn off this warning, set this to True.
 # Default: false
-disableWidgetStateDuplicationWarning = True
+disableWidgetStateDuplicationWarning = true
 
 [theme]
 
