@@ -39,11 +39,11 @@ df = pd.read_csv('ASCE722Ch13.csv')
 df.set_index('Menuitems', inplace=True)
 if st.session_state.selecteditem != "":
     _selecteditem = st.session_state.selecteditem
-    selecteditem = st.selectbox("Select Nonstructural item (ASCE 7-22 Tables 13.5-1 and 13.6-1)",df.index, index = list(df.index).index(_selecteditem), key="nonstructural")
+    selecteditem = st.selectbox("Select Nonstructural item (ASCE 7-22 Tables 13.5-1 and 13.6-1)",df.index, index = list(df.index).index(_selecteditem), key="nonstructural1")
 else:
-    selecteditem = st.selectbox("Select Nonstructural item (ASCE 7-22 Tables 13.5-1 and 13.6-1)",df.index, index = 1, key="nonstructural")
+    selecteditem = st.selectbox("Select Nonstructural item (ASCE 7-22 Tables 13.5-1 and 13.6-1)",df.index, index = 1, key="nonstructural2")
 
-st.session_state.selecteditem = st.session_state.nonstructural
+st.session_state.selecteditem = selecteditem
 
 car0 = df.loc[selecteditem].values[0]
 car1 = df.loc[selecteditem].values[1]
@@ -54,9 +54,9 @@ sc1,sc2 =st.columns(2)
 with sc1:
     I_p = "I_{p}"
     if st.session_state.selectedIp != 0.0:
-        iP = float(st.selectbox(f"${I_p}$, Component Importance Factor",(1.0,1.5), index = list((1.0,1.5)).index(st.session_state.selectedIp), key="Ip"))   
+        iP = float(st.selectbox(f"${I_p}$, Component Importance Factor",(1.0,1.5), index = list((1.0,1.5)).index(st.session_state.selectedIp), key="Ip1"))   
     else:
-        iP = float(st.selectbox(f"${I_p}$, Component Importance Factor",(1.0,1.5), index = 1, key="Ip"))
+        iP = float(st.selectbox(f"${I_p}$, Component Importance Factor",(1.0,1.5), index = 1, key="Ip2"))
     st.session_state.selectedIp = iP
    
 
@@ -65,20 +65,20 @@ with sc3:
     Z = "Z"
     # z = st.number_input(f"${Z}$, height above base",value= 90.0)
     if st.session_state.UserZvalues != "":
-        zStr = st.text_input(f"${Z}$, height above base (multiple ok,separate with commas)",value= st.session_state.UserZvalues,  key="zvalues")
+        zStr = st.text_input(f"${Z}$, height above base (multiple ok,separate with commas)",value= st.session_state.UserZvalues,  key="zvalues1")
 
     else:
-        zStr = st.text_input(f"${Z}$, height above base (multiple ok,separate with commas)",str("0, 15, 30, 45, 60, 75, 90, 100"),key="zvalues")
+        zStr = st.text_input(f"${Z}$, height above base (multiple ok,separate with commas)",str("0, 15, 30, 45, 60, 75, 90, 100"),key="zvalues2")
 
-st.session_state.UserZvalues = st.session_state.zvalues
+st.session_state.UserZvalues = zStr
 
 
 if st.session_state.UserZlabels != "":
-    zLbl = st.text_input("Labels corresponding to Z values (Separate with commas,Optional)",st.session_state.UserZlabels, key="zLables")
+    zLbl = st.text_input("Labels corresponding to Z values (Separate with commas,Optional)",st.session_state.UserZlabels, key="zLables1")
 else:
-    zLbl = st.text_input("Labels corresponding to Z values (Separate with commas,Optional)",str("Grnd Level, Level 2, Level 3, Level 4, Level 5, Level 6, Mech Level, Roof"),key="zLables")
+    zLbl = st.text_input("Labels corresponding to Z values (Separate with commas,Optional)",str("Grnd Level, Level 2, Level 3, Level 4, Level 5, Level 6, Mech Level, Roof"),key="zLables2")
 zLblist = [i.strip() for i in zLbl.split(",")]
-st.session_state.UserZlabels = st.session_state.zLables
+st.session_state.UserZlabels = zLbl
 
 try:
     z =[float(i) for i in zStr.split(",")]
@@ -96,10 +96,10 @@ if len(z) < len(zLblist):
 with sc4:
     H = "H"
     if st.session_state["UserHvalues"] != 0.0:
-        h = st.number_input(f"${H}$, Average roof height of structure in ft",value= st.session_state["UserHvalues"], key="H")
+        h = st.number_input(f"${H}$, Average roof height of structure in ft",value= st.session_state["UserHvalues"], key="H1")
     else:
-        h = st.number_input(f"${H}$, Average roof height of structure in ft",value= 100.0, key="H")
-    st.session_state.UserHvalues = st.session_state.H
+        h = st.number_input(f"${H}$, Average roof height of structure in ft",value= 100.0, key="H2")
+    st.session_state.UserHvalues = h
     if h < max(z):
         st.write(":red[H is < highest value of z, Please correct]")
         st.stop()
@@ -111,21 +111,21 @@ if knownstsys:
     dfs.set_index('StructuralSystem', inplace=True)
     if st.session_state.selecteditemStructSys != "":
         _selecteditem = st.session_state.selecteditemStructSys
-        selecteditem = st.selectbox("Select Structural System of the Building (ASCE 7-22 Table 12.2-1):",dfs.index, index = list(dfs.index).index(_selecteditem), key="structural") 
+        selecteditem = st.selectbox("Select Structural System of the Building (ASCE 7-22 Table 12.2-1):",dfs.index, index = list(dfs.index).index(_selecteditem), key="structural1") 
         st.session_state.selecteditemStructSys = st.session_state.structural
     else:   
-        selecteditem = st.selectbox("Select Structural System of the Building (ASCE 7-22 Table 12.2-1):",dfs.index, index = 49, key="structural")
-        st.session_state.selecteditemStructSys = st.session_state.structural
+        selecteditem = st.selectbox("Select Structural System of the Building (ASCE 7-22 Table 12.2-1):",dfs.index, index = 49, key="structural2")
+        st.session_state.selecteditemStructSys = selecteditem
     
     
     r = dfs.loc[selecteditem].values[0]
     oM = dfs.loc[selecteditem].values[1]
 I_e = "I_{e}"
 if st.session_state["selectedIe"] != 0.0:
-    ie = float(st.selectbox(f"${I_e}$, Importance Factor for Building",(1.0,1.25,1.5), index = list((1.0,1.25,1.5)).index(st.session_state["selectedIe"]), key="Ie"))
+    ie = float(st.selectbox(f"${I_e}$, Importance Factor for Building",(1.0,1.25,1.5), index = list((1.0,1.25,1.5)).index(st.session_state["selectedIe"]), key="Ie1"))
 else:
-    ie = float(st.selectbox(f"${I_e}$, Importance Factor for Building",(1.0,1.25,1.5), index = 2, key="Ie"))
-st.session_state["selectedIe"] = st.session_state.Ie
+    ie = float(st.selectbox(f"${I_e}$, Importance Factor for Building",(1.0,1.25,1.5), index = 2, key="Ie2"))
+st.session_state["selectedIe"] = ie
 st.write(f"Selected Structural System: {selecteditem}")
 if knownstsys:
     c1,c2 = st.columns(2)
@@ -150,10 +150,10 @@ knownperiod = persistent_toggle("Period Known (if not enabled, period is calcula
 if knownperiod:
     Ta = "T_{a}"
     if st.session_state.selecteditemTa != 0.0:
-        tA = st.number_input(f"${Ta}$, Lowest fundamental period of structure:",value= st.session_state.selecteditemTa, key="Ta")
+        tA = st.number_input(f"${Ta}$, Lowest fundamental period of structure:",value= st.session_state.selecteditemTa, key="Ta1")
     else:
-        tA = st.number_input(f"${Ta}$, Lowest fundamental period of structure:",value= 0.5, key="Ta")
-    st.session_state.selecteditemTa = st.session_state.Ta
+        tA = st.number_input(f"${Ta}$, Lowest fundamental period of structure:",value= 0.5, key="Ta2")
+    st.session_state.selecteditemTa = tA
 else:
     tA = 0.02*h**0.75
     Ta = "T_{a} = C_t H^x = "
@@ -242,6 +242,6 @@ ax.set_title("Variation of Fp with Z/H")
 info = (mysite[:100] + '..') if len(mysite) > 100 else mysite
 ax.text(0.99, 0.08, info, horizontalalignment='right', verticalalignment='top', fontsize=10, color ='Black',transform=ax.transAxes)
 ax.text(0.99, 0.05, "Sds = "+str(round(sds,3)), horizontalalignment='right', verticalalignment='top', fontsize=10, color ='Black',transform=ax.transAxes)
-info = (st.session_state['nonstructural'][:150] + '..') if len(st.session_state['nonstructural']) > 150 else st.session_state['nonstructural']
+info = (st.session_state.selecteditem[:150] + '..') if len(st.session_state.selecteditem) > 150 else st.session_state.selecteditem
 ax.text(0.99, 0.02, info, horizontalalignment='right', verticalalignment='top', fontsize=6, color ='Black',transform=ax.transAxes)
 st.pyplot(fig)
