@@ -112,7 +112,7 @@ if knownstsys:
     if st.session_state.selecteditemStructSys != "":
         _selecteditem = st.session_state.selecteditemStructSys
         selecteditem = st.selectbox("Select Structural System of the Building (ASCE 7-22 Table 12.2-1):",dfs.index, index = list(dfs.index).index(_selecteditem), key="structural1") 
-        st.session_state.selecteditemStructSys = st.session_state.structural
+        st.session_state.selecteditemStructSys = selecteditem
     else:   
         selecteditem = st.selectbox("Select Structural System of the Building (ASCE 7-22 Table 12.2-1):",dfs.index, index = 49, key="structural2")
         st.session_state.selecteditemStructSys = selecteditem
