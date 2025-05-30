@@ -616,7 +616,7 @@ c1, c2 =st.columns(2)
 with c1:
     t1, t2 = st.tabs(["Shear Wave Velocity", "Site Class"])
     with t1:
-        swv = st.number_input("Shear Wave Velocity (ft/s)",value = inSwv, step = 100.0, min_value = 0.0, key="swv")
+        swv = st.number_input("Shear Wave Velocity (ft/s)",value = inSwv, step = 100.0, min_value = 0.0, key="swvss")
         st.session_state['myswv'] = swv
         estimatedswv= persistent_checkbox("Estimated Shear Wave Velocity?" ,key="estswv")
     with t2:
@@ -646,9 +646,6 @@ with tab2:
     st.session_state['mylong'] = longitude
     if addressg != "":
         st.write("Note: Clear address to generate spectra using lat/long pair")
-
-if 'clicked' not in st.session_state:
-    st.session_state.clicked = False
 
 def click_button():
     st.session_state.clicked = True

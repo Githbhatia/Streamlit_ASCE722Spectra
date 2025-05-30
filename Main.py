@@ -22,7 +22,8 @@ if "selecteditemTa" not in st.session_state:
     st.session_state.selecteditemTa = 0.0
 if 'checklist_items' not in st.session_state:
     st.session_state.checklist_items = {}
-
+if 'clicked' not in st.session_state:
+    st.session_state.clicked = False
 
 st.logo("HXBLogo.png", size="large")
 main_page= st.Page("Spectra.py", title="ASCE 7-22 Seismic Parameters and Spectra", icon=":material/home:")
