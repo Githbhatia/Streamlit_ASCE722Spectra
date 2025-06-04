@@ -153,6 +153,9 @@ if knownperiod:
         tA = st.number_input(f"${Ta}$, Lowest fundamental period of structure:",value= st.session_state.selecteditemTa, key="Ta")
     else:
         tA = st.number_input(f"${Ta}$, Lowest fundamental period of structure:",value= 0.5, key="Ta")
+    if tA <= 0:
+        st.write("tA cannot be zero, revise")
+        st.stop()
     st.session_state.selecteditemTa = st.session_state.Ta
 else:
     tA = 0.02*h**0.75
@@ -167,6 +170,12 @@ def getHf(zhratio):
     hF = 1+ a1*zhratio + a2*zhratio**10 
     # print ("Hf = " + str(hF))   
     return(hF)
+
+def getaltHf(zhratio):
+    hF = 1+ 2.5*zhratio 
+    # print ("Hf = " + str(hF))   
+    return(hF)
+
 
 zhlist = np.concatenate((np.array([0.0,0.001]),np.arange(0.002, 1.001, 0.001)),axis=0)
 
@@ -189,6 +198,16 @@ for i in range(len(z)):
 
 
 Wp = "W_{p}"
+s1, s2 = st.columns(2)
+with s1:
+    st.write(":red[ASCE 7-22 Equation 13.3-4:]")
+    st.latex(r'''\color{red} H_{f} = 1 + a_{1} \left(\frac{z}{h} \right) + a_{2} \left(\frac{z}{h} \right)^{10}''')
+    st.latex(r'''\color{red} a_{1} = 1/T_{a} \leq 2.5''')
+    st.latex(r'''\color{red} a_{2} = [1-(0.4/T_{a})^{2} \geq 0''')
+
+with s2:
+    st.write(":blue[ASCE 7-22 Equation 13.3-4:]   \n (Conservative for periods > 0.4 secs)")
+    st.latex(r'''\color{blue} H_{f} = 1 + 2.5 \left(\frac{z}{h} \right) ''')
 st.write(":red[ASCE 7-22 Equation 13.3-1:]")
 st.latex(r'''\color{red} F_{p} = 0.4 S_{DS} I_{p} \left( \frac{H_{f}}{R_{\mu}} \right) \left( \frac{C_{AR}}{R_{po}} \right) W_{p}''')
 c1,c2 = st.columns(2)
@@ -213,20 +232,26 @@ st.write(f"${Rpo}$ = " + str(rPO))
 Omop = "\\Omega_{op}"
 st.write(f" ${Omop}$ to be used for concrete or masonry post-installed anchors = " + str(round(omegaOP,3)) )
 
-fPlist = []
+fPlist = []; fPlistalt=[]
 for i in range(len(zhlist)):
     hFL = getHf(zhlist[i])
+    hFLalt = getaltHf(zhlist[i])
     if zhlist[i] == 0.0:
         fPlist.append(min(max(0.4*sds*iP*(hFL/1.0)*(car0/rPO),fPMin),fPMax))
+        fPlistalt.append(min(max(0.4*sds*iP*(hFLalt/1.0)*(car0/rPO),fPMin),fPMax))
     else:
         fPlist.append(min(max(0.4*sds*iP*(hFL/rU)*(car1/rPO),fPMin),fPMax))
+        fPlistalt.append(min(max(0.4*sds*iP*(hFLalt/rU)*(car1/rPO),fPMin),fPMax))
+        
 st.write(f":blue[Governing ${FP}$:]")
 dfsfP=pd.DataFrame({"Location":zLblist,"Z":z,"Z/H": zh,"Hf": hF, "Fp/Wp": fP})
 st.dataframe(dfsfP, hide_index=True)
 
 fig = plt.figure(figsize=(10, 10))
 ax = fig.add_subplot(111)
-ax.plot(fPlist, zhlist, label="Calculated Fp", color='Red', linewidth=1.0)
+ax.plot(fPlist, zhlist, label="Calculated Fp using Hf per Eq 13.3-4", color='Red', linewidth=1.0)
+ax.plot(fPlistalt, zhlist, label="Calculated Fp using Hf per Eq 13.3-5", color='Blue', linestyle='--',linewidth=1.0)
+ax.legend()
 for i in range(len(z)):
     ax.plot(fP[i], zh[i], marker='o', label="Governing Fp", color='Black', linestyle='--', linewidth=2.0)
     axmin,axmax = ax.get_xlim()
