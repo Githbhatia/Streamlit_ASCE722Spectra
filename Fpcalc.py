@@ -79,7 +79,7 @@ if OPD:
     loc = ["At Grade","Lower Third","Middle Third","Upper Third (including roof)"]
 
     st.write("Governing $F_{p}$:")
-    dfsfP=pd.DataFrame.from_dict({'location': loc, Type1: fPOPDalt[0], Type2: fPOPDalt[1]})
+    dfsfP=pd.DataFrame.from_dict({'Location, (Sds = ' + str(round(sds,3)) + ')': loc, Type1: fPOPDalt[0], Type2: fPOPDalt[1]})
     st.dataframe(dfsfP, hide_index=True)
 st.divider()    
 
@@ -285,7 +285,7 @@ if DfP:
             fPlistalt.append(min(max(0.4*sds*iP*(hFLalt/rU)*(car1/rPO),fPMin),fPMax))
             
     st.write(f":blue[Governing ${FP}$:]")
-    dfsfP=pd.DataFrame({"Location":zLblist,"Z":z,"Z/H": zh,"Hf": hF, "Fp/Wp": fP})
+    dfsfP=pd.DataFrame({"Location, (Sds = " + str(round(sds,3)) + ")" :zLblist,"Z":z,"Z/H": zh,"Hf": hF, "Fp/Wp": fP})
     st.dataframe(dfsfP, hide_index=True)
 
     fig = plt.figure(figsize=(10, 10))
