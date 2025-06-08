@@ -50,7 +50,7 @@ df = pd.read_csv('ASCE722Ch13.csv')
 df.set_index('Menuitems', inplace=True)
 st.divider()
 
-OPD = st.checkbox("Fp for OPDs", value=True, key="check1")
+OPD = st.checkbox("Select for Fp for OPDs", value=True, key="check1")
 if OPD:
     zOPD = [0.0, 1/3, 2/3, 1.0]
     nlist = ["Interior nonstructural walls and partitions;  Light frame > 9 ft (2.74 m) in height","Ceilings; All"]
@@ -84,7 +84,7 @@ if OPD:
 st.divider()    
 
 
-DfP = st.checkbox(" Detaialed Fp Calulations for any nonstructural component", value=False, key="check2")
+DfP = st.checkbox("Select for Detailed Fp Calulations for any nonstructural component", value=False, key="check2")
 if DfP:
         
     st.write(":red[Detailed $F_{p}$ Calculations:]")
