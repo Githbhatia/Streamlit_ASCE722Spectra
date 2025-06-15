@@ -11,6 +11,7 @@ import matplotlib.pyplot as plt
 import streamlit as st
 import pandas as pd
 import math
+import pydeck as pdk
 
 def persistent_checkbox(label, key):
     state = st.checkbox(label, value=st.session_state.checklist_items.get(key, False), key=key)
@@ -166,8 +167,41 @@ def onclick():
             
 
     
-    df = pd.DataFrame({"lat":[float(lat)], "lon":[float(longt)]})
-    st.map(df)      
+    df = pd.DataFrame({"lat":[float(lat)], "lon":[float(longt)],"text": mysite})
+    view = pdk.data_utils.compute_view(df[["lon", "lat"]])
+    st.pydeck_chart(
+    pdk.Deck(
+        map_style="mapbox://styles/mapbox/light-v9",
+        initial_view_state=view,
+        tooltip={"text": "{text}"},
+        layers=[
+            pdk.Layer(
+                "ScatterplotLayer",
+                data=df,
+                get_position=["lon", "lat"],
+                get_color=[255,0,0],
+                get_radius=10,
+                radiusMinPixels=5,
+                radiusMaxPixels=50,
+                pickable=True,
+                ),
+            pdk.Layer(
+                "TextLayer",
+                data=df,
+                get_position=["lon", "lat"],
+                get_color=[0, 0, 0],
+                get_text=str("text"),
+                get_size=11,
+                get_text_anchor='"middle"',
+                get_alignment_baseline='"top"',
+                pickable=True,
+                ),
+
+
+            ],
+        )
+    )
+  
 
 
     url = 'https://earthquake.usgs.gov/ws/designmaps/asce7-22.json?latitude='+ str(lat) + '&longitude=' + str(longt) +'&riskCategory='+ riskct +'&siteClass=' + sitecl + '&title=Example'
@@ -387,9 +421,8 @@ def contourf(lat, longt, riskct):
     longgrid = np.arange(longt-(nlong//2)*gridspacing, longt+((nlong//2)+0.9)*gridspacing, gridspacing)
     xLong,xLat = np.meshgrid(longgrid,latgrid)
     ZSDS=np.zeros((nlong,nlat)); ZSD1=np.zeros((nlong,nlat))
-    st.write("Grid Used:")
+    
     df = pd.DataFrame({"lat":xLat.flatten(), "lon":xLong.flatten()})
-    st.map(df)  
     mesg = st.empty()
 
     for i in range(nlong):
@@ -413,6 +446,44 @@ def contourf(lat, longt, riskct):
     ax.set_title('Variation of SD1 around site')
     ax.text(longt, lat, '. Site '+ str(ZSD1[nlong//2, nlat//2]), fontsize = 10)
     ax.clabel(CS2, inline=True, fontsize=10)
+    textlist = [""]*49
+    textlist[24] = "Site"
+    df = pd.DataFrame({"lat":xLat.flatten(), "lon":xLong.flatten(), "weight":ZSDS.flatten(), "weight2":ZSD1.flatten(), "text": textlist})
+
+    view = pdk.data_utils.compute_view(df[["lon", "lat"]])
+    st.write("Grid Used:(hover to see values)")
+    st.pydeck_chart(
+    pdk.Deck(
+        map_style="mapbox://styles/mapbox/light-v9",
+        initial_view_state=view,
+        tooltip={"text": "SDS={weight}, SD1={weight2}"},
+        layers=[
+            pdk.Layer(
+                "ScatterplotLayer",
+                data=df,
+                get_position=["lon", "lat"],
+                get_color=[255,0,0],
+                get_radius=10,
+                radiusMinPixels=5,
+                radiusMaxPixels=50,
+                pickable=True,
+                ),
+            pdk.Layer(
+                "TextLayer",
+                data=df,
+                get_position=["lon", "lat"],
+                get_color=[0, 0, 0],
+                get_text=str("text"),
+                get_size=11,
+                get_text_anchor='"middle"',
+                get_alignment_baseline='"top"',
+                pickable=True,
+                ),
+
+
+            ],
+        )
+    )
 
     st.pyplot(fig)
 
