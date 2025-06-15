@@ -456,7 +456,7 @@ def contourf(lat, longt, riskct):
     pdk.Deck(
         map_style="mapbox://styles/mapbox/light-v9",
         initial_view_state=view,
-        tooltip={"text": "SDS={weight}, SD1={weight2}"},
+        tooltip={"text": "{lat}, {lon}, SDS={weight}, SD1={weight2}"},
         layers=[
             pdk.Layer(
                 "ScatterplotLayer",
