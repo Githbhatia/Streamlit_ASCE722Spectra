@@ -448,15 +448,16 @@ def contourf(lat, longt, riskct):
     ax.clabel(CS2, inline=True, fontsize=10)
     textlist = [""]*49
     textlist[24] = "Site"
-    df = pd.DataFrame({"lat":xLat.flatten(), "lon":xLong.flatten(), "weight":ZSDS.flatten(), "weight2":ZSD1.flatten(), "text": textlist})
 
+    df = pd.DataFrame({"lat":xLat.flatten(), "lon":xLong.flatten(), "weight":ZSDS.flatten(), "weight2":ZSD1.flatten(), "text": textlist})
+    df.insert(1, "latlong", (df["lat"].round(3)).astype(str)+","+(df["lon"].round(3)).astype(str))
     view = pdk.data_utils.compute_view(df[["lon", "lat"]])
     st.write("Grid Used:(hover to see values)")
     st.pydeck_chart(
     pdk.Deck(
         map_style="mapbox://styles/mapbox/light-v9",
         initial_view_state=view,
-        tooltip={"text": "{lat}, {lon}, SDS={weight}, SD1={weight2}"},
+        tooltip={"text": "{latlong}, \n SDS={weight}, SD1={weight2}"},
         layers=[
             pdk.Layer(
                 "ScatterplotLayer",
