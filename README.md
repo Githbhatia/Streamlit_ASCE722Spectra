@@ -27,4 +27,6 @@ Accepts both late long pair or an address.
 
 5/24/2025 Further added code for persistance in user options on the Fp page, not perfect but close.
 
+6/15/2025 Improved code for maps - switched to pydeck.  Now has labels for markers and tooltip popups.
+
 Try out at: https://jmtwtc7pdpdfhpzgnwfdt6.streamlit.app/
