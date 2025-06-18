@@ -159,9 +159,15 @@ def onclick():
     if address =="":
         lat = latitude
         longt = longitude
-        address = mygeolocatorreverse(lat, longt)
+        try:
+            address = mygeolocatorreverse(lat, longt)
+        except:
+            st.write("Geolocator not available, try again")
     else:
-        lat, longt, address = mygeolocator(address)
+        try:
+            lat, longt, address = mygeolocator(address)
+        except:
+            st.write("Geolocator not available, try again")
         if lat == 0.0 and longt == 0.0:
             st.stop()
             
