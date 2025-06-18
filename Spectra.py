@@ -168,7 +168,10 @@ def onclick():
 
     
     df = pd.DataFrame({"lat":[float(lat)], "lon":[float(longt)],"text": mysite})
-    view = pdk.data_utils.compute_view(df[["lon", "lat"]])
+    view = pdk.ViewState(
+        latitude=float(lat),
+        longitude=float(longt),
+        zoom=11,)
     st.pydeck_chart(
     pdk.Deck(
         map_style="mapbox://styles/mapbox/light-v9",
