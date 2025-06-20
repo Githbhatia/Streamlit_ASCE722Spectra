@@ -180,7 +180,7 @@ def onclick():
         zoom=11,)
     st.pydeck_chart(
     pdk.Deck(
-        map_style="mapbox://styles/mapbox/light-v11",
+        #map_style="mapbox://styles/mapbox/light-v12",
         initial_view_state=view,
         tooltip={"text": "{text}"},
         layers=[
@@ -198,7 +198,7 @@ def onclick():
                 "TextLayer",
                 data=df,
                 get_position=["lon", "lat"],
-                get_color=[0, 0, 0],
+                get_color=[255, 0, 0],
                 get_text=str("text"),
                 get_size=11,
                 get_text_anchor='"middle"',
@@ -464,7 +464,7 @@ def contourf(lat, longt, riskct):
     st.write("Grid Used:(hover to see values)")
     st.pydeck_chart(
     pdk.Deck(
-        map_style="mapbox://styles/mapbox/light-v11",
+        #map_style="mapbox://styles/mapbox/light-v11",
         initial_view_state=view,
         tooltip={"text": "{latlong}, \n SDS={weight}, SD1={weight2}"},
         layers=[
@@ -482,7 +482,7 @@ def contourf(lat, longt, riskct):
                 "TextLayer",
                 data=df,
                 get_position=["lon", "lat"],
-                get_color=[0, 0, 0],
+                get_color=[255, 0, 0],
                 get_text=str("text"),
                 get_size=11,
                 get_text_anchor='"middle"',
