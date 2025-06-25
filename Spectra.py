@@ -180,7 +180,7 @@ def onclick():
         zoom=11,)
     st.pydeck_chart(
     pdk.Deck(
-        #map_style="mapbox://styles/mapbox/light-v12",
+        map_style="mapbox://styles/mapbox/light-v11",
         initial_view_state=view,
         tooltip={"text": "{text}"},
         layers=[
