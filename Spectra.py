@@ -180,7 +180,7 @@ def onclick():
         zoom=11,)
     st.pydeck_chart(
     pdk.Deck(
-        #map_style="mapbox://styles/mapbox/light-v9",
+        # map_style="mapbox://styles/mapbox/light-v9",
         initial_view_state=view,
         tooltip={"text": "{text}"},
         layers=[
@@ -278,6 +278,8 @@ def onclick():
 
     ax[1].set_xlabel('Period')
     ax[1].set_title(sitetitle + " MCE Spectrum")
+
+    ax2.set_xlabel('Period')
 
     if (estimatedswv and swv != 0.0):
 
@@ -822,5 +824,4 @@ if st.session_state.clicked:
         contourf(lat, longt, riskct)
 
 st.divider()
-
 
