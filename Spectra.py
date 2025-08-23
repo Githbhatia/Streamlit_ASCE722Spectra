@@ -180,7 +180,7 @@ def onclick():
         zoom=11,)
     st.pydeck_chart(
     pdk.Deck(
-        #map_style="mapbox://styles/mapbox/light-v11",
+        map_style="mapbox://styles/mapbox/light-v9",
         initial_view_state=view,
         tooltip={"text": "{text}"},
         layers=[
@@ -198,7 +198,7 @@ def onclick():
                 "TextLayer",
                 data=df,
                 get_position=["lon", "lat"],
-                get_color=[255, 0, 0],
+                get_color=[0, 0, 0],
                 get_text=str("text"),
                 get_size=11,
                 get_text_anchor='"middle"',
@@ -270,7 +270,9 @@ def onclick():
         smceu = rdatau["response"]["data"]["multiPeriodMCErSpectrum"]["ordinates"]
 
     fig = plt.figure(figsize=(10, 10))
+    fig2 = plt.figure(figsize=(10, 5))
     ax = fig.subplots(2,1)
+    ax2 = fig2.subplots(1,1)
     ax[0].set_xlabel('Period')
     ax[0].set_title(sitetitle + " Design Spectrum")
 
@@ -313,6 +315,16 @@ def onclick():
                 sd1 = max(0.9*sg[i]*t[i], sd1)
             sd1=max(sd1,sd1min)
 
+        elfs = [min(x,sds) for x in sg ]
+        focc = elfs.index(sds)
+        elfs = [sds if ind <= focc else x for ind, x in enumerate(elfs) ]
+        ax2.plot(t, elfs, label="Recommended ELF Design Spectrum", color='Purple', linewidth=1.0)
+        ax2.set_xlim([0, 5])
+        ax2.legend()
+        ax2.grid()
+        ax2.set_title(sitetitle + " Recommended ELF Design Spectrum (MPRS capped to SDS)")
+
+
         st.subheader("ASCE7-22 Seismic Parameter Output")
         st.write("Based on est. shear wave velocity per ASCE 7-22 Section 20.3 and 21.4")
         df = pd.DataFrame(
@@ -321,9 +333,11 @@ def onclick():
         df.set_index('Parameter', inplace=True)
         st.dataframe(df)
 
-        dfs=pd.DataFrame({"time period":t,"Governing Multiperiod Spec": sg, "Governing MCE Multiperiod":smceg })
+        dfs=pd.DataFrame({"time period":t,"Governing Multiperiod Spec": sg, "Recommended ELF Design Spectrum": elfs,"Governing MCE Multiperiod":smceg})
         st.dataframe(dfs)
-        textout = mywritefileEstSV(t, sg, tmce, smceg, sds, sd1, sitecl)
+        textout = mywritefileEstSV(t, sg, tmce, smceg, sds, sd1, sitecl, elfs)
+
+
 
     elif  swv != 0.0:
         sexp = np.array(su)*siteclBMultp + np.array(sl)*(1-siteclBMultp)
@@ -342,6 +356,17 @@ def onclick():
         ax[1].legend()
         ax[1].grid()
         p = rdata["response"]["data"].items()
+        sds = rdata["response"]["data"]["sds"]
+
+        elfs = [min(x,sds) for x in s ]
+        focc = elfs.index(sds)
+        elfs = [sds if ind <= focc else x for ind, x in enumerate(elfs) ]
+        ax2.plot(t, elfs, label="Recommended ELF Design Spectrum", color='Purple', linewidth=1.0)
+        ax2.set_xlim([0, 5])
+        ax2.legend()
+        ax2.grid()
+        ax2.set_title(sitetitle + " Recommended ELF Design Spectrum (MPRS capped to SDS)")
+
         st.subheader("ASCE7-22 Seismic Parameter Output")
         df = pd.DataFrame(p)
         df = df[0:11]
@@ -349,11 +374,13 @@ def onclick():
         df['Values'] = df['Values'].astype(str)
         df.set_index('Parameter', inplace=True)
         st.dataframe(df)
-        dfs=pd.DataFrame({"time period":t,"Multiperiod Spec": s, "Interpolated Spec": sexp  ,"MCE Multiperiod":smce, "Interpolated MCE spec": sexpmce })
+        dfs=pd.DataFrame({"time period":t,"Multiperiod Spec": s, "Interpolated Spec": sexp, "Recommended ELF Design Spectrum": elfs, "MCE Multiperiod":smce, "Interpolated MCE spec": sexpmce })
         st.dataframe(dfs)
         sds =float(df.loc["sds"].values[0])
         st.session_state['sds'] = sds
-        textout = mywritefileest(rdata, sitecl, sexp)
+        textout = mywritefileest(rdata, sitecl, sexp, elfs)
+        
+
 
     elif siteclass=="Default":   
 
@@ -380,6 +407,16 @@ def onclick():
         sds = 0.9 * max(sg[t.index(0.2):t.index(5.0)])
         st.session_state['sds'] = sds
         sd1 = sg[t.index(1.0)]
+
+        elfs = [min(x,sds) for x in sg ]
+        focc = elfs.index(sds)
+        elfs = [sds if ind <= focc else x for ind, x in enumerate(elfs) ]
+        ax2.plot(t, elfs, label="Recommended ELF Design Spectrum", color='Purple', linewidth=1.0)
+        ax2.set_xlim([0, 5])
+        ax2.legend()
+        ax2.grid()
+        ax2.set_title(sitetitle + " Recommended ELF Design Spectrum (MPRS capped to SDS)")
+
         st.subheader("ASCE7-22 Seismic Parameter Output")
         st.write("Default = Max of Site Class C, CD, D")
         df = pd.DataFrame(
@@ -387,9 +424,11 @@ def onclick():
         )
         df.set_index('Parameter', inplace=True)
         st.dataframe(df)
-        dfs=pd.DataFrame({"time period":t,"Governing Multiperiod Spec": sg, "Governing MCE Multiperiod":smceg })
+        dfs=pd.DataFrame({"time period":t,"Governing Multiperiod Spec": sg, "Recommended ELF Design Spectrum": elfs, "Governing MCE Multiperiod":smceg })
         st.dataframe(dfs)
-        textout = mywritefileEstSV(t, sg, tmce, smceg, sds, sd1, sitecl)
+        textout = mywritefileEstSV(t, sg, tmce, smceg, sds, sd1, sitecl, elfs)
+
+
     else:
         ax[0].plot(t, s, label="Multiperiod Design Spectrum for " + sitecl, color='Red', linewidth=1.0)
         ax[0].plot(t2, s2, label="2-Period Design Spectrum for " + sitecl, color='Green', linewidth=1.0)
@@ -402,6 +441,17 @@ def onclick():
         ax[1].legend()
         ax[1].grid()
         p = rdata["response"]["data"].items()
+        sds = rdata["response"]["data"]["sds"]
+
+        elfs = [min(x,sds) for x in s ]
+        focc = elfs.index(sds)
+        elfs = [sds if ind <= focc else x for ind, x in enumerate(elfs) ]
+        ax2.plot(t, elfs, label="Recommended ELF Design Spectrum", color='Purple', linewidth=1.0)
+        ax2.set_xlim([0, 5])
+        ax2.legend()
+        ax2.grid()
+        ax2.set_title(sitetitle + " Recommended ELF Design Spectrum (MPRS capped to SDS)")
+
         st.subheader("ASCE7-22 Seismic Parameter Output")
         df = pd.DataFrame(p)
         df = df[0:11]
@@ -411,11 +461,14 @@ def onclick():
         st.dataframe(df)
         sds = float(df.loc["sds"].values[0])
         st.session_state['sds'] = sds
-        dfs=pd.DataFrame({"time period":t,"Multiperiod Spec": s, "MCE Multiperiod":smce })
+        dfs=pd.DataFrame({"time period":t,"Multiperiod Spec": s, "Recommended ELF Design Spectrum": elfs, "MCE Multiperiod":smce })
         st.dataframe(dfs)
-        textout = mywritefile(rdata, sitecl)
+        textout = mywritefile(rdata, sitecl, elfs)
+        
+
 
     st.pyplot(fig)
+    st.pyplot(fig2)
 
     return()
 
@@ -464,7 +517,7 @@ def contourf(lat, longt, riskct):
     st.write("Grid Used:(hover to see values)")
     st.pydeck_chart(
     pdk.Deck(
-        #map_style="mapbox://styles/mapbox/light-v11",
+        map_style="mapbox://styles/mapbox/light-v9",
         initial_view_state=view,
         tooltip={"text": "{latlong}, \n SDS={weight}, SD1={weight2}"},
         layers=[
@@ -482,7 +535,7 @@ def contourf(lat, longt, riskct):
                 "TextLayer",
                 data=df,
                 get_position=["lon", "lat"],
-                get_color=[255, 0, 0],
+                get_color=[0, 0, 0],
                 get_text=str("text"),
                 get_size=11,
                 get_text_anchor='"middle"',
@@ -499,7 +552,7 @@ def contourf(lat, longt, riskct):
 
 
 
-def mywritefileEstSV(t, sg, tmce, smceg, sds, sd1, sitecl):
+def mywritefileEstSV(t, sg, tmce, smceg, sds, sd1, sitecl, elfs):
     sitetitle = mysite
     riskct = riskc
 
@@ -526,6 +579,11 @@ def mywritefileEstSV(t, sg, tmce, smceg, sds, sd1, sitecl):
     while j < index:
         textout += str(t[j])+ ", " + str(sg[j])+"\n"
         j+= 1
+    j = 0
+    textout += "Recommended ELF Design Spectrum\n"
+    while j < index:
+        textout += str(t[j])+ ", " + str(elfs[j])+"\n"
+        j+= 1
     textout += "Governing MultiPeriodMCErSpectrum\n"
     index = len(tmce)
     j = 0
@@ -537,7 +595,7 @@ def mywritefileEstSV(t, sg, tmce, smceg, sds, sd1, sitecl):
 
 
 
-def mywritefile( ldata, sitecl):
+def mywritefile( ldata, sitecl, elfs):
     sitetitle = mysite
     riskct = riskc
 
@@ -567,6 +625,11 @@ def mywritefile( ldata, sitecl):
     while j < index:
         textout += str(t[j])+ ", " + str(s[j])+"\n"
         j+= 1
+    j = 0
+    textout += "Recommended ELF Design Spectrum\n"
+    while j < index:
+        textout += str(t[j])+ ", " + str(elfs[j])+"\n"
+        j+= 1
     textout += "MultiPeriodMCErSpectrum\n"
     index = len(tmce)
     j = 0
@@ -576,7 +639,7 @@ def mywritefile( ldata, sitecl):
     return(textout)
 
 
-def mywritefileest(ldata, sitecl, sexp):
+def mywritefileest(ldata, sitecl, sexp, elfs):
     sitetitle = mysite
     riskct = riskc
 
@@ -605,6 +668,11 @@ def mywritefileest(ldata, sitecl, sexp):
     j = 0
     while j < index:
         textout += str(t[j])+ ", " + str(s[j])+"\n"
+        j+= 1
+    j = 0
+    textout += "Recommended ELF Design Spectrum\n"
+    while j < index:
+        textout += str(t[j])+ ", " + str(elfs[j])+"\n"
         j+= 1
 
     textout += "Interpolated MultiPeriodDesignSpectrum\n"
@@ -689,7 +757,7 @@ else:
     mysite = st.text_input("Title for report", st.session_state["myTitle"] , key="title")
 st.session_state['myTitle'] = mysite
 
-st.write("Either enter Shear Wave Velocity or pick Site Class" )
+st.write("Either enter Shear Wave Velocity or pick Site Class:" )
 st.write("(Shear Wave Velocity will be used when entered)")
 
 
@@ -698,6 +766,7 @@ with c1:
     t1, t2 = st.tabs(["Shear Wave Velocity", "Site Class"])
     with t1:
         swv = st.number_input("Shear Wave Velocity (ft/s)",value = inSwv, step = 100.0, min_value = 0.0, key="swvss")
+        st.write("Note: Shear Wave Velocity of 0.0 will use Site Class selection to generate spectra")
         st.session_state['myswv'] = swv
         estimatedswv= persistent_checkbox("Estimated Shear Wave Velocity?" ,key="estswv")
     with t2:
@@ -714,13 +783,13 @@ with c2:
 st.divider()
 st.write("Either provide Address or Lat/Long Pair (leave Address blank)")
 
-tab1, tab2 = st.tabs(["Address", "Lat/Long"])
+tab1, tab2 = st.tabs(["Lat/Long", "Address"])
 
-with tab1:
+with tab2:
     addressg = st.text_input("Address", inAdd, placeholder="123, streat name, city, CA")
     st.session_state['myaddress'] = addressg
 
-with tab2:
+with tab1:
     latitude= st.number_input("Latitude",value=inLat, step = 0.1, min_value = -90.0, max_value= 90.0)
     st.session_state['mylat'] = latitude
     longitude= st.number_input("Longitude",value =inLong, step = 0.1, min_value =-180.0, max_value=180.0)
