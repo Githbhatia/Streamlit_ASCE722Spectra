@@ -180,7 +180,7 @@ def onclick():
         zoom=11,)
     st.pydeck_chart(
     pdk.Deck(
-        map_style="mapbox://styles/mapbox/light-v9",
+        #map_style="mapbox://styles/mapbox/light-v9",
         initial_view_state=view,
         tooltip={"text": "{text}"},
         layers=[
@@ -822,4 +822,5 @@ if st.session_state.clicked:
         contourf(lat, longt, riskct)
 
 st.divider()
+
 
