@@ -29,4 +29,6 @@ Accepts both late long pair or an address.
 
 6/15/2025 Improved code for maps - switched to pydeck.  Now has labels for markers and tooltip popups.
 
+8/22/2025 Added "Recommended ELF Design Spectra" per ASCE ballot for future change to ASCE 7-22
+
 Try out at: https://jmtwtc7pdpdfhpzgnwfdt6.streamlit.app/
