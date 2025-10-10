@@ -519,7 +519,7 @@ def contourf(lat, longt, riskct):
     st.write("Grid Used:(hover to see values)")
     st.pydeck_chart(
     pdk.Deck(
-        map_style="mapbox://styles/mapbox/light-v9",
+        #map_style="mapbox://styles/mapbox/light-v9",
         initial_view_state=view,
         tooltip={"text": "{latlong}, \n SDS={weight}, SD1={weight2}"},
         layers=[
@@ -824,4 +824,5 @@ if st.session_state.clicked:
         contourf(lat, longt, riskct)
 
 st.divider()
+
 
