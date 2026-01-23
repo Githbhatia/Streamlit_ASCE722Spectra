@@ -210,9 +210,11 @@ if DfP:
         st.session_state.selecteditemTa = st.session_state.Ta
     else:
         tA = 0.02*h**0.75
-        Ta = "T_{a} = C_{t} H^{x} = "
+        Ta = "T_{a}"
+        Ct= "C_{t}"
+        Hx = "H^{x}"
         st.write(f"Per ASCE 7-22 Eq 12.8-8 (for \"all other structural systems\"):" )
-        st.write(f"${Ta}$ " +str(round(tA,3))+ " secs")
+        st.write(f"${Ta}$ = ${Ct}$ ${Hx}$ = "  +str(round(tA,3))+ " secs")
     st.divider()
 
 
@@ -312,4 +314,5 @@ if DfP:
     ax.text(0.99, 0.02, info, horizontalalignment='right', verticalalignment='top', fontsize=6, color ='Black',transform=ax.transAxes)
     st.pyplot(fig)
 st.divider()
+
 
