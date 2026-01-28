@@ -171,6 +171,8 @@ if DfP:
         
         r = dfs.loc[selecteditem].values[0]
         oM = dfs.loc[selecteditem].values[1]
+        cTs = dfs.loc[selecteditem].values[3]
+        xs = dfs.loc[selecteditem].values[4]
     I_e = "I_{e}"
     if st.session_state["selectedIe"] != 0.0:
         ie = float(st.selectbox(f"${I_e}$, Importance Factor for Building",(1.0,1.25,1.5), index = list((1.0,1.25,1.5)).index(st.session_state["selectedIe"]), key="Ie"))
@@ -209,11 +211,19 @@ if DfP:
             st.stop()
         st.session_state.selecteditemTa = st.session_state.Ta
     else:
-        tA = 0.02*h**0.75
+        if knownstsys:
+            st.write(f"Per ASCE 7-22 Table 12.2-1 for {selecteditem}:" )
+        else:
+            cTs = 0.02
+            xs = 0.75
+            st.write(f"Per ASCE 7-22 Eq 12.8-8 (for \"all other structural systems\"):" )
+        tA = cTs*h**xs 
         Ta = "T_{a}"
         Ct= "C_{t}"
         Hx = "H^{x}"
-        st.write(f"Per ASCE 7-22 Eq 12.8-8 (for \"all other structural systems\"):" )
+        X= "x"
+        st.write(f"${Ct}$ = " +str(round(cTs,3)))
+        st.write(f"${X}$ = " +str(round(xs,3)))
         st.write(f"${Ta}$ = ${Ct}$ ${Hx}$ = "  +str(round(tA,3))+ " secs")
     st.divider()
 
