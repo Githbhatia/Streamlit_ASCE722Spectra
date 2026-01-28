@@ -31,4 +31,6 @@ Accepts both late long pair or an address.
 
 8/22/2025 Added "Recommended ELF Design Spectra" per ASCE ballot for future change to ASCE 7-22
 
+1/28/2026 Revised period calculation to sync with structural system selected.
+
 Try out at: https://jmtwtc7pdpdfhpzgnwfdt6.streamlit.app/
