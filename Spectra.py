@@ -41,7 +41,7 @@ def myurlopen(url):
 def mygeolocatorreverse(lat, longt):
     ctx = ssl.create_default_context(cafile=certifi.where())
     #ctx = ssl._create_unverified_context()
-    # geopy.geocoders.options.default_ssl_context = ctx
+    geopy.geocoders.options.default_ssl_context = ctx
     geolocator = Nominatim(user_agent="STASCE722SpectraFp1", scheme='https')
     geocode = RateLimiter(geolocator.geocode, min_delay_seconds=1)
     try:
@@ -62,7 +62,7 @@ def mygeolocatorreverse(lat, longt):
 def mygeolocator(address):
     ctx = ssl.create_default_context(cafile=certifi.where())
     # #ctx = ssl._create_unverified_context()
-    # geopy.geocoders.options.default_ssl_context = ctx
+    geopy.geocoders.options.default_ssl_context = ctx
     geolocator = Nominatim(user_agent="STASCE722SpectraFp2", scheme='https')
     geocode = RateLimiter(geolocator.geocode, min_delay_seconds=1)
     try:
