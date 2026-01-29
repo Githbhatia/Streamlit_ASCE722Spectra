@@ -164,13 +164,13 @@ def onclick():
         longt = longitude
         try:
             address = mygeolocatorreverse(lat, longt)
-        except:
-            st.write("Geolocator not available, try again")
+        except Exception as e:
+            st.write("Geolocator not available, try again " + str(e))
     else:
         try:
             lat, longt, address = mygeolocator(address)
-        except:
-            st.write("Geolocator not available, try again")
+        except Exception as e:
+            st.write("Geolocator not available, try again " + str(e))
             st.stop()
             
 
