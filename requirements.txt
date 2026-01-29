@@ -1,9 +1,10 @@
 ﻿certifi
-geopy==2.3.0
+geopy==2.4.1
 pandas
 matplotlib
 numpy
 streamlit>=1.53.0
+
 
 
 
