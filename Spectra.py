@@ -5,6 +5,7 @@ import ssl
 import geopy.geocoders
 from geopy.geocoders import Nominatim
 from geopy.exc import GeocoderTimedOut
+from geopy.extra.rate_limiter import RateLimiter
 import urllib.request as ur
 import json as js
 import matplotlib.pyplot as plt
@@ -40,10 +41,11 @@ def myurlopen(url):
 def mygeolocatorreverse(lat, longt):
     ctx = ssl.create_default_context(cafile=certifi.where())
     #ctx = ssl._create_unverified_context()
-    geopy.geocoders.options.default_ssl_context = ctx
+    # geopy.geocoders.options.default_ssl_context = ctx
     geolocator = Nominatim(user_agent="STASCE722SpectraFp1", scheme='https')
+    geocode = RateLimiter(geolocator.geocode, min_delay_seconds=1)
     try:
-        location = geolocator.reverse(str(lat) + " ," + str(longt))
+        location = geolocator.geocode.reverse(str(lat) + " ," + str(longt))
         if location != None:
             address = str(location.address)
             st.write("Using "+ address + " (Geocoding services provided by OpenStreetMaps)")
@@ -59,9 +61,10 @@ def mygeolocatorreverse(lat, longt):
 @st.cache_resource
 def mygeolocator(address):
     ctx = ssl.create_default_context(cafile=certifi.where())
-    #ctx = ssl._create_unverified_context()
-    geopy.geocoders.options.default_ssl_context = ctx
+    # #ctx = ssl._create_unverified_context()
+    # geopy.geocoders.options.default_ssl_context = ctx
     geolocator = Nominatim(user_agent="STASCE722SpectraFp2", scheme='https')
+    geocode = RateLimiter(geolocator.geocode, min_delay_seconds=1)
     try:
         location = geolocator.geocode(address)
         if (location != None):
