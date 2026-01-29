@@ -45,7 +45,7 @@ def mygeolocatorreverse(lat, longt):
     geolocator = Nominatim(user_agent="STASCE722SpectraFp1", scheme='https')
     geocode = RateLimiter(geolocator.geocode, min_delay_seconds=1)
     try:
-        location = geolocator.geocode.reverse(str(lat) + " ," + str(longt))
+        location = geolocator.geocode.reverse(str(lat) + " ," + str(longt), timeout=2)
         if location != None:
             address = str(location.address)
             st.write("Using "+ address + " (Geocoding services provided by OpenStreetMaps)")
@@ -66,7 +66,7 @@ def mygeolocator(address):
     geolocator = Nominatim(user_agent="STASCE722SpectraFp2", scheme='https')
     geocode = RateLimiter(geolocator.geocode, min_delay_seconds=1)
     try:
-        location = geolocator.geocode(address)
+        location = geolocator.geocode(address, timeout=2)
         if (location != None):
             lat = str(location.latitude)
             longt = str(location.longitude)
