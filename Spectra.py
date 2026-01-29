@@ -41,12 +41,12 @@ def mygeolocatorreverse(lat, longt):
     ctx = ssl.create_default_context(cafile=certifi.where())
     #ctx = ssl._create_unverified_context()
     geopy.geocoders.options.default_ssl_context = ctx
-    geolocator = Nominatim(user_agent="STASCE722Spectra", scheme='https')
+    geolocator = Nominatim(user_agent="STASCE722SpectraFp1", scheme='https')
     try:
         location = geolocator.reverse(str(lat) + " ," + str(longt))
         if location != None:
             address = str(location.address)
-            st.write("Using "+ address)
+            st.write("Using "+ address + " (Geocoding services provided by OpenStreetMaps)")
             return(location.address)
         else:
             st.write("Address not found: Continuing using "+ str(lat) + ", " + str(longt)) 
@@ -61,14 +61,14 @@ def mygeolocator(address):
     ctx = ssl.create_default_context(cafile=certifi.where())
     #ctx = ssl._create_unverified_context()
     geopy.geocoders.options.default_ssl_context = ctx
-    geolocator = Nominatim(user_agent="STASCE722Spectra", scheme='https')
+    geolocator = Nominatim(user_agent="STASCE722SpectraFp2", scheme='https')
     try:
         location = geolocator.geocode(address)
         if (location != None):
             lat = str(location.latitude)
             longt = str(location.longitude)
             address = str(location.address)
-            st.write("Using "+ str(lat) + ", " + str(longt))
+            st.write("Using "+ str(lat) + ", " + str(longt) + " (Geocoding services provided by OpenStreetMaps)")
             return(location.latitude, location.longitude, location.address)
         else:
             st.write("Invalid Address:" + "Revise address and try again")
@@ -168,7 +168,6 @@ def onclick():
             lat, longt, address = mygeolocator(address)
         except:
             st.write("Geolocator not available, try again")
-        if lat == 0.0 and longt == 0.0:
             st.stop()
             
 
