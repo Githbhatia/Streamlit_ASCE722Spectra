@@ -43,9 +43,9 @@ def mygeolocatorreverse(lat, longt):
     # #ctx = ssl._create_unverified_context()
     # geopy.geocoders.options.default_ssl_context = ctx
     geolocator = Nominatim(user_agent="STASCE722SpectraFp1")
-    geocode = RateLimiter(geolocator.geocode, min_delay_seconds=1)
+    geocode = RateLimiter(geolocator.reverse, min_delay_seconds=1)
     try:
-        location = geolocator.geocode.reverse(str(lat) + " ," + str(longt), timeout=2)
+        location = geolocator.reverse(str(lat) + " ," + str(longt), timeout=2)
         if location != None:
             address = str(location.address)
             st.write("Using "+ address + " (Geocoding services provided by OpenStreetMaps)")
