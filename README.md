@@ -33,4 +33,6 @@ Accepts both late long pair or an address.
 
 1/28/2026 Revised period calculation to sync with structural system selected.
 
+2/6/2026 Provided a choice of geocoders - Openstreet maps has been "busy" lately.  Have not figured out how to assign an api_key for ArcGIS yet.
+
 Try out at: https://jmtwtc7pdpdfhpzgnwfdt6.streamlit.app/
