@@ -810,7 +810,8 @@ with tab1:
     if addressg != "":
         st.write("Note: Clear address to generate spectra using lat/long pair")
 
-whichgeolocator = st.radio("Select Geocoding Service (will use cache where it exists)", ("OpenStreetMaps (Default)", "ArcGIS"), index=0)
+whichgeolocator = st.radio("Select Geocoding Service (will use cache where it exists)", ("OpenStreetMaps (Default)", "ArcGIS"), index=0, key="geoloc")
+
 st.write("Note: Geocoding services have usage limits and may be slow at times. If geocoding fails, try again or switch geocoding service.")
 def click_button():
     st.session_state.clicked = True
