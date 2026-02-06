@@ -4,6 +4,7 @@ import certifi
 import ssl
 import geopy.geocoders
 from geopy.geocoders import Nominatim
+from geopy.geocoders import ArcGIS
 from geopy.exc import GeocoderTimedOut
 from geopy.extra.rate_limiter import RateLimiter
 import urllib.request as ur
@@ -42,13 +43,19 @@ def mygeolocatorreverse(lat, longt):
     ctx = ssl.create_default_context(cafile=certifi.where())
     # ctx = ssl._create_unverified_context()
     geopy.geocoders.options.default_ssl_context = ctx
-    geolocator = Nominatim(user_agent="STASCE722SpectraFp1", scheme='https')
+    if whichgeolocator == "OpenStreetMaps (Default)":
+        geolocator = Nominatim(user_agent="STASCE722SpectraFp1", scheme='https')
+    else:
+        geolocator = ArcGIS(user_agent="STASCE722SpectraFp1", scheme='https')
     geocode = RateLimiter(geolocator.reverse, min_delay_seconds=1)
     try:
         location = geolocator.reverse(str(lat) + " ," + str(longt), timeout=2)
         if location != None:
             address = str(location.address)
-            st.write("Using "+ address + " (Geocoding services provided by OpenStreetMaps)")
+            if whichgeolocator == "OpenStreetMaps (Default)":
+                st.write("Using "+ address + " (Geocoding services provided by OpenStreetMaps)")
+            else:
+                st.write("Using "+ address + " (Geocoding services provided by ArcGIS)")
             return(location.address)
         else:
             st.write("Address not found: Continuing using "+ str(lat) + ", " + str(longt)) 
@@ -63,7 +70,11 @@ def mygeolocator(address):
     ctx = ssl.create_default_context(cafile=certifi.where())
     # ctx = ssl._create_unverified_context()
     geopy.geocoders.options.default_ssl_context = ctx
-    geolocator = Nominatim(user_agent="STASCE722SpectraFp2")
+    # geolocator = Nominatim(user_agent="STASCE722SpectraFp2")
+    if whichgeolocator == "OpenStreetMaps (Default)":
+        geolocator = Nominatim(user_agent="STASCE722SpectraFp1", scheme='https')
+    else:
+        geolocator = ArcGIS(user_agent="STASCE722SpectraFp1", scheme='https')
     geocode = RateLimiter(geolocator.geocode, min_delay_seconds=1)
     try:
         location = geolocator.geocode(address, timeout=2)
@@ -71,7 +82,10 @@ def mygeolocator(address):
             lat = str(location.latitude)
             longt = str(location.longitude)
             address = str(location.address)
-            st.write("Using "+ str(lat) + ", " + str(longt) + " (Geocoding services provided by OpenStreetMaps)")
+            if whichgeolocator == "OpenStreetMaps (Default)":
+                st.write("Using "+ str(lat) + ", " + str(longt) + " (Geocoding services provided by OpenStreetMaps)")
+            else:
+                st.write("Using "+ str(lat) + ", " + str(longt) + " (Geocoding services provided by ArcGIS)")
             return(location.latitude, location.longitude, location.address)
         else:
             st.write("Invalid Address:" + "Revise address and try again")
@@ -85,7 +99,7 @@ def mygeolocator(address):
 
 def onclick():
 
-    global address, lat,longt, textout, riskct, sitecl,sds
+    global address, lat,longt, textout, riskct, sitecl,sds, whichgeolocator
    
     if swv != 0.0:
         try:
@@ -148,16 +162,11 @@ def onclick():
     else:
         st.write("Using site class " + sitecl)
 
-    
-    ctx = ssl.create_default_context(cafile=certifi.where())
-    #ctx = ssl._create_unverified_context()
-    geopy.geocoders.options.default_ssl_context = ctx
-    geolocator = Nominatim(user_agent="STASCE722Spectra", scheme='https')
     sitetitle = mysite
     riskct = riskc
     address = addressg
 
-
+    
 
     if address =="":
         lat = latitude
@@ -801,6 +810,8 @@ with tab1:
     if addressg != "":
         st.write("Note: Clear address to generate spectra using lat/long pair")
 
+whichgeolocator = st.radio("Select Geocoding Service (will use cache where it exists)", ("OpenStreetMaps (Default)", "ArcGIS"), index=0)
+st.write("Note: Geocoding services have usage limits and may be slow at times. If geocoding fails, try again or switch geocoding service.")
 def click_button():
     st.session_state.clicked = True
 
