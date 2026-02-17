@@ -35,4 +35,6 @@ Accepts both late long pair or an address.
 
 2/6/2026 Provided a choice of geocoders - Openstreet maps has been "busy" lately.  Have not figured out how to assign an api_key for ArcGIS yet.
 
+2/16/2026 Switching to a grid (st.data_editor) input for z and h though there is no reliable way to save the session.state for this table.
+
 Try out at: https://jmtwtc7pdpdfhpzgnwfdt6.streamlit.app/
