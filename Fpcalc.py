@@ -221,7 +221,7 @@ if DfP:
     st.write(f"${Ru}$ = " +str(round(rU,3)) + " (1.0 used for z = 0.0 per ASCE 7-22 13.3.1.2)")
 
     st.divider()
-    knownperiod = persistent_toggle("Period Known (if not enabled, period is calculated based on Height H)", key="periodselect")
+    knownperiod = persistent_toggle("Period Known (if not enabled, period is calculated based on Height h)", key="periodselect")
     # st.write(st.session_state)
     if knownperiod:
         Ta = "T_{a}"
@@ -347,5 +347,6 @@ if DfP:
     ax.text(0.99, 0.02, info, horizontalalignment='right', verticalalignment='top', fontsize=6, color ='Black',transform=ax.transAxes)
     st.pyplot(fig)
 st.divider()
+
 
 
