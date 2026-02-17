@@ -111,49 +111,72 @@ if DfP:
         st.session_state.selectedIp = iP
     
 
-    sc3,sc4 =st.columns(2)
-    with sc3:
-        Z = "Z"
-        # z = st.number_input(f"${Z}$, height above base",value= 90.0)
-        if st.session_state.UserZvalues != "":
-            zStr = st.text_input(f"${Z}$, height above base (multiple ok,separate with commas)",value= st.session_state.UserZvalues,  key="zvalues")
+    # sc3,sc4 =st.columns(2)
+    # with sc3:
+    #     Z = "Z"
+    #     # z = st.number_input(f"${Z}$, height above base",value= 90.0)
+    #     if st.session_state.UserZvalues != "":
+    #         zStr = st.text_input(f"${Z}$, height above base (multiple ok,separate with commas)",value= st.session_state.UserZvalues,  key="zvalues")
 
-        else:
-            zStr = st.text_input(f"${Z}$, height above base (multiple ok,separate with commas)",str("0, 15, 30, 45, 60, 75, 90, 100"),key="zvalues")
+    #     else:
+    #         zStr = st.text_input(f"${Z}$, height above base (multiple ok,separate with commas)",str("0, 15, 30, 45, 60, 75, 90, 100"),key="zvalues")
 
-    st.session_state.UserZvalues = st.session_state.zvalues
+    # st.session_state.UserZvalues = st.session_state.zvalues
 
 
-    if st.session_state.UserZlabels != "":
-        zLbl = st.text_input("Labels corresponding to Z values (Separate with commas,Optional)",st.session_state.UserZlabels, key="zLables")
-    else:
-        zLbl = st.text_input("Labels corresponding to Z values (Separate with commas,Optional)",str("Grnd Level, Level 2, Level 3, Level 4, Level 5, Level 6, Mech Level, Roof"),key="zLables")
-    zLblist = [i.strip() for i in zLbl.split(",")]
-    st.session_state.UserZlabels = st.session_state.zLables
+    # if st.session_state.UserZlabels != "":
+    #     zLbl = st.text_input("Labels corresponding to Z values (Separate with commas,Optional)",st.session_state.UserZlabels, key="zLables")
+    # else:
+    #     zLbl = st.text_input("Labels corresponding to Z values (Separate with commas,Optional)",str("Grnd Level, Level 2, Level 3, Level 4, Level 5, Level 6, Mech Level, Roof"),key="zLables")
+    # zLblist = [i.strip() for i in zLbl.split(",")]
+    # st.session_state.UserZlabels = st.session_state.zLables
 
-    try:
-        z =[float(i) for i in zStr.split(",")]
-    except ValueError:
-        st.write(":red[Invalid input, Please enter numbers separated by commas]")
-        st.stop()
+    # try:
+    #     z =[float(i) for i in zStr.split(",")]
+    # except ValueError:
+    #     st.write(":red[Invalid input, Please enter numbers separated by commas]")
+    #     st.stop()
 
-    if len(z) > len(zLblist):
-        for i in range(len(z)-len(zLblist)):
-            zLblist.append("")
-    if len(z) < len(zLblist):
-        for i in range(len(zLblist)-len(z)):
-            zLblist.pop()
+    # if len(z) > len(zLblist):
+    #     for i in range(len(z)-len(zLblist)):
+    #         zLblist.append("")
+    # if len(z) < len(zLblist):
+    #     for i in range(len(zLblist)-len(z)):
+    #         zLblist.pop()
 
-    with sc4:
-        H = "H"
-        if st.session_state["UserHvalues"] != 0.0:
-            h = st.number_input(f"${H}$, Average roof height of structure in ft",value= st.session_state["UserHvalues"], key="H")
-        else:
-            h = st.number_input(f"${H}$, Average roof height of structure in ft",value= 100.0, key="H")
-        st.session_state.UserHvalues = st.session_state.H
-        if h < max(z):
-            st.write(":red[H is < highest value of z, Please correct]")
-            st.stop()
+    z = [0,  100]
+    zLblist = ["Grnd Level","Roof"]
+   
+    dftable=pd.DataFrame({"Location" :zLblist,"z":z})
+    st.write("Enter z values and corresponding labels in the table below (can add/remove rows as needed):")
+    st.write("Maximum z value will be taken as h (average roof height), and minimum z value should be >= 0.0 (grade plane)." )
+    st.write("List can be out of order. \
+    Navigating to another page will reset the table to default values")
+    edited_df = st.data_editor(dftable, num_rows="dynamic",column_config={"Location": st.column_config.TextColumn("Location", help="Labels for Z values"), 
+        "z": st.column_config.NumberColumn(
+            "z (ft)",
+            help="Height above grade plane, should be >=0.0",
+            min_value=0.0 ),
+    }, hide_index=True)
+    edited_df = edited_df.dropna( subset=["z"])
+    edited_df.fillna({"Location":""}, inplace = True)
+    edited_df = edited_df.sort_values(by="z")
+    
+    z = edited_df["z"].tolist()
+    h = max(z)
+    zLblist = edited_df["Location"].tolist()
+
+
+    # with sc4:
+    #     H = "H"
+    #     if st.session_state["UserHvalues"] != 0.0:
+    #         h = st.number_input(f"${H}$, Average roof height of structure in ft",value= st.session_state["UserHvalues"], key="H")
+    #     else:
+    #         h = st.number_input(f"${H}$, Average roof height of structure in ft",value= 100.0, key="H")
+    #     st.session_state.UserHvalues = st.session_state.H
+    #     if h < max(z):
+    #         st.write(":red[H is < highest value of z, Please correct]")
+    #         st.stop()
 
     st.divider()
     knownstsys = persistent_toggle("Structural System Selection (Unknown system assumed if not enabled)", key="structuralselect")
@@ -220,7 +243,7 @@ if DfP:
         tA = cTs*h**xs 
         Ta = "T_{a}"
         Ct= "C_{t}"
-        Hx = "H^{x}"
+        Hx = "h^{x}"
         X= "x"
         st.write(f"${Ct}$ = " +str(round(cTs,3)))
         st.write(f"${X}$ = " +str(round(xs,3)))
@@ -297,7 +320,7 @@ if DfP:
             fPlistalt.append(min(max(0.4*sds*iP*(hFLalt/rU)*(car1/rPO),fPMin),fPMax))
             
     st.write(f":blue[Governing ${FP}$:]")
-    dfsfP=pd.DataFrame({"Location, (Sds = " + str(round(sds,3)) + ")" :zLblist,"Z":z,"Z/H": zh,"Hf": hF, "Fp/Wp": fP})
+    dfsfP=pd.DataFrame({"Location, (Sds = " + str(round(sds,3)) + ")" :zLblist,"z":z,"z/h": zh,"Hf": hF, "Fp/Wp": fP})
     st.dataframe(dfsfP, hide_index=True)
 
     fig = plt.figure(figsize=(10, 10))
@@ -315,8 +338,8 @@ if DfP:
             ax.annotate(f"{round(fP[i],3)} at " + str(z[i]) + " ("+ zLblist[i] + ")", xy=(fP[i], zh[i]), xytext=(fP[i]+arrowlength, zh[i]+0.005), arrowprops=dict(facecolor='black', shrink=0.05))
     ax.grid()
     ax.set_xlabel("Fp/Wp")
-    ax.set_ylabel("Z/H")
-    ax.set_title("Variation of Fp with Z/H")
+    ax.set_ylabel("z/h")
+    ax.set_title("Variation of Fp with z/h")
     info = (mysite[:100] + '..') if len(mysite) > 100 else mysite
     ax.text(0.99, 0.08, info, horizontalalignment='right', verticalalignment='top', fontsize=10, color ='Black',transform=ax.transAxes)
     ax.text(0.99, 0.05, "Sds = "+str(round(sds,3)), horizontalalignment='right', verticalalignment='top', fontsize=10, color ='Black',transform=ax.transAxes)
