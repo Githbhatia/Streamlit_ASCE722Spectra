@@ -37,4 +37,6 @@ Accepts both late long pair or an address.
 
 2/16/2026 Switching to a grid (st.data_editor) input for z and h though there is no reliable way to save the session.state for this table.
 
+4/10/2026 Added button to see the site relative to faults - this is temporary until I can figure out how to embed this directly into the app page.
+
 Try out at: https://jmtwtc7pdpdfhpzgnwfdt6.streamlit.app/
