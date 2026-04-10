@@ -222,7 +222,8 @@ def onclick():
         )
     )
   
-
+    faultURL = "https://hcai.maps.arcgis.com/apps/webappviewer/index.html?id=783b89c5f62a4853a92f08a320d6d518&marker=" + str(longt) + "," + str(lat)+"&scale=20000&showLayers=Earthquake Faults and Folds in the USA - Qfaults_US_Database;Earthquake Faults and Folds in the USA - ca_offshore" 
+    st.link_button("See proximity of site to seismic sources and faults", faultURL, type="primary")
 
     url = 'https://earthquake.usgs.gov/ws/designmaps/asce7-22.json?latitude='+ str(lat) + '&longitude=' + str(longt) +'&riskCategory='+ riskct +'&siteClass=' + sitecl + '&title=Example'
     
