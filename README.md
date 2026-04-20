@@ -39,4 +39,5 @@ Accepts both late long pair or an address.
 
 4/10/2026 Added button to see the site relative to faults - this is temporary until I can figure out how to embed this directly into the app page.
 
+4/19/2026 Commented out extra coding for the "Default" site class (initially inserted to verify USGS calcs for the "Defacult" site class as being the max of C,CD,D)
 Try out at: https://jmtwtc7pdpdfhpzgnwfdt6.streamlit.app/
