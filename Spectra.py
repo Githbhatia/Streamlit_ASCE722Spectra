@@ -144,10 +144,10 @@ def onclick():
         placeholder.selectbox("Site Class",siteClassList,index = siteClassList.index(sitecl)) 
             
         
-    elif siteclass=="Default":
-        sitecl = "CD"
-        siteclu = "C"
-        sitecll = "D"
+    # elif siteclass=="Default":
+    #     sitecl = "CD"
+    #     siteclu = "C"
+    #     sitecll = "D"
     else:
         sitecl = siteclass
     if sitecl == 'F': 
@@ -229,20 +229,23 @@ def onclick():
 
     url = 'https://earthquake.usgs.gov/ws/designmaps/asce7-22.json?latitude='+ str(lat) + '&longitude=' + str(longt) +'&riskCategory='+ riskct +'&siteClass=' + sitecl + '&title=Example'
     
-    if  swv != 0.0 or siteclass=="Default":
+    # if  swv != 0.0 or siteclass=="Default":
+    if swv != 0.0:
         urll = 'https://earthquake.usgs.gov/ws/designmaps/asce7-22.json?latitude='+ str(lat) + '&longitude=' + str(longt) +'&riskCategory='+ riskct +'&siteClass=' + sitecll + '&title=Example'
         urlu = 'https://earthquake.usgs.gov/ws/designmaps/asce7-22.json?latitude='+ str(lat) + '&longitude=' + str(longt) +'&riskCategory='+ riskct +'&siteClass=' + siteclu + '&title=Example'
         
 
 
     response = myurlopen(url)
-    if swv != 0.0 or siteclass=="Default":
+    # if swv != 0.0 or siteclass=="Default":
+    if swv != 0.0 :
         responsel = myurlopen(urll)
         responseu = myurlopen(urlu)
 
     
     rdata = js.loads(response)
-    if swv != 0.0 or siteclass=="Default":           
+    # if swv != 0.0 or siteclass=="Default":      
+    if swv != 0.0:      
         rdatal = js.loads(responsel)
         rdatau = js.loads(responseu)
 
@@ -258,6 +261,7 @@ def onclick():
     output = 'Output for Latitude = ' + str(lat) + ' Longitude = ' + str(longt)
     t = rdata["response"]["data"]["multiPeriodDesignSpectrum"]["periods"]
     s = rdata["response"]["data"]["multiPeriodDesignSpectrum"]["ordinates"]
+    # st.write (t, s )
 
     t2 = rdata["response"]["data"]["twoPeriodDesignSpectrum"]["periods"]
     s2 = rdata["response"]["data"]["twoPeriodDesignSpectrum"]["ordinates"]
@@ -270,7 +274,8 @@ def onclick():
     tmce2 = rdata["response"]["data"]["twoPeriodMCErSpectrum"]["periods"]
     smce2 = rdata["response"]["data"]["twoPeriodMCErSpectrum"]["ordinates"]
 
-    if swv != 0.0 or siteclass=="Default":    
+    # if swv != 0.0 or siteclass=="Default":    
+    if swv != 0.0:
         tl = rdatal["response"]["data"]["multiPeriodDesignSpectrum"]["periods"]
         sl = rdatal["response"]["data"]["multiPeriodDesignSpectrum"]["ordinates"]
         
@@ -398,51 +403,51 @@ def onclick():
         
 
 
-    elif siteclass=="Default":   
+    # elif siteclass=="Default":   
 
-        sg = [max(sl,s,su) for sl,s,su in zip(sl,s,su)]
-        ax[0].plot(t, sl, label="Multiperiod Des Spec lower bound SC= "+ sitecll, color='Red', linewidth=1.0)
-        ax[0].plot(t, s, label="Multiperiod Des Spec SC= " + sitecl, color='Blue', linewidth=1.0)
-        ax[0].plot(t, su, label="Multiperiod Des Spec upper bound SC= "+ siteclu, color='Green', linewidth=1.0)
-        ax[0].plot(t, sg, label="Govering Multiperiod Des Spec", color='Black', linestyle='--', linewidth=2.0)
-        ax[0].set_xlim([0, 5])
-        ax[0].legend()  
-        ax[0].grid()
-        smcel = rdatal["response"]["data"]["multiPeriodMCErSpectrum"]["ordinates"]
-        smceu = rdatau["response"]["data"]["multiPeriodMCErSpectrum"]["ordinates"]
-        smceg = [max(smcel,smce,smceu) for smcel,smce,smceu in zip(smcel,smce,smceu)]
-        ax[1].plot(tmce, smcel, label="MCE Multiperiod lower bound SC= "+ sitecll, color='Red', linewidth=1.0)
-        ax[1].plot(tmce, smce, label="MCE Multiperiod Spec SC= " + sitecl, color='Blue', linewidth=1.0)
-        ax[1].plot(tmce, smceu, label="MCE Multiperiod upper bound SC= "+ siteclu, color='Green', linewidth=1.0)
-        ax[1].plot(tmce, smceg, label="Govering MCE Multiperiod", color='Black', linestyle='--', linewidth=2.0)
-        ax[1].set_xlim([0, 5])
-        ax[1].legend() 
-        ax[1].grid()
+    #     sg = [max(sl,s,su) for sl,s,su in zip(sl,s,su)]
+    #     ax[0].plot(t, sl, label="Multiperiod Des Spec lower bound SC= "+ sitecll, color='Red', linewidth=1.0)
+    #     ax[0].plot(t, s, label="Multiperiod Des Spec SC= " + sitecl, color='Blue', linewidth=1.0)
+    #     ax[0].plot(t, su, label="Multiperiod Des Spec upper bound SC= "+ siteclu, color='Green', linewidth=1.0)
+    #     ax[0].plot(t, sg, label="Govering Multiperiod Des Spec", color='Black', linestyle='--', linewidth=2.0)
+    #     ax[0].set_xlim([0, 5])
+    #     ax[0].legend()  
+    #     ax[0].grid()
+    #     smcel = rdatal["response"]["data"]["multiPeriodMCErSpectrum"]["ordinates"]
+    #     smceu = rdatau["response"]["data"]["multiPeriodMCErSpectrum"]["ordinates"]
+    #     smceg = [max(smcel,smce,smceu) for smcel,smce,smceu in zip(smcel,smce,smceu)]
+    #     ax[1].plot(tmce, smcel, label="MCE Multiperiod lower bound SC= "+ sitecll, color='Red', linewidth=1.0)
+    #     ax[1].plot(tmce, smce, label="MCE Multiperiod Spec SC= " + sitecl, color='Blue', linewidth=1.0)
+    #     ax[1].plot(tmce, smceu, label="MCE Multiperiod upper bound SC= "+ siteclu, color='Green', linewidth=1.0)
+    #     ax[1].plot(tmce, smceg, label="Govering MCE Multiperiod", color='Black', linestyle='--', linewidth=2.0)
+    #     ax[1].set_xlim([0, 5])
+    #     ax[1].legend() 
+    #     ax[1].grid()
  
 
-        sds = 0.9 * max(sg[t.index(0.2):t.index(5.0)])
-        st.session_state['sds'] = sds
-        sd1 = sg[t.index(1.0)]
+    #     sds = 0.9 * max(sg[t.index(0.2):t.index(5.0)])
+    #     st.session_state['sds'] = sds
+    #     sd1 = sg[t.index(1.0)]
 
-        elfs = [min(x,sds) for x in sg ]
-        focc = elfs.index(sds)
-        elfs = [sds if ind <= focc else x for ind, x in enumerate(elfs) ]
-        ax2.plot(t, elfs, label="Recommended ELF Design Spectrum", color='Purple', linewidth=1.0)
-        ax2.set_xlim([0, 5])
-        ax2.legend()
-        ax2.grid()
-        ax2.set_title(sitetitle + " Recommended ELF Design Spectrum (MPRS capped to SDS)")
+    #     elfs = [min(x,sds) for x in sg ]
+    #     focc = elfs.index(sds)
+    #     elfs = [sds if ind <= focc else x for ind, x in enumerate(elfs) ]
+    #     ax2.plot(t, elfs, label="Recommended ELF Design Spectrum", color='Purple', linewidth=1.0)
+    #     ax2.set_xlim([0, 5])
+    #     ax2.legend()
+    #     ax2.grid()
+    #     ax2.set_title(sitetitle + " Recommended ELF Design Spectrum (MPRS capped to SDS)")
 
-        st.subheader("ASCE7-22 Seismic Parameter Output")
-        st.write("Default = Max of Site Class C, CD, D")
-        df = pd.DataFrame(
-        {'Parameter':["sms","sm1","sds","sd1","pga"],'Values':[str(round(sds*1.5,3)),str(round(sd1*1.5,3)),str(round(sds,3)),str(round(sd1,3)),str(round(sg[0],3))]}
-        )
-        df.set_index('Parameter', inplace=True)
-        st.dataframe(df)
-        dfs=pd.DataFrame({"time period":t,"Governing Multiperiod Spec": sg, "Recommended ELF Design Spectrum": elfs, "Governing MCE Multiperiod":smceg })
-        st.dataframe(dfs)
-        textout = mywritefileEstSV(t, sg, tmce, smceg, sds, sd1, sitecl, elfs)
+    #     st.subheader("ASCE7-22 Seismic Parameter Output")
+    #     st.write("Default = Max of Site Class C, CD, D")
+    #     df = pd.DataFrame(
+    #     {'Parameter':["sms","sm1","sds","sd1","pga"],'Values':[str(round(sds*1.5,3)),str(round(sd1*1.5,3)),str(round(sds,3)),str(round(sd1,3)),str(round(sg[0],3))]}
+    #     )
+    #     df.set_index('Parameter', inplace=True)
+    #     st.dataframe(df)
+    #     dfs=pd.DataFrame({"time period":t,"Governing Multiperiod Spec": sg, "Recommended ELF Design Spectrum": elfs, "Governing MCE Multiperiod":smceg })
+    #     st.dataframe(dfs)
+    #     textout = mywritefileEstSV(t, sg, tmce, smceg, sds, sd1, sitecl, elfs)
 
 
     else:
