@@ -41,4 +41,6 @@ Accepts both late long pair or an address.
 
 4/19/2026 Commented out extra coding for the "Default" site class (initially inserted to verify USGS calcs for the "Defacult" site class as being the max of C,CD,D)
 
+6/9/2025 Added calculation for equivalent SDS to use for tables in old OPDs/OPMs that were approved in older ASCE 7-10 and ASCE 7-16 versions.
+
 Try out at: https://jmtwtc7pdpdfhpzgnwfdt6.streamlit.app/
