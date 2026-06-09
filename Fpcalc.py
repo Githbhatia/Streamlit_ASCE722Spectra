@@ -346,6 +346,24 @@ if DfP:
     info = (st.session_state['nonstructural'][:150] + '..') if len(st.session_state['nonstructural']) > 150 else st.session_state['nonstructural']
     ax.text(0.99, 0.02, info, horizontalalignment='right', verticalalignment='top', fontsize=6, color ='Black',transform=ax.transAxes)
     st.pyplot(fig)
+    st.divider()
+
+    st.subheader(f":blue[Equivalent ${sds_latex}$ Calculation for OPDs/OPMs approved for previous versions of ASCE 7:]")
+
+    ccc = st.columns(2)
+    with ccc[0]:
+        ap= st.selectbox("Enter Amplification factor, $a_{p}$ used in OPD/OPM", options=[1.0, 2.5], index=0, key="ap")
+    with ccc[1]:
+        rp= st.selectbox("Component Response Modification factor, $R_{p}$ used in OPD/OPM", options=[1.5,2.0,2.5,3,3.5,6,9,12], index=3, key="rp")
+    equivalentSdsList = []
+    for i in range(len(z)):
+        equivalentSdsList.append((fP[i]/(0.4*ap))*(rp/iP)/(1+2*(zh[i])))
+    
+    st.write(f":red[Equivalent ${sds_latex}$ :]")
+    dfssds=pd.DataFrame({"Location" :zLblist,"z":z,"z/h": zh,"Equivalent Sds for OPD/OPM": equivalentSdsList})
+    st.dataframe(dfssds, hide_index=True)
+
+
 st.divider()
 
 
