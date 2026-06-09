@@ -357,12 +357,13 @@ if DfP:
         rp= st.selectbox("Component Response Modification factor, $R_{p}$ used in OPD/OPM", options=[1.5,2.0,2.5,3,3.5,6,9,12], index=2, key="rp")
     equivalentSdsList = []
     for i in range(len(z)):
-        equivalentSdsList.append((fP[i]/(0.4*ap))*(rp/iP)/(1+2*(zh[i])))
+        equivalentSdsList.append((fP[i]/(0.4*ap))*(rp/iP)/3.0)
     
     st.write(f":red[Equivalent ${sds_latex}$ :]")
     dfssds=pd.DataFrame({"Location" :zLblist,"z":z,"z/h": zh,"Equivalent Sds for OPD/OPM": equivalentSdsList})
     st.dataframe(dfssds, hide_index=True)
 
+    st.write(":red[Note: All older OPDs/OPMs are approved for z/h = 1.0]")
 
 st.divider()
 
