@@ -354,7 +354,7 @@ if DfP:
     with ccc[0]:
         ap= st.selectbox("Enter Amplification factor, $a_{p}$ used in OPD/OPM", options=[1.0, 2.5], index=0, key="ap")
     with ccc[1]:
-        rp= st.selectbox("Component Response Modification factor, $R_{p}$ used in OPD/OPM", options=[1.5,2.0,2.5,3,3.5,6,9,12], index=3, key="rp")
+        rp= st.selectbox("Component Response Modification factor, $R_{p}$ used in OPD/OPM", options=[1.5,2.0,2.5,3,3.5,6,9,12], index=2, key="rp")
     equivalentSdsList = []
     for i in range(len(z)):
         equivalentSdsList.append((fP[i]/(0.4*ap))*(rp/iP)/(1+2*(zh[i])))
