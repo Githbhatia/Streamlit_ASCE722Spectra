@@ -349,12 +349,27 @@ if DfP:
     st.divider()
 
     st.subheader(f":blue[Equivalent ${sds_latex}$ Calculation for OPDs/OPMs approved for previous versions of ASCE 7:]")
+    df16 = pd.read_csv('ASCE716Ch13.csv')
+    df16.set_index('Menuitems', inplace=True)
+
+    if st.session_state.selecteditem16 != "":
+        _selecteditem16 = st.session_state.selecteditem16
+        selecteditem = st.selectbox("Select Nonstructural item (ASCE 7-16 Tables 13.5-1 and 13.6-1)",df16.index, index = list(df16.index).index(_selecteditem16), key="nonstructural16")
+    else:
+        selecteditem = st.selectbox("Select Nonstructural item (ASCE 7-16 Tables 13.5-1 and 13.6-1)",df16.index, index = 1, key="nonstructural16")
+
+    st.session_state.selecteditem16 = st.session_state.nonstructural16
+
+    ap = df16.loc[selecteditem].values[0]
+    rp = df16.loc[selecteditem].values[1]
 
     ccc = st.columns(2)
     with ccc[0]:
-        ap= st.selectbox("Enter Amplification factor, $a_{p}$ used in OPD/OPM", options=[1.0, 2.5], index=0, key="ap")
+        apstr = "a_{p}"
+        st.write(f"${apstr}$ = " + str(ap))
     with ccc[1]:
-        rp= st.selectbox("Component Response Modification factor, $R_{p}$ used in OPD/OPM", options=[1.5,2.0,2.5,3,3.5,6,9,12], index=2, key="rp")
+        rpstr = "R_{p}"
+        st.write(f"${rpstr}$ = " + str(rp))
     equivalentSdsList = []
     for i in range(len(z)):
         equivalentSdsList.append((fP[i]/(0.4*ap))*(rp/iP)/3.0)

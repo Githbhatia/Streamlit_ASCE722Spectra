@@ -1,0 +1,58 @@
+﻿Menuitems,ap,Rp,Omega0
+Interior nonstructural walls and partitions -Plain (unreinforced) masonry walls,1,1.5,1.5
+Interior nonstructural walls and partitions -All other walls and partitions,1,2.5,2
+Cantilever elements (unbraced or braced to structural frame below center of mass) - Parapets and cantilever interior nonstructural walls,2.5,2.5,2
+Cantilever elements (unbraced or braced to structural frame below center of mass) - Chimneys where laterally braced or supported by the structural frame,2.5,2.5,2
+Cantilever elements (braced to structural frame above center of mass) - Parapets (braced above center of mass),1,2.5,2
+Cantilever elements (braced to structural frame above center of mass) - Chimneys (braced above center of mass),1,2.5,2
+Cantilever elements (braced to structural frame above center of mass)- Exterior nonstructural walls,1,2.5,2
+Exterior nonstructural wall elements and connections - Wall element,1,2.5,NA
+Exterior nonstructural wall elements and connections - Body of wall panel connections,1,2.5,NA
+Exterior nonstructural wall elements and connections - Fasteners of connecting system,1.25,1,1
+Veneer– Limited deformability elements and attachments,1,2.5,2
+Veneer– Low deformability elements and attachments,1,1.5,2
+Penthouses (except where framed by extension of building frame),2.5,3.5,2
+Ceilings (all),1,2.5,2
+Cabinets– Permanent floor?supported storage cabinets >6 ft (1829 mm) including contents,1,2.5,2
+"Cabinets– Permanent floor?supported library shelving, book stacks, and bookshelves >6 ft (1829 mm), including contents",1,2.5,2
+Laboratory equipment,1,2.5,2
+Access floors– Special access floors (per Section 13.5.7.2),1,2.5,2
+All other access floors,1,1.5,1.5
+Appendages and ornamentations,2.5,2.5,2
+Signs and billboards,2.5,3,2
+Rigid: High-deformability elements and attachments,1,3.5,2
+Rigid: Limited-deformability elements and attachments,1,2.5,2
+Rigid: Low-deformability materials and attachments,1,1.5,1.5
+Flexible: High-deformability elements and attachments,2.5,3.5,2
+Flexible: Limited-deformability elements and attachments,2.5,2.5,2
+Flexible: Low-deformability materials and attachments,2.5,1.5,1.5
+Egress stairways not part of building seismic force-resisting system,1,2.5,2
+Egress stairs and ramp fasteners and attachments,2.5,2.5,2
+"MECHANICAL AND ELECTRICAL COMPONENTS - Air-side HVACR, fans, air handlers, air conditioning units, cabinet heaters, air distribution boxes, and other mechanical components constructed of sheet metal framing",2.5,6,2
+"MECHANICAL AND ELECTRICAL COMPONENTS - Wet-side HVACR, boilers, furnaces, atmospheric tanks and bins, chillers, water heaters, heat exchangers, evaporators, air separators, manufacturing or process equipment, and other mechanical components constructed of high-deformability materials",1,2.5,2
+"MECHANICAL AND ELECTRICAL COMPONENTS - Air coolers (fin fans), air-cooled heat exchangers, condensing units, dry coolers, remote radiators and other mechanical components elevated on integral structural steel or sheet metal supports",2.5,3,1.5
+"MECHANICAL AND ELECTRICAL COMPONENTS - Engines, turbines, pumps, compressors, and pressure vessels not supported on skirts and not within the scope of Chapter 15",1,2.5,2
+MECHANICAL AND ELECTRICAL COMPONENTS - Skirt-supported pressure vessels not within the scope of Chapter 15,2.5,2,2
+MECHANICAL AND ELECTRICAL COMPONENTS - Elevator and escalator components,1,2.5,2
+"MECHANICAL AND ELECTRICAL COMPONENTS - Generators, batteries, inverters, motors, transformers, and other electrical components constructed of high-deformability materials",1,2.5,2
+"MECHANICAL AND ELECTRICAL COMPONENTS - Motor control centers, panel boards, switch gear, instrumentation cabinets, and other components constructed of sheet metal framing",2.5,6,2
+"MECHANICAL AND ELECTRICAL COMPONENTS - Communication equipment, computers, instrumentation, and controls",1,2,2
+"MECHANICAL AND ELECTRICAL COMPONENTS - Roof-mounted stacks, cooling and electrical towers laterally braced below their center of mass",2.5,2,2
+"MECHANICAL AND ELECTRICAL COMPONENTS - Roof-mounted stacks, cooling and electrical towers laterally braced above their center of mass",1,2.5,2
+MECHANICAL AND ELECTRICAL COMPONENTS - Lighting fixtures,1,1.5,2
+MECHANICAL AND ELECTRICAL COMPONENTS - Other mechanical or electrical components,1,1.5,2
+VIBRATION-ISOLATED COMPONENTS AND SYSTEMS - Components and systems isolated using neoprene elements and neoprene isolated floors with built-in or separate elastomeric snubbing devices or resilient perimeter stops,2.5,2.5,2
+VIBRATION-ISOLATED COMPONENTS AND SYSTEMS - Spring-isolated components and systems and vibration-isolated floors closely restrained using built-in or separate elastomeric snubbing devices or resilient perimeter stops,2.5,2,2
+VIBRATION-ISOLATED COMPONENTS AND SYSTEMS - Internally isolated components and systems,2.5,2,2
+VIBRATION-ISOLATED COMPONENTS AND SYSTEMS - Suspended vibration-isolated equipment including in-line duct devices and suspended internally isolated components,2.5,2,2
+"DISTRIBUTION SYSTEMS - Piping in accordance with ASME B31 (2001, 2002, 2008, and 2010), including in-line components with joints made by welding or brazing",2.5,12,2
+"DISTRIBUTION SYSTEMS - Piping in accordance with ASME B31, including in-line components, constructed of high- or limited-deformability materials, with joints made by threading, bonding, compression couplings, or grooved couplings",2.5,6,2
+"DISTRIBUTION SYSTEMS - Piping not in accordance with ASME B31, including in-line components, constructed of high-deformability materials, with joints made by welding or brazing",2.5,9,2
+"DISTRIBUTION SYSTEMS - Piping not in accordance with ASME B31, including in-line components, constructed of high- or limited-deformability materials, with joints made by threading, bonding, compression couplings, or grooved couplings",2.5,4.5,2
+"DISTRIBUTION SYSTEMS - Ductwork, including in-line components, constructed of high-deformability materials, with joints made by welding or brazing",2.5,6,2
+"DISTRIBUTION SYSTEMS - Ductwork, including in-line components, constructed of high- or limited-deformability materials with joints made by means other than welding or brazing",2.5,3,2
+"DISTRIBUTION SYSTEMS - Ductwork, including in-line components, constructed of low-deformability materials, such as cast iron, glass, and nonductile plastics",2.5,3,2
+DISTRIBUTION SYSTEMS - Electrical conduit and cable trays,1,2.5,2
+DISTRIBUTION SYSTEMS - Bus duct,2.5,6,2
+DISTRIBUTION SYSTEMS - Plumbing,2.5,6,2
+DISTRIBUTION SYSTEMS - Pneumatic tube transport systems,2.5,6,2
