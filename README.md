@@ -41,6 +41,8 @@ Accepts both late long pair or an address.
 
 4/19/2026 Commented out extra coding for the "Default" site class (initially inserted to verify USGS calcs for the "Defacult" site class as being the max of C,CD,D)
 
-6/9/2025 Added calculation for equivalent SDS to use for tables in old OPDs/OPMs that were approved in older ASCE 7-10 and ASCE 7-16 versions.
+6/9/2026 Added calculation for equivalent SDS to use for tables in old OPDs/OPMs that were approved in older ASCE 7-10 and ASCE 7-16 versions.
+
+6/14/2026 The equivalent SDS calculation does not need user to select the nonstructural item in ASCCE 7-16, the equivalent ones are automatically selected.
 
 Try out at: https://jmtwtc7pdpdfhpzgnwfdt6.streamlit.app/
