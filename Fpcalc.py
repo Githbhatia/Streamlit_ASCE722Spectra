@@ -89,17 +89,17 @@ if DfP:
         
     st.write(":red[Detailed $F_{p}$ Calculations:]")
     if st.session_state.selecteditem != "":
-        _selecteditem = st.session_state.selecteditem
-        selecteditem = st.selectbox("Select Nonstructural item (ASCE 7-22 Tables 13.5-1 and 13.6-1)",df.index, index = list(df.index).index(_selecteditem), key="nonstructural")
+        _selecteditem22 = st.session_state.selecteditem
+        selecteditem22 = st.selectbox("Select Nonstructural item (ASCE 7-22 Tables 13.5-1 and 13.6-1)",df.index, index = list(df.index).index(_selecteditem22), key="nonstructural")
     else:
-        selecteditem = st.selectbox("Select Nonstructural item (ASCE 7-22 Tables 13.5-1 and 13.6-1)",df.index, index = 1, key="nonstructural")
+        selecteditem22= st.selectbox("Select Nonstructural item (ASCE 7-22 Tables 13.5-1 and 13.6-1)",df.index, index = 1, key="nonstructural")
 
-    st.session_state.selecteditem = st.session_state.nonstructural
+    st.session_state.selecteditem22 = st.session_state.nonstructural
 
-    car0 = df.loc[selecteditem].values[0]
-    car1 = df.loc[selecteditem].values[1]
-    rPO = df.loc[selecteditem].values[2]
-    omegaOP = df.loc[selecteditem].values[3]
+    car0 = df.loc[selecteditem22].values[0]
+    car1 = df.loc[selecteditem22].values[1]
+    rPO = df.loc[selecteditem22].values[2]
+    omegaOP = df.loc[selecteditem22].values[3]
 
     sc1,sc2 =st.columns(2)
     with sc1:
@@ -349,19 +349,22 @@ if DfP:
     st.divider()
 
     st.subheader(f":blue[Equivalent ${sds_latex}$ Calculation for OPDs/OPMs approved for previous versions of ASCE 7:]")
-    df16 = pd.read_csv('ASCE716Ch13.csv')
-    df16.set_index('Menuitems', inplace=True)
+    # df16 = pd.read_csv('ASCE716Ch13.csv')
+    # df16.set_index('Menuitems', inplace=True)
 
-    if st.session_state.selecteditem16 != "":
-        _selecteditem16 = st.session_state.selecteditem16
-        selecteditem = st.selectbox("Select Nonstructural item (ASCE 7-16 Tables 13.5-1 and 13.6-1)",df16.index, index = list(df16.index).index(_selecteditem16), key="nonstructural16")
-    else:
-        selecteditem = st.selectbox("Select Nonstructural item (ASCE 7-16 Tables 13.5-1 and 13.6-1)",df16.index, index = 1, key="nonstructural16")
+    # if st.session_state.selecteditem16 != "":
+    #     _selecteditem16 = st.session_state.selecteditem16
+    #     selecteditem16 = st.selectbox("Select Nonstructural item (ASCE 7-16 Tables 13.5-1 and 13.6-1)",df16.index, index = list(df16.index).index(_selecteditem16), key="nonstructural16")
+    # else:
+    #     selecteditem16 = st.selectbox("Select Nonstructural item (ASCE 7-16 Tables 13.5-1 and 13.6-1)",df16.index, index = 1, key="nonstructural16")
 
-    st.session_state.selecteditem16 = st.session_state.nonstructural16
+    # st.session_state.selecteditem16 = st.session_state.nonstructural16
 
-    ap = df16.loc[selecteditem].values[0]
-    rp = df16.loc[selecteditem].values[1]
+    # ap = df16.loc[selecteditem16].values[0]
+    # rp = df16.loc[selecteditem16].values[1]
+    st.write("Equivalent ASCE7-16 Chapter 13 item  = " + df.loc[selecteditem22].values[4] )
+    ap = df.loc[selecteditem22].values[5]
+    rp = df.loc[selecteditem22].values[6]
 
     ccc = st.columns(2)
     with ccc[0]:

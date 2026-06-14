@@ -6,8 +6,6 @@ if 'myTitle' not in st.session_state:
     st.session_state['myTitle'] = ""
 if "selecteditem" not in st.session_state:
     st.session_state.selecteditem = ""
-if "selecteditem16" not in st.session_state:
-    st.session_state.selecteditem16 = ""
 if "selectedIp" not in st.session_state:
     st.session_state.selectedIp = 0.0
 if "UserZvalues" not in st.session_state:
