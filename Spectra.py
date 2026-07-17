@@ -222,17 +222,18 @@ def onclick():
         )
     )
   
+  
     faultURL = "https://hcai.maps.arcgis.com/apps/webappviewer/index.html?id=783b89c5f62a4853a92f08a320d6d518&marker=" + \
         str(longt) + ";" + str(lat)+ ";;"+str(mysite)+\
             "&scale=200000&showLayers=Earthquake Faults and Folds in the USA - Qfaults_US_Database;Earthquake Faults and Folds in the USA - ca_offshore" 
     st.link_button("See proximity of site to seismic sources and faults", faultURL, type="primary")
 
-    url = 'https://earthquake.usgs.gov/ws/designmaps/asce7-22.json?latitude='+ str(lat) + '&longitude=' + str(longt) +'&riskCategory='+ riskct +'&siteClass=' + sitecl + '&title=Example'
+    url = 'https://earthquake.usgs.gov/ws/building-codes/asce7-22/calculate?latitude='+ str(lat) + '&longitude=' + str(longt) +'&riskCategory='+ riskct +'&siteClass=' + sitecl + '&title=Example'
     
     # if  swv != 0.0 or siteclass=="Default":
     if swv != 0.0:
-        urll = 'https://earthquake.usgs.gov/ws/designmaps/asce7-22.json?latitude='+ str(lat) + '&longitude=' + str(longt) +'&riskCategory='+ riskct +'&siteClass=' + sitecll + '&title=Example'
-        urlu = 'https://earthquake.usgs.gov/ws/designmaps/asce7-22.json?latitude='+ str(lat) + '&longitude=' + str(longt) +'&riskCategory='+ riskct +'&siteClass=' + siteclu + '&title=Example'
+        urll = 'https://earthquake.usgs.gov/ws/building-codes/asce7-22/calculate?latitude='+ str(lat) + '&longitude=' + str(longt) +'&riskCategory='+ riskct +'&siteClass=' + sitecll + '&title=Example'
+        urlu = 'https://earthquake.usgs.gov/ws/building-codes/asce7-22/calculate?latitude='+ str(lat) + '&longitude=' + str(longt) +'&riskCategory='+ riskct +'&siteClass=' + siteclu + '&title=Example'
         
 
 
@@ -511,7 +512,7 @@ def contourf(lat, longt, riskct):
     for i in range(nlong):
         for j in range(nlat):
             mesg.write("Getting gird " + str(i) + ", " + str(j))
-            url = 'https://earthquake.usgs.gov/ws/designmaps/asce7-22.json?latitude='+ str(xLat[i,j]) + '&longitude=' + str(xLong[i,j]) +'&riskCategory='+ riskct +'&siteClass=' + sitecl + '&title=Example'
+            url = 'https://earthquake.usgs.gov/ws/building-codes/asce7-22/calculate?latitude='+ str(xLat[i,j]) + '&longitude=' + str(xLong[i,j]) +'&riskCategory='+ riskct +'&siteClass=' + sitecl + '&title=Example'
             response = myurlopen(url)
             rdata = js.loads(response)
             ZSDS[i,j] = rdata["response"]["data"]["sds"]
