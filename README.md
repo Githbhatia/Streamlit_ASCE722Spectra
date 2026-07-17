@@ -45,4 +45,6 @@ Accepts both late long pair or an address.
 
 6/14/2026 The equivalent SDS calculation does not need user to select the nonstructural item in ASCCE 7-16, the equivalent ones are automatically selected.
 
+7/17/2026 Revised for new USGS url.
+
 Try out at: https://jmtwtc7pdpdfhpzgnwfdt6.streamlit.app/
