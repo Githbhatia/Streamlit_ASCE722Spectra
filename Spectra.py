@@ -579,7 +579,7 @@ def mywritefileEstSV(t, sg, tmce, smceg, sds, sd1, sitecl, elfs):
     riskct = riskc
 
     textout = ""
-
+    textout += versionstr + "\n"
     textout += "Data source is USGS (ASCE 722 Database) and OpenStreetMaps.\nAuthors do not assume any responsibility or liability for its accuracy.\n"
     textout += "Use of the output of this program does not imply approval by the governing building code bodies responsible for building code approval and interpretation for the building site described by latitude/longitude location.\n"
     textout += "\n \n"
@@ -628,6 +628,7 @@ def mywritefile( ldata, sitecl, elfs):
     s = ldata["response"]["data"]["multiPeriodDesignSpectrum"]["ordinates"]
     tmce = ldata["response"]["data"]["multiPeriodMCErSpectrum"]["periods"]
     smce = ldata["response"]["data"]["multiPeriodMCErSpectrum"]["ordinates"]
+    textout += versionstr + "\n"
     textout += "Data source is USGS (ASCE 722 Database) and OpenStreetMaps.\nAuthors do not assume any responsibility or liability for its accuracy.\n"
     textout += "Use of the output of this program does not imply approval by the governing building code bodies responsible for building code approval and interpretation for the building site described by latitude/longitude location.\n"
     textout += "\n \n"
@@ -672,6 +673,7 @@ def mywritefileest(ldata, sitecl, sexp, elfs):
     s = ldata["response"]["data"]["multiPeriodDesignSpectrum"]["ordinates"]
     tmce = ldata["response"]["data"]["multiPeriodMCErSpectrum"]["periods"]
     smce = ldata["response"]["data"]["multiPeriodMCErSpectrum"]["ordinates"]
+    textout += versionstr + "\n"
     textout += "Data source is USGS (ASCE 722 Database) and OpenStreetMaps.\nAuthors do not assume any responsibility or liability for its accuracy.\n"
     textout += "Use of the output of this program does not imply approval by the governing building code bodies responsible for building code approval and interpretation for the building site described by latitude/longitude location.\n"
     textout += "\n \n"
@@ -769,7 +771,8 @@ elif 'myswv' in st.session_state:
     inSwv = st.session_state['myswv']
 else:
     inSwv = 0.0
-
+versionstr = "Version 2.0 (revision date 7/17/2026)"
+st.badge(versionstr, color="green")
 st.write("Data source is USGS (ASCE 722 Database) and OpenStreetMaps.\nAuthors do not assume any responsibility or liability for its accuracy.")
 st.write("Use of the output of this program does not imply approval by the governing building code bodies responsible for building code approval and interpretation for the building site described by latitude/longitude location.")
 st.divider()
