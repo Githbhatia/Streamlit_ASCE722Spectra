@@ -47,4 +47,6 @@ Accepts both late long pair or an address.
 
 7/17/2026 Revised for new USGS url.
 
+8/10/2026 Revised due to unusual UI error that would give a data leak error if one unchecked the OPD option for the FP calculation - no calculation changes.
+
 Try out at: https://jmtwtc7pdpdfhpzgnwfdt6.streamlit.app/
