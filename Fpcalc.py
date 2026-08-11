@@ -27,7 +27,7 @@ sds  = st.session_state['sds']
 sds_latex = "S_{DS}"
 sd1_latex = "S_{D1}"
 st.subheader(":blue[ASCE7-22 Fp Calculation]")
-versionstr = "Version 2.0 (revision date 7/17/2026)"
+versionstr = "Version 2.1 (revision date 8/10/2026)"
 st.badge(versionstr, color="green")
 st.write("USING THE DEFAULT OPTIONS WILL LEAD TO CONSERVATIVE RESULTS")
 if not st.session_state.clicked:
