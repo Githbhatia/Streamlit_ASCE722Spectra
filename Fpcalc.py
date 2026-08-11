@@ -181,30 +181,32 @@ if DfP:
     #         st.stop()
 
     st.divider()
+    knownstsys = False;selecteditemss = "";r=0.0;oM=0.0;cTs=0.02;xs=0.75
     knownstsys = persistent_toggle("Structural System Selection (Unknown system assumed if not enabled)", key="structuralselect")
     if knownstsys:
         dfs = pd.read_csv('ASCE722StructuralSystems.csv')
         dfs.set_index('StructuralSystem', inplace=True)
         if st.session_state.selecteditemStructSys != "":
-            _selecteditem = st.session_state.selecteditemStructSys
-            selecteditem = st.selectbox("Select Structural System of the Building (ASCE 7-22 Table 12.2-1):",dfs.index, index = list(dfs.index).index(_selecteditem), key="structural") 
+            _selecteditemss = st.session_state.selecteditemStructSys
+            selecteditemss = st.selectbox("Select Structural System of the Building (ASCE 7-22 Table 12.2-1):",dfs.index, index = list(dfs.index).index(_selecteditemss), key="structural") 
             st.session_state.selecteditemStructSys = st.session_state.structural
         else:   
-            selecteditem = st.selectbox("Select Structural System of the Building (ASCE 7-22 Table 12.2-1):",dfs.index, index = 49, key="structural")
+            selecteditemss = st.selectbox("Select Structural System of the Building (ASCE 7-22 Table 12.2-1):",dfs.index, index = 49, key="structural")
             st.session_state.selecteditemStructSys = st.session_state.structural
         
         
-        r = dfs.loc[selecteditem].values[0]
-        oM = dfs.loc[selecteditem].values[1]
-        cTs = dfs.loc[selecteditem].values[3]
-        xs = dfs.loc[selecteditem].values[4]
+        r = dfs.loc[selecteditemss].values[0]
+        oM = dfs.loc[selecteditemss].values[1]
+        cTs = dfs.loc[selecteditemss].values[3]
+        xs = dfs.loc[selecteditemss].values[4]
     I_e = "I_{e}"
     if st.session_state["selectedIe"] != 0.0:
         ie = float(st.selectbox(f"${I_e}$, Importance Factor for Building",(1.0,1.25,1.5), index = list((1.0,1.25,1.5)).index(st.session_state["selectedIe"]), key="Ie"))
     else:
         ie = float(st.selectbox(f"${I_e}$, Importance Factor for Building",(1.0,1.25,1.5), index = 2, key="Ie"))
     st.session_state["selectedIe"] = st.session_state.Ie
-    st.write(f"Selected Structural System: {selecteditem}")
+    if selecteditemss != "":
+        st.write(f"Selected Structural System: {selecteditemss}")
     if knownstsys:
         c1,c2 = st.columns(2)
         with c1:
@@ -237,7 +239,7 @@ if DfP:
         st.session_state.selecteditemTa = st.session_state.Ta
     else:
         if knownstsys:
-            st.write(f"Per ASCE 7-22 Table 12.2-1 for {selecteditem}:" )
+            st.write(f"Per ASCE 7-22 Table 12.2-1 for {selecteditemss}:" )
         else:
             cTs = 0.02
             xs = 0.75

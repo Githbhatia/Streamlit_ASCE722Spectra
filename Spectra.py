@@ -771,7 +771,7 @@ elif 'myswv' in st.session_state:
     inSwv = st.session_state['myswv']
 else:
     inSwv = 0.0
-versionstr = "Version 2.0 (revision date 7/17/2026)"
+versionstr = "Version 2.1 (revision date 8/10/2026)"
 st.badge(versionstr, color="green")
 st.write("Data source is USGS (ASCE 722 Database) and OpenStreetMaps.\nAuthors do not assume any responsibility or liability for its accuracy.")
 st.write("Use of the output of this program does not imply approval by the governing building code bodies responsible for building code approval and interpretation for the building site described by latitude/longitude location.")
