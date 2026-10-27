@@ -49,7 +49,7 @@ if sds <= 0.0:
     st.stop()
 
 df = pd.read_csv('ASCE722Ch13.csv')
-df.set_index('Menuitems', inplace=True)
+df = df.set_index('Menuitems')
 st.divider()
 
 OPD = st.checkbox("Select for Fp for OPDs", value=True, key="check1")
@@ -161,7 +161,7 @@ if DfP:
             min_value=0.0 ),
     }, hide_index=True)
     edited_df = edited_df.dropna( subset=["z"])
-    edited_df.fillna({"Location":""}, inplace = True)
+    edited_df = edited_df.fillna({"Location":""})
     edited_df = edited_df.sort_values(by="z")
     
     z = edited_df["z"].tolist()
@@ -185,7 +185,7 @@ if DfP:
     knownstsys = persistent_toggle("Structural System Selection (Unknown system assumed if not enabled)", key="structuralselect")
     if knownstsys:
         dfs = pd.read_csv('ASCE722StructuralSystems.csv')
-        dfs.set_index('StructuralSystem', inplace=True)
+        dfs = dfs.set_index('StructuralSystem')
         if st.session_state.selecteditemStructSys != "":
             _selecteditemss = st.session_state.selecteditemStructSys
             selecteditemss = st.selectbox("Select Structural System of the Building (ASCE 7-22 Table 12.2-1):",dfs.index, index = list(dfs.index).index(_selecteditemss), key="structural") 

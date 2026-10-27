@@ -355,7 +355,7 @@ def onclick():
         df = pd.DataFrame(
         {'Parameter':["sms","sm1","sds","sd1","pga"],'Values':[str(round(sds*1.5,3)),str(round(sd1*1.5,3)),str(round(sds,3)),str(round(sd1,3)),str(round(sg[0],3))]}
         )
-        df.set_index('Parameter', inplace=True)
+        df = df.set_index('Parameter')
         st.dataframe(df)
 
         dfs=pd.DataFrame({"time period":t,"Governing Multiperiod Spec": sg, "Recommended ELF Design Spectrum": elfs,"Governing MCE Multiperiod":smceg})
@@ -397,7 +397,7 @@ def onclick():
         df = df[0:11]
         df.columns = ['Parameter','Values']
         df['Values'] = df['Values'].astype(str)
-        df.set_index('Parameter', inplace=True)
+        df = df.set_index('Parameter')
         st.dataframe(df)
         dfs=pd.DataFrame({"time period":t,"Multiperiod Spec": s, "Interpolated Spec": sexp, "Recommended ELF Design Spectrum": elfs, "MCE Multiperiod":smce, "Interpolated MCE spec": sexpmce })
         st.dataframe(dfs)
@@ -447,7 +447,7 @@ def onclick():
     #     df = pd.DataFrame(
     #     {'Parameter':["sms","sm1","sds","sd1","pga"],'Values':[str(round(sds*1.5,3)),str(round(sd1*1.5,3)),str(round(sds,3)),str(round(sd1,3)),str(round(sg[0],3))]}
     #     )
-    #     df.set_index('Parameter', inplace=True)
+    #     df = df.set_index('Parameter')
     #     st.dataframe(df)
     #     dfs=pd.DataFrame({"time period":t,"Governing Multiperiod Spec": sg, "Recommended ELF Design Spectrum": elfs, "Governing MCE Multiperiod":smceg })
     #     st.dataframe(dfs)
@@ -482,7 +482,7 @@ def onclick():
         df = df[0:11]
         df.columns = ['Parameter','Values']
         df['Values'] = df['Values'].astype(str)
-        df.set_index('Parameter', inplace=True)
+        df = df.set_index('Parameter')
         st.dataframe(df)
         sds = float(df.loc["sds"].values[0])
         st.session_state['sds'] = sds
