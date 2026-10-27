@@ -184,49 +184,52 @@ def onclick():
             
 
     
-    df = pd.DataFrame({"lat":[float(lat)], "lon":[float(longt)],"text": mysite})
-    view = pdk.ViewState(
-        latitude=float(lat),
-        longitude=float(longt),
-        zoom=11,)
-    st.pydeck_chart(
-    pdk.Deck(
-        # map_style="mapbox://styles/mapbox/light-v9",
-        initial_view_state=view,
-        tooltip={"text": "{text}"},
-        layers=[
-            pdk.Layer(
-                "ScatterplotLayer",
-                data=df,
-                get_position=["lon", "lat"],
-                get_color=[255,0,0],
-                get_radius=10,
-                radiusMinPixels=5,
-                radiusMaxPixels=50,
-                pickable=True,
-                ),
-            pdk.Layer(
-                "TextLayer",
-                data=df,
-                get_position=["lon", "lat"],
-                get_color=[0, 0, 0],
-                get_text=str("text"),
-                get_size=11,
-                get_text_anchor='"middle"',
-                get_alignment_baseline='"top"',
-                pickable=True,
-                ),
+    # df = pd.DataFrame({"lat":[float(lat)], "lon":[float(longt)],"text": mysite})
+    # view = pdk.ViewState(
+    #     latitude=float(lat),
+    #     longitude=float(longt),
+    #     zoom=11,)
+    # st.pydeck_chart(
+    # pdk.Deck(
+    #     # map_style="mapbox://styles/mapbox/light-v9",
+    #     initial_view_state=view,
+    #     tooltip={"text": "{text}"},
+    #     layers=[
+    #         pdk.Layer(
+    #             "ScatterplotLayer",
+    #             data=df,
+    #             get_position=["lon", "lat"],
+    #             get_color=[255,0,0],
+    #             get_radius=10,
+    #             radiusMinPixels=5,
+    #             radiusMaxPixels=50,
+    #             pickable=True,
+    #             ),
+    #         pdk.Layer(
+    #             "TextLayer",
+    #             data=df,
+    #             get_position=["lon", "lat"],
+    #             get_color=[0, 0, 0],
+    #             get_text=str("text"),
+    #             get_size=11,
+    #             get_text_anchor='"middle"',
+    #             get_alignment_baseline='"top"',
+    #             pickable=True,
+    #             ),
 
 
-            ],
-        )
-    )
-  
+    #         ],
+    #     )
+    # )
+
+    
   
     faultURL = "https://hcai.maps.arcgis.com/apps/webappviewer/index.html?id=783b89c5f62a4853a92f08a320d6d518&marker=" + \
         str(longt) + ";" + str(lat)+ ";;"+str(mysite)+\
-            "&scale=200000&showLayers=Earthquake Faults and Folds in the USA - Qfaults_US_Database;Earthquake Faults and Folds in the USA - ca_offshore" 
-    st.link_button("See proximity of site to seismic sources and faults", faultURL, type="primary")
+            "&scale=800000&showLayers=Earthquake Faults and Folds in the USA - Qfaults_US_Database;Earthquake Faults and Folds in the USA - ca_offshore" 
+
+    st.iframe(faultURL, height=800,alt="Map",)
+    # st.link_button("See proximity of site to seismic sources and faults", faultURL, type="primary")
 
     url = 'https://earthquake.usgs.gov/ws/building-codes/asce7-22/calculate?latitude='+ str(lat) + '&longitude=' + str(longt) +'&riskCategory='+ riskct +'&siteClass=' + sitecl + '&title=Example'
     
@@ -771,7 +774,7 @@ elif 'myswv' in st.session_state:
     inSwv = st.session_state['myswv']
 else:
     inSwv = 0.0
-versionstr = "Version 2.1 (revision date 8/10/2026)"
+versionstr = "Version 2.2 (revision date 10/26/2026)"
 st.badge(versionstr, color="green")
 st.write("Data source is USGS (ASCE 722 Database) and OpenStreetMaps.\nAuthors do not assume any responsibility or liability for its accuracy.")
 st.write("Use of the output of this program does not imply approval by the governing building code bodies responsible for building code approval and interpretation for the building site described by latitude/longitude location.")
