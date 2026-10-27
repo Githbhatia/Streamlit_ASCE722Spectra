@@ -49,4 +49,6 @@ Accepts both late long pair or an address.
 
 8/10/2026 Revised due to unusual UI error that would give a data leak error if one unchecked the OPD option for the FP calculation - no calculation changes.
 
+10/26/2026 Replace Streetview map with HCAI EOC maps showing faults.  Also removed Pandas deprecated "inplace" code.
+
 Try out at: https://jmtwtc7pdpdfhpzgnwfdt6.streamlit.app/
